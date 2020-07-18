@@ -1,46 +1,16 @@
 {
-  "name": "reactivue",
+  "name": "@reactivue/monorepo",
   "description": "Using Vue Composition API in React components.",
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
-  "version": "0.0.0-alpha.1",
-  "main": "dist/index.js",
-  "typing": "dist/index.d.js",
-  "files": [
-    "dist"
+  "private": true,
+  "workspaces": [
+    "packages/**"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antfu/reactivue.git"
-  },
-  "keywords": [
-    "vue",
-    "react",
-    "vue-composition-api",
-    "vue-in-react",
-    "reactivity"
-  ],
-  "bugs": {
-    "url": "https://github.com/antfu/reactivue/issues"
-  },
-  "homepage": "https://github.com/antfu/reactivue#readme",
   "scripts": {
-    "dev": "rollup -c -w",
-    "build": "rollup -c"
-  },
-  "devDependencies": {
-    "@rollup/plugin-node-resolve": "^8.4.0",
-    "@types/react": "^16.9.43",
-    "@vue/runtime-dom": "^3.0.0-rc.1",
-    "cac": "^6.6.1",
-    "react": "^16.13.1",
-    "typescript": "^3.9.7",
-    "rollup": "^2.22.1",
-    "rollup-plugin-dts": "^1.4.8",
-    "rollup-plugin-typescript2": "^0.27.1"
-  },
-  "peerDependencies": {
-    "@vue/runtime-dom": ">=3",
-    "react": ">=16"
+    "preinstall": "npx only-allow pnpm",
+    "dev": "pnpm -C ./packages/reactivue run dev",
+    "dev:example": "pnpm -C ./packages/example run dev",
+    "build": "pnpm -C ./packages/reactivue run build"
   }
 }
