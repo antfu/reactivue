@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "lib": ["ESNext"],
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true
+  },
+  "exclude": ["node_modules", "dist"]
+}
