@@ -1,13 +1,20 @@
 <p align="center">
 <img src="./screenshots/logo.svg" height="180"/></p>
 
-<p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
+<p align="center"><b>{WIP}</b> React components with Vue Composition API</p>
+
+<br/>
 
 <pre align="center">
 npm i <b>reactivue</b>
 </pre>
 
-<p align="center"><em>I love <a href="https://v3.vuejs.org/guide/composition-api-introduction.html" target="_blank">Vue Composition API</a> and it's <a href="https://v3.vuejs.org/guide/reactivity.html" target="_blank">reactivity system</a>, <br>but <a href="https://reactjs.org/docs/components-and-props.html" target="_blank">functional components</a> in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
+<br/>
+
+<p align="center"><em>I love <a href="https://v3.vuejs.org/guide/composition-api-introduction.html" target="_blank">Vue Composition API</a> and its <a href="https://v3.vuejs.org/guide/reactivity.html" target="_blank">reactivity system</a>, <br>but <a href="https://reactjs.org/docs/components-and-props.html" target="_blank">functional components</a> in React are also sweet with Typescript. <br>Instead of making a choice, why not to use them together?</em></p>
+
+<br/>
+
 
 ## Usage
 
