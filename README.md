@@ -5,7 +5,7 @@
 
 <pre align="center">{WIP}</pre>
 
-<p align="center"><em>I love Vue's Composition API and reactivity system, but functional components in React are great are well with nice Typescript support. <br>So, why not to use them together?</em></p>
+<p align="center"><em>I love Vue Composition API and it's reactivity system, <br>but functional components in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
 
 
 ## Install
