@@ -54,10 +54,14 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
 export const unmountInstance = (id: number) => {
   if (_vueState[id]) {
     invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
+    // unregister all the computed/watch effects
+    for (const effect of _vueState[id].effects || [])
+      effect()
     invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
     _vueState[id].isUnmounted = true
   }
 
+  // release the ref
   delete _vueState[id]
 }
 
