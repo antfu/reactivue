@@ -1,15 +1,13 @@
 <p align="center">
 <img src="./screenshots/logo.svg" height="180"/></p>
 
-<p align="center">Use Vue Composition API in React components</p>
-
-<pre align="center">{WIP}</pre>
-
-<p align="center"><em>I love Vue Composition API and it's reactivity system, <br>but functional components in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
+<p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
 
 <pre align="center">
 npm i <b>reactivue</b>
 </pre>
+
+<p align="center"><em>I love Vue Composition API and it's reactivity system, <br>but functional components in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
 
 ## Usage
 
@@ -17,7 +15,7 @@ npm i <b>reactivue</b>
 
 `reactivue` ships with `@vue/reactivity` as a dependency, re-exporting all the APIs from it (`ref`, `computed`, `reactive`, etc.) Lifecycle APIs are provided by `reactivue` with slight different implementation to `@vue/runtime-dom` to make them specific for React lifecycles (`defineComponent`, `watch`, `onMounted`, etc.)
 
-### `defineComponent` Factory
+### Component Factory
 
 ```tsx
 import React from 'React'
@@ -56,7 +54,7 @@ render(<MyCounter value={10}>, el)
 
 You can use it as a hook as well.
 
-> The `defineComponent` factory is actually a sugar to make the following code simplier.
+> The `defineComponent` factory is actually a sugar to and equivalent to the following code.
 
 
 ```tsx

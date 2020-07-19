@@ -16,7 +16,6 @@ export function useSetup<State, Props = {}>(
     const instance = createNewInstanceWithId(id, props)
 
     useInstanceScope(id, () => {
-      // TODO: bind instance
       const data = ref(setupFunction(readonly(props)))
 
       instance.data = data

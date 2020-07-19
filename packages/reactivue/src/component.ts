@@ -4,6 +4,15 @@ import { Ref, ReactiveEffect, ref } from '@vue/reactivity'
 let _id = 0
 const _vueState: Record<number, InternalInstanceState> = {}
 
+export interface InternalInstanceState {
+  _id: number
+  props: any
+  data: Ref<any>
+  isUnmounted: boolean
+  effects?: ReactiveEffect[]
+  hooks: Record<string, Function[]>
+}
+
 export function getNewInstanceId() {
   return _id++
 }
@@ -28,6 +37,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     props,
     data,
     isUnmounted: false,
+    hooks: {},
   }
   _vueState[id] = instance
   return instance
@@ -53,12 +63,4 @@ export const unmountInstance = (id: number) => {
 export function recordInstanceBoundEffect(effect: ReactiveEffect) {
   if (currentInstance)
     (currentInstance.effects || (currentInstance.effects = [])).push(effect)
-}
-
-export interface InternalInstanceState {
-  _id: number
-  props: any
-  data: Ref<any>
-  isUnmounted: boolean
-  effects?: ReactiveEffect[]
 }
