@@ -8,11 +8,16 @@
     "packages/**"
   ],
   "scripts": {
-    "setup": "pnpm install --shamefully-hoist",
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -C ./packages/reactivue run dev",
-    "dev:parcel": "pnpm -C ./packages/example-parcel run dev",
     "dev:vite": "pnpm -C ./packages/example-vite run dev",
     "build": "pnpm -C ./packages/reactivue run build"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.2.14",
+    "eslint": "^7.5.0"
+  },
+  "eslintConfig": {
+    "extends": "@antfu/eslint-config-ts"
   }
 }

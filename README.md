@@ -7,29 +7,27 @@
 
 <p align="center"><em>I love Vue Composition API and it's reactivity system, <br>but functional components in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
 
-
-## Install
-
-<pre>
-npm i <b>reactivue</b> @vue/runtime-core react react-dom
+<pre align="center">
+npm i <b>reactivue</b>
 </pre>
 
 ## Usage
 
 > It's currently expiremental and might have some breaking changes in the future. No production yet but feel free to try it out.
 
-### Factory
+`reactivue` ships with `@vue/reactivity` as a dependency, re-exporting all the APIs from it (`ref`, `computed`, `reactive`, etc.) Lifecycle APIs are provided by `reactivue` with slight different implementation to `@vue/runtime-dom` to make them specific for React lifecycles (`defineComponent`, `watch`, `onMounted`, etc.)
+
+### `defineComponent` Factory
 
 ```tsx
 import React from 'React'
-import { ref, computed } from '@vue/runtime-core'
-import { define } from 'reactivue'
+import { defineComponent, ref, computed } from 'reactivue'
 
 interface Props {
   value: number
 }
 
-const MyCounter = define(
+const MyCounter = defineComponent(
   // setup function in Vue
   (props: Props) => {
     const counter = ref(props.value)
@@ -58,20 +56,19 @@ render(<MyCounter value={10}>, el)
 
 You can use it as a hook as well.
 
-> The `define` factory is actually a sugar to make the following code simplier.
+> The `defineComponent` factory is actually a sugar to make the following code simplier.
 
 
 ```tsx
 import React from 'React'
-import { ref, computed } from '@vue/runtime-core'
-import { useVue } from 'reactivue'
+import { useSetup, ref, computed } from 'reactivue'
 
 interface Props {
   value: number
 }
 
 function MyCounter(Props: Props) {
-  const state = useVue(
+  const state = useSetup(
     (props: Props) => {
       const counter = ref(props.value)
       const doubled = computed(() => counter.value * 2)

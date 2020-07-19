@@ -2,3 +2,6 @@ node_modules
 dist
 .DS_Store
 .cache
+packages/reactivue/index.js
+packages/reactivue/index.d.js
+packages/reactivue/index.esm.js

@@ -1,10 +1,9 @@
 
 import React from 'react'
-import { ref, computed, watch } from '@vue/runtime-dom'
-import { useVue } from 'reactivue'
+import { useSetup, ref, computed, watch } from 'reactivue'
 
 export function Counter(Props: { value: number }) {
-  const state = useVue(
+  const state = useSetup(
     (props) => {
       const counter = ref(props.value)
 
@@ -13,12 +12,12 @@ export function Counter(Props: { value: number }) {
       const doubled = computed(() => counter.value * 2)
       const isFive = ref(false)
 
-      watch(() => props.value, (v) => (counter.value = v))
-      watch(counter, (v) => (isFive.value = v === 5), { immediate: true })
+      watch(() => props.value, v => (counter.value = v))
+      watch(counter, v => (isFive.value = v === 5), { immediate: true })
 
       return { counter, inc, dec, doubled, isFive }
     },
-    Props, 
+    Props,
   )
 
   const { counter, inc, doubled, dec, isFive } = state

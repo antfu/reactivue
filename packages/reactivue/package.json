@@ -6,6 +6,7 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "browser": "dist/index.esm.js",
   "typing": "dist/index.d.js",
   "files": [
     "dist"
@@ -32,16 +33,18 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@types/react": "^16.9.43",
-    "@vue/runtime-dom": "^3.0.0-rc.1",
     "cac": "^6.6.1",
     "react": "^16.13.1",
     "rollup": "^2.22.1",
     "rollup-plugin-dts": "^1.4.8",
     "rollup-plugin-typescript2": "^0.27.1",
+    "tslib": "^2.0.0",
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "@vue/runtime-dom": ">=3",
     "react": ">=16"
+  },
+  "dependencies": {
+    "@vue/reactivity": "^3.0.0-rc.1"
   }
 }
