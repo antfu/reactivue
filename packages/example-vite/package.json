@@ -1,0 +1,21 @@
+{
+  "name": "reactivue-example-vite",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@pika/react": "^16.13.1",
+    "@pika/react-dom": "^16.13.1",
+    "@vue/runtime-dom": "^3.0.0-rc.1",
+    "reactivue": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "typescript": "^3.9.3",
+    "vite": "^1.0.0-rc.1",
+    "vite-plugin-react": "^3.0.0"
+  }
+}

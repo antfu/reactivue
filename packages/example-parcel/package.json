@@ -9,7 +9,8 @@
   "dependencies": {
     "@vue/runtime-dom": "^3.0.0-rc.1",
     "react": "npm:@pika/react",
-    "react-dom": "npm:@pika/react-dom"
+    "react-dom": "npm:@pika/react-dom",
+    "reactivue": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^16.9.43",

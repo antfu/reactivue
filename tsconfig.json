@@ -3,11 +3,12 @@
     "module": "esnext",
     "lib": ["ESNext"],
     "strict": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
   },
   "exclude": ["node_modules", "dist"]
 }

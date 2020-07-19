@@ -12,6 +12,10 @@ export default [
         file: 'dist/index.js',
         format: 'cjs',
       },
+      {
+        file: 'dist/index.esm.js',
+        format: 'esm',
+      },
     ],
     plugins: [resolve(), typescript()],
     external,

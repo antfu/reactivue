@@ -1,8 +1,8 @@
 import React from 'react'
 import { ref, computed, watch } from '@vue/runtime-dom'
-import { define } from './reactivue'
+import { define } from 'reactivue'
 
-export const Counter2 = define(
+export const Counter = define(
   (props: { value: number }) => {
   const counter = ref(props.value)
 

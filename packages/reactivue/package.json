@@ -5,6 +5,7 @@
   "license": "MIT",
   "version": "0.0.0-alpha.1",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typing": "dist/index.d.js",
   "files": [
     "dist"

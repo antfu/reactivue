@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { ref, computed, watch } from '@vue/runtime-dom'
-import { useVue } from './reactivue'
+import { useVue } from 'reactivue'
 
 export function Counter(Props: { value: number }) {
   const state = useVue(

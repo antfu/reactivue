@@ -1,7 +1,7 @@
 <p align="center">
 <img src="./screenshots/logo.svg" height="180"/></p>
 
-<p align="center">Using Vue Composition API in React components</p>
+<p align="center">Use Vue Composition API in React components</p>
 
 <pre align="center">{WIP}</pre>
 
@@ -96,7 +96,7 @@ function MyCounter(Props: Props) {
 
 ### Example
 
-[packages/example](./packages/example)
+Check [packages/example](./packages)
 
 ### License
 
