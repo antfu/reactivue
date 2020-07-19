@@ -94,20 +94,63 @@ function MyCounter(Props: Props) {
 }
 ```
 
+
 ### APIs
 
-> TODO: add detailed docs
+Some tips and cavert compare to Vue's Composition API.
 
-- `ref`, `computed`, `reactive`, etc.
-  - `reactivue` shipped `@vue/reactivity` as its dependency, and re-exporting all the APIs from it 
+#### Reactivity
 
-- `defineComponent`, `watch`, `onMounted`, etc.
-  - Lifecycle APIs are provided by `reactivue` with slight different implementation to `@vue/runtime-dom` in order to make them specific for React lifecycles
+The reactivity system APIs are direct re-exported from `@vue/reactivity`, they should work the same as in Vue.
 
+````ts
+// the following two line are equivalent.
+import { ref, reactive, computed } from 'reactivue'
+import { ref, reactive, computed } from '@vue/reactivity'
+````
+
+#### Lifecycles
+
+`reactivue` implemented the basic lifecycles to bound with React's lifecycles. Some lifecycle doesn't have the React equivalent, they will be called somewhere near when it should be called. For most of the time, you can use them like you would in Vue.
+
+````ts
+import { onMounted, onUnmounted, defineComponent } from 'reactivue'
+
+export const HelloWorld = defineComponent(
+  (props: {}) => {
+    /* ... */
+    
+    onMounted(() => {
+      console.log('Hello World.')
+    })
+
+    onUnmounted(() => {
+      console.log('Goodbye World.')
+    })
+
+    return /* ... */
+  },
+  ({ /* ... */ }) => {
+    return (
+      <div>...</div>
+    )
+  })
+
+````
+
+#### Extra APIs
+
+- `defineComponent()` - not the one you expected to see in Vue. Instead, it accepts a setup function and a render function that will return a React Functional Component.
+- `useSetup()` - the hook for resolve Composition API's setup, refer to the section above.
+
+
+#### Limitations
+
+- No `getCurrentInstance()` - since we don't actually have a Vue instance here
 
 ### Example
 
-Check [packages/example](./packages)
+Check [example-vite](./packages/example-vite)
 
 ### License
 
