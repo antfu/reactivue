@@ -2,6 +2,7 @@ import { UnwrapRef, reactive, ref, readonly } from '@vue/reactivity'
 import { useState, useEffect } from 'react'
 import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountInstance } from './component'
 import { watch } from './watch'
+import { invokeLifeCycle, LifecycleHooks } from './lifecycle'
 
 export function useSetup<State, Props = {}>(
   setupFunction: (props: Props) => State,
@@ -17,6 +18,8 @@ export function useSetup<State, Props = {}>(
 
     useInstanceScope(id, () => {
       const data = ref(setupFunction(readonly(props)))
+
+      invokeLifeCycle(LifecycleHooks.BEFORE_MOUNT)
 
       instance.data = data
     })
@@ -42,19 +45,25 @@ export function useSetup<State, Props = {}>(
     useInstanceScope(id, (instance) => {
       if (!instance)
         return
+
+      invokeLifeCycle(LifecycleHooks.MOUNTED)
+
       const { data } = instance
       watch(
         data,
         () => {
-          // trigger React update
-          setTick(+new Date())
+          useInstanceScope(id, () => {
+            invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE)
+            // trigger React update
+            setTick(+new Date())
+            invokeLifeCycle(LifecycleHooks.UPDATED)
+          })
         },
         { deep: true, flush: 'post' },
       )
     })
 
     return () => {
-      console.log('unmounted', id)
       unmountInstance(id)
     }
   }, [])

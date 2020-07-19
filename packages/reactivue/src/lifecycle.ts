@@ -75,7 +75,6 @@ export const invokeLifeCycle = (
 ) => {
   if (target) {
     const hooks = target.hooks[type] || []
-
     useInstanceScope(target._id, () => {
       for (const hook of hooks)
         hook()

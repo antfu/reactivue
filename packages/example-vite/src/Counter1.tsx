@@ -1,5 +1,5 @@
 import React from 'react'
-import { defineComponent, ref, computed, watch } from 'reactivue'
+import { defineComponent, ref, computed, watch, onUnmounted, onMounted } from 'reactivue'
 
 export const Counter = defineComponent(
   (props: { value: number }) => {
@@ -15,6 +15,14 @@ export const Counter = defineComponent(
       v => (counter.value = v),
     )
     watch(counter, v => (isFive.value = v === 5), { immediate: true })
+
+    onMounted(() => {
+      console.log('Hello World.')
+    })
+
+    onUnmounted(() => {
+      console.log('Goodbye World.')
+    })
 
     return { counter, inc, dec, doubled, isFive }
   },

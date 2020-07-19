@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref } from '@vue/reactivity'
+import { invokeLifeCycle, LifecycleHooks } from './lifecycle'
 
 let _id = 0
 const _vueState: Record<number, InternalInstanceState> = {}
@@ -51,11 +52,13 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
 }
 
 export const unmountInstance = (id: number) => {
-  if (_vueState[id])
+  if (_vueState[id]) {
+    invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
+    invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
     _vueState[id].isUnmounted = true
+  }
 
   delete _vueState[id]
-  // TODO: call onMounted lifecycle
 }
 
 // record effects created during a component's setup() so that they can be

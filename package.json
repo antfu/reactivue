@@ -15,9 +15,16 @@
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.2.14",
-    "eslint": "^7.5.0"
+    "eslint": "^7.5.0",
+    "eslint-plugin-react": "^7.20.3"
   },
   "eslintConfig": {
-    "extends": "@antfu/eslint-config-ts"
+    "extends": [
+      "@antfu/eslint-config-ts",
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "react/prop-types": "off"
+    }
   }
 }

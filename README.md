@@ -7,13 +7,11 @@
 npm i <b>reactivue</b>
 </pre>
 
-<p align="center"><em>I love Vue Composition API and it's reactivity system, <br>but functional components in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
+<p align="center"><em>I love <a href="https://v3.vuejs.org/guide/composition-api-introduction.html" target="_blank">Vue Composition API</a> and it's <a href="https://v3.vuejs.org/guide/reactivity.html" target="_blank">reactivity system</a>, <br>but <a href="https://reactjs.org/docs/components-and-props.html" target="_blank">functional components</a> in React are also sweet with Typescript support. <br>So, why not to use them together?</em></p>
 
 ## Usage
 
 > It's currently expiremental and might have some breaking changes in the future. No production yet but feel free to try it out.
-
-`reactivue` ships with `@vue/reactivity` as a dependency, re-exporting all the APIs from it (`ref`, `computed`, `reactive`, etc.) Lifecycle APIs are provided by `reactivue` with slight different implementation to `@vue/runtime-dom` to make them specific for React lifecycles (`defineComponent`, `watch`, `onMounted`, etc.)
 
 ### Component Factory
 
@@ -88,6 +86,17 @@ function MyCounter(Props: Props) {
   )
 }
 ```
+
+### APIs
+
+> TODO: add detailed docs
+
+- `ref`, `computed`, `reactive`, etc.
+  - `reactivue` shipped `@vue/reactivity` as its dependency, and re-exporting all the APIs from it 
+
+- `defineComponent`, `watch`, `onMounted`, etc.
+  - Lifecycle APIs are provided by `reactivue` with slight different implementation to `@vue/runtime-dom` in order to make them specific for React lifecycles
+
 
 ### Example
 
