@@ -13,6 +13,7 @@ importers:
       '@pika/react': 16.13.1
       '@pika/react-dom': 16.13.1
       '@vue/runtime-dom': 3.0.0-rc.1
+      pinia: 0.1.0-alpha.1
       reactivue: 'link:../reactivue'
     devDependencies:
       '@types/react': 16.9.43
@@ -26,6 +27,7 @@ importers:
       '@types/react': ^16.9.35
       '@types/react-dom': ^16.9.8
       '@vue/runtime-dom': ^3.0.0-rc.1
+      pinia: ^0.1.0-alpha.1
       reactivue: 'workspace:*'
       typescript: ^3.9.3
       vite: ^1.0.0-rc.1
@@ -2862,6 +2864,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
+  /pinia/0.1.0-alpha.1:
+    dev: false
+    resolution:
+      integrity: sha512-m+puqj0qUpr9RtDFJ5Nf2iQj1DzJoqIS+HP3D83Ypuk2iaH3+ozDR9Dh9lYaDj0Vmm9mTf80xjpCVugGOkudhw==
   /pkg-dir/2.0.0:
     dependencies:
       find-up: 2.1.0

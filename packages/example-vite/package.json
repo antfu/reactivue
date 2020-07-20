@@ -9,6 +9,7 @@
     "@pika/react": "^16.13.1",
     "@pika/react-dom": "^16.13.1",
     "@vue/runtime-dom": "^3.0.0-rc.1",
+    "pinia": "^0.1.0-alpha.1",
     "reactivue": "workspace:*"
   },
   "devDependencies": {

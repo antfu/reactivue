@@ -29,7 +29,7 @@ export function Counter(Props: { value: number }) {
       <button onClick={dec}>Dec</button>
       <table>
         <tbody>
-          <tr><td>Counter</td><td>{counter}</td></tr>
+          <tr><td>Counter 2</td><td>{counter}</td></tr>
           <tr><td>isFive</td><td>{JSON.stringify(isFive)}</td></tr>
           <tr><td>Doubled</td><td>{doubled}</td></tr>
         </tbody>

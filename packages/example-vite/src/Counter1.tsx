@@ -36,7 +36,7 @@ export const Counter = defineComponent(
         <table>
           <tbody>
             <tr>
-              <td>Counter</td>
+              <td>Counter 1</td>
               <td>{counter}</td>
             </tr>
             <tr>
