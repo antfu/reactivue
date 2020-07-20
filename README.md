@@ -111,7 +111,7 @@ import { ref, reactive, computed } from '@vue/reactivity'
 
 #### Lifecycles
 
-This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when it should be called (for example `onCreated` are almost the same as `onMounted`).
+This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when it should be called (for example `onMounted` will be call right after `onCreated`).
 
 For most of the time, you can use them like you would in Vue.
 
@@ -149,6 +149,7 @@ export const HelloWorld = defineComponent(
 #### Limitations
 
 - No `getCurrentInstance()` - since we don't actually have a Vue instance here
+- `emit()` is not available yet
 
 ### Example
 
