@@ -1,18 +1,10 @@
+// ported from https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiLifecycle.ts
+
 import { pauseTracking, resetTracking } from '@vue/reactivity'
 import { __DEV__ } from './env'
-import { InternalInstanceState, currentInstance, setCurrentInstance, useInstanceScope } from './component'
+import { currentInstance, setCurrentInstance, useInstanceScope } from './component'
 import { warn, callWithAsyncErrorHandling } from './errorHandling'
-
-export const enum LifecycleHooks {
-  BEFORE_CREATE = 'BeforeMount',
-  CREATED = 'Created',
-  BEFORE_MOUNT = 'BeforeMount',
-  MOUNTED = 'Mounted',
-  BEFORE_UPDATE = 'BeforeUpdate',
-  UPDATED = 'Updated',
-  BEFORE_UNMOUNT = 'BeforeUnmount',
-  UNMOUNTED = 'Unmounted',
-}
+import { LifecycleHooks, InternalInstanceState } from './types'
 
 export function injectHook(
   type: LifecycleHooks,

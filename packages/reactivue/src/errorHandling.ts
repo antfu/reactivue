@@ -1,5 +1,5 @@
-import { InternalInstanceState } from './component'
 import { isFunction, isPromise } from './utils'
+import { InternalInstanceState } from './types'
 
 export function callWithErrorHandling(
   fn: Function,

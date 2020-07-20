@@ -1,3 +1,5 @@
+// ported from https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiWatch.ts
+
 /* eslint-disable array-callback-return */
 import { effect, Ref, ComputedRef, ReactiveEffectOptions, isRef, isReactive, stop } from '@vue/reactivity'
 import { currentInstance, recordInstanceBoundEffect } from './component'

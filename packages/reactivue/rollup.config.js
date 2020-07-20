@@ -2,7 +2,7 @@ import typescript from 'rollup-plugin-typescript2'
 import dts from 'rollup-plugin-dts'
 import resolve from '@rollup/plugin-node-resolve'
 
-const external = ['@vue/runtime-dom', 'react']
+const external = ['@vue/reactivity', 'react']
 
 export default [
   {
@@ -19,6 +19,10 @@ export default [
     ],
     plugins: [resolve(), typescript()],
     external,
+    onwarn(msg, warn) {
+      if (!/Circular/.test(msg))
+        warn(msg)
+    },
   },
   {
     input: 'src/index.ts',

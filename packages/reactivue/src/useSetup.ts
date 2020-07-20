@@ -2,7 +2,8 @@ import { UnwrapRef, reactive, ref, readonly } from '@vue/reactivity'
 import { useState, useEffect } from 'react'
 import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountInstance } from './component'
 import { watch } from './watch'
-import { invokeLifeCycle, LifecycleHooks } from './lifecycle'
+import { invokeLifeCycle } from './lifecycle'
+import { LifecycleHooks } from './types'
 
 export function useSetup<State, Props = {}>(
   setupFunction: (props: Props) => State,

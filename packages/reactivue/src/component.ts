@@ -1,26 +1,15 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref } from '@vue/reactivity'
-import { invokeLifeCycle, LifecycleHooks } from './lifecycle'
+import { invokeLifeCycle } from './lifecycle'
+import { InternalInstanceState, LifecycleHooks } from './types'
 
 let _id = 0
 const _vueState: Record<number, InternalInstanceState> = {}
 
-export interface InternalInstanceState {
-  _id: number
-  props: any
-  data: Ref<any>
-  isUnmounted: boolean
-  effects?: ReactiveEffect[]
-  hooks: Record<string, Function[]>
-}
-
-export function getNewInstanceId() {
-  return _id++
-}
-
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
+export const getNewInstanceId = () => _id++
 export const getCurrentInstance = () => currentInstance
 export const setCurrentInstance = (
   instance: InternalInstanceState | null,
