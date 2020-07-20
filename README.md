@@ -102,8 +102,111 @@ function MyCounter(Props: Props) {
 }
 ```
 
+## Using Vue's Libraries
 
-### APIs
+Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
+
+#### Aliasing
+
+<details>
+<summary>Vite</summary><br>
+
+Add following code to `vite.config.js` 
+
+```js
+{
+  /* ... */
+  alias: {
+    'vue': 'reactivue',
+    '@vue/runtime-dom': 'reactivue',
+  }
+}
+```
+
+</details>
+<details>
+<summary>Webpack</summary><br>
+
+Add following code to your webpack config
+
+```js
+const config = { 
+  /* ... */
+  resolve: { 
+    alias: { 
+      'vue': 'reactivue',
+      '@vue/runtime-dom': 'reactivue',
+    },
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>Parcel</summary><br>
+
+Parcel uses the standard `package.json` file to read configuration options under an `alias` key.
+
+```js
+{
+  "alias": {
+    "vue": "reactivue",
+    "@vue/runtime-dom": "reactivue",
+  },
+}
+```
+
+</details>
+
+
+<details>
+<summary>Rollup</summary><br>
+
+To alias within Rollup, you'll need to install [@rollup/plugin-alias](https://github.com/rollup/plugins/tree/master/packages/alias). The plugin will need to be placed before your `@rollup/plugin-node-resolve`.
+
+```js
+import alias from '@rollup/plugin-alias';
+
+module.exports = {
+  plugins: [
+    alias({
+      entries: [
+        { find: 'vue', replacement: 'reactivue' },
+        { find: '@vue/runtime-dom', replacement: 'reactivue' }
+      ]
+    })
+  ]
+};
+```
+
+</details>
+
+
+<details>
+<summary>Jest</summary><br>
+
+Jest allows the rewriting of module paths similar to bundlers. These rewrites are configured using regular expressions in your Jest configuration:
+
+```js
+{
+  "moduleNameMapper": {
+    "^vue$": "reactivue",
+    "^@vue/runtime-dom$": "reactivue",
+  }
+}
+```
+
+</details>
+
+#### Compatible Libraries
+
+> A list of libaries that have been tested to work with `reactivue`. Feel free to make PRs adding more.
+
+- [pinia](https://github.com/posva/pinia) - 🍍 Automatically Typed, Modular and lightweight Store for Vue
+- [VueUse](https://github.com/antfu/vueuse) - 🧰 Collection of Composition API utils for Vue 2 and 3
+
+## APIs
 
 Some tips and cavert compare to Vue's Composition API.
 
@@ -140,4 +243,4 @@ Check [example-vite](./packages/example-vite)
 
 ### License
 
-MIT - Anthony Fu 2020
+[MIT License](https://github.com/antfu/rectivue/blob/master/LICENSE) © 2020 [Anthony Fu](https://github.com/antfu)
