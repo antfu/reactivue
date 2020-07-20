@@ -3,7 +3,11 @@
 
 <p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
 
-<br/>
+<p align="center">
+<a href="https://www.npmjs.com/package/reactivue"><img src="https://badgen.net/npm/v/reactivue?color=53c2df&label"/></a>
+<a href="https://bundlephobia.com/result?p=reactivue@latest"><img src="https://badgen.net/bundlephobia/minzip/reactivue?color=40b983&label"/></a>
+</p>
+
 
 <pre align="center">
 npm i <b>reactivue</b>

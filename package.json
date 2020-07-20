@@ -11,7 +11,8 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -C ./packages/reactivue run dev",
     "dev:vite": "pnpm -C ./packages/example-vite run dev",
-    "build": "pnpm -C ./packages/reactivue run build"
+    "build": "pnpm -C ./packages/reactivue run build && cp README.md ./packages/reactivue",
+    "release:patch": "cd ./packages/reactivue && pnpm version patch -m \"chore: release %s\" && pnpm publish"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.2.14",
