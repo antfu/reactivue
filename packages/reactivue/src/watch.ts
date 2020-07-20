@@ -2,8 +2,8 @@
 
 /* eslint-disable array-callback-return */
 import { effect, Ref, ComputedRef, ReactiveEffectOptions, isRef, isReactive, stop } from '@vue/reactivity'
+import { isFunction, isArray, NOOP, isObject, remove, hasChanged } from '@vue/shared'
 import { currentInstance, recordInstanceBoundEffect } from './component'
-import { isFunction, isArray, NOOP, isObject, remove, hasChanged } from './utils'
 import { warn, callWithErrorHandling, callWithAsyncErrorHandling } from './errorHandling'
 import { __DEV__ } from './env'
 

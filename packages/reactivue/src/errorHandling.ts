@@ -1,4 +1,4 @@
-import { isFunction, isPromise } from './utils'
+import { isFunction, isPromise } from '@vue/shared'
 import { InternalInstanceState } from './types'
 
 export function callWithErrorHandling(
