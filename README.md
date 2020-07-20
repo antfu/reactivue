@@ -1,7 +1,7 @@
 <p align="center">
 <img src="./screenshots/logo.svg" height="180"/></p>
 
-<p align="center"><b>{WIP}</b> React components with Vue Composition API</p>
+<p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
 
 <br/>
 
@@ -111,7 +111,9 @@ import { ref, reactive, computed } from '@vue/reactivity'
 
 #### Lifecycles
 
-`reactivue` implemented the basic lifecycles to bound with React's lifecycles. Some lifecycle doesn't have the React equivalent, they will be called somewhere near when it should be called. For most of the time, you can use them like you would in Vue.
+This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when it should be called (for example `onCreated` are almost the same as `onMounted`).
+
+For most of the time, you can use them like you would in Vue.
 
 ````ts
 import { onMounted, onUnmounted, defineComponent } from 'reactivue'
