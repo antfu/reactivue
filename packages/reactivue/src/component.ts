@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import { Ref, ReactiveEffect, ref } from '@vue/reactivity'
+import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
@@ -45,7 +45,7 @@ export const unmountInstance = (id: number) => {
     invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
     // unregister all the computed/watch effects
     for (const effect of _vueState[id].effects || [])
-      effect()
+      stop(effect)
     invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
     _vueState[id].isUnmounted = true
   }

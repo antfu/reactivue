@@ -28,7 +28,7 @@ npm i <b>reactivue</b>
 
 ```tsx
 import React from 'React'
-import { defineComponent, ref, computed } from 'reactivue'
+import { defineComponent, ref, computed, onUnmounted } from 'reactivue'
 
 interface Props {
   value: number
@@ -40,6 +40,8 @@ const MyCounter = defineComponent(
     const counter = ref(props.value)
     const doubled = computed(() => counter.value * 2)
     const inc = () => counter.value += 1
+
+    onUnmounted(() => console.log('Goodbye World'))
 
     return { counter, doubled, inc }
   },
@@ -68,7 +70,7 @@ You can use it as a hook as well.
 
 ```tsx
 import React from 'React'
-import { useSetup, ref, computed } from 'reactivue'
+import { useSetup, ref, computed, onUnmounted } from 'reactivue'
 
 interface Props {
   value: number
@@ -76,10 +78,12 @@ interface Props {
 
 function MyCounter(Props: Props) {
   const state = useSetup(
-    (props: Props) => {
+    (props: Props) => { // props is a reactive object in Vue
       const counter = ref(props.value)
       const doubled = computed(() => counter.value * 2)
       const inc = () => counter.value += 1
+
+      onUnmounted(() => console.log('Goodbye World'))
 
       return { counter, doubled, inc }
     },
@@ -115,34 +119,9 @@ import { ref, reactive, computed } from '@vue/reactivity'
 
 #### Lifecycles
 
-This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when it should be called (for example `onMounted` will be call right after `onCreated`).
+This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when they should be called (for example `onMounted` will be call right after `onCreated`).
 
 For most of the time, you can use them like you would in Vue.
-
-````ts
-import { onMounted, onUnmounted, defineComponent } from 'reactivue'
-
-export const HelloWorld = defineComponent(
-  (props: {}) => {
-    /* ... */
-    
-    onMounted(() => {
-      console.log('Hello World.')
-    })
-
-    onUnmounted(() => {
-      console.log('Goodbye World.')
-    })
-
-    return /* ... */
-  },
-  ({ /* ... */ }) => {
-    return (
-      <div>...</div>
-    )
-  })
-
-````
 
 #### Extra APIs
 
@@ -153,7 +132,7 @@ export const HelloWorld = defineComponent(
 #### Limitations
 
 - No `getCurrentInstance()` - since we don't actually have a Vue instance here
-- `emit()` is not available yet
+- `emit()` is not available
 
 ### Example
 
