@@ -51,7 +51,7 @@ const MyCounter = defineComponent(
     return (
       <div>
         <div>{counter} x 2 = {doubled}</div>
-        <button>Increase</button>
+        <button onClick={inc}>Increase</button>
       </div>
     )
   }
@@ -96,7 +96,7 @@ function MyCounter(Props: Props) {
   return (
     <div>
       <div>{counter} x 2 = {doubled}</div>
-      <button>Increase</button>
+      <button onClick={inc}>Increase</button>
     </div>
   )
 }
