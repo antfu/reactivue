@@ -102,6 +102,46 @@ function MyCounter(Props: Props) {
 }
 ```
 
+> The `createSetup`, a convenient function to create reusable custom logic hooks and can be used in multiple react functional component.
+
+```tsx
+import React from 'react'
+import { createSetup, ref, computed, onUnmounted } from 'reactivue'
+
+interface Props {
+  value: number
+}
+
+// 'useSetup' can use any functional components and create multiple times
+const useSetup = createSetup(
+  (props: Props) => {
+    const counter = ref(props.value)
+    const doubled = computed(() => counter.value * 2)
+    const inc = () => counter.value += 1
+
+    onUnmounted(() => console.log('Goodbye World'))
+
+    return { counter, doubled, inc }
+  },
+)
+
+export const MyCounter = (props: Props) => {
+  const { counter, doubled, inc } = useSetup(props)
+  const { counter: counter2, doubled: doubled2, inc: inc2 } = useSetup(props)
+
+  return (
+    <div>
+      <div>{counter} x 2 = {doubled}</div>
+      <button onClick={inc}>Increase</button>
+      <br/>
+
+      <div>{counter2} x 2 = {doubled2}</div>
+      <button onClick={inc2}>Increase</button>
+    </div>
+  )
+}
+```tsx
+
 ## Using Vue's Libraries
 
 Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
@@ -230,6 +270,7 @@ For most of the time, you can use them like you would in Vue.
 
 - `defineComponent()` - not the one you expected to see in Vue. Instead, it accepts a setup function and a render function that will return a React Functional Component.
 - `useSetup()` - the hook for resolve Composition API's setup, refer to the section above.
+- `createSetup()` - the convenient function help to create reusable custom logic hooks and can be used in multiple react functional component
 
 
 #### Limitations
