@@ -4,6 +4,7 @@ import { Counter as Counter1 } from './Counter1'
 import { Counter as Counter2 } from './Counter2'
 import { Pinia as Pinia1 } from './Pinia1'
 import { Pinia as Pinia2 } from './Pinia2'
+import { MyCounter } from './createSetup'
 
 function App(Props: { name: string }) {
   const [c, s] = useState(0)
@@ -18,8 +19,17 @@ function App(Props: { name: string }) {
       { show ? <Counter1 value={c}/> : null}
       <Counter2 value={c}/>
 
+      <h2>
+        use with pinia
+      </h2>
       <Pinia1/>
+
       <Pinia2/>
+
+      <h2>
+          use createSetup
+      </h2>
+      <MyCounter value={2} />
     </div>
   )
 }
