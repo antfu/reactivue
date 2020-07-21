@@ -102,7 +102,9 @@ function MyCounter(Props: Props) {
 }
 ```
 
-> The `createSetup`, a convenient function to create reusable custom logic hooks and can be used in multiple react functional component.
+### Hook Factory
+
+To reuse the composition logics, `createSetup` is provided as a factory to create your own hooks.
 
 ```tsx
 import React from 'react'
