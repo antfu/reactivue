@@ -106,18 +106,15 @@ function MyCounter(Props: Props) {
 
 To reuse the composition logics, `createSetup` is provided as a factory to create your own hooks.
 
-you can create useMySetup in a store file, and use in other components
-
 ```ts
-// ./store/useMySetup.ts
-import React from 'react'
+// mySetup.ts
 import { createSetup, ref, computed, onUnmounted } from 'reactivue'
 
-interface Props {
+export interface Props {
   value: number
 }
 
-// 'useMySetup' can use any functional components and create multiple times
+// create a custom hook that can be reused
 export const useMySetup = createSetup(
   (props: Props) => {
     const counter = ref(props.value)
@@ -132,12 +129,13 @@ export const useMySetup = createSetup(
 ```
 
 ```tsx
-// ./component/MyCounter.tsx
-import { useMySetup } from '../store/useMySetup'
+// Counter.tsx
+import React from 'react'
+import { useMySetup, Props } from './mySetup'
 
-export const MyCounter = (props: Props) => {
+export const Counter = (props: Props) => {
   const { counter, doubled, inc } = useMySetup(props)
-  const { counter: counter2, doubled: doubled2, inc: inc2 } = useMySetup(props)
+  const { counter: counter2, doubled: doubled2, inc: inc2 } = useMySetup({ value: 10 })
 
   return (
     <div>
@@ -150,11 +148,11 @@ export const MyCounter = (props: Props) => {
     </div>
   )
 }
-```tsx
+```
 
 ## Using Vue's Libraries
 
-Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
+*Yes, you can!* Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
 
 #### Aliasing
 
@@ -285,8 +283,9 @@ For most of the time, you can use them like you would in Vue.
 
 #### Limitations
 
-- No `getCurrentInstance()` - since we don't actually have a Vue instance here
+- `getCurrentInstance()` - returns the meta info for the internal states, NOT a Vue instance. It's exposed to allow you check if it's inside a instance scope.
 - `emit()` is not available
+
 
 ### Example
 
