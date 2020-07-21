@@ -272,7 +272,7 @@ For most of the time, you can use them like you would in Vue.
 
 - `defineComponent()` - not the one you expected to see in Vue. Instead, it accepts a setup function and a render function that will return a React Functional Component.
 - `useSetup()` - the hook for resolve Composition API's setup, refer to the section above.
-- `createSetup()` - the convenient function help to create reusable custom logic hooks and can be used in multiple react functional component
+- `createSetup()` - a factory to wrapper your logics into reusable custom hooks. 
 
 
 #### Limitations
