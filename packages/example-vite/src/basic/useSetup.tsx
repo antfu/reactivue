@@ -22,14 +22,13 @@ export function Counter(Props: { value: number }) {
 
   const { counter, inc, doubled, dec, isFive } = state
   return (
-    <div>
-      <p></p>
-      <button onClick={inc}>Inc</button>
-      <code> </code>
-      <button onClick={dec}>Dec</button>
+    <div className="card">
+      <p>useSetup()</p>
+      <button onClick={dec}>dec -</button>
+      <button onClick={inc}>inc +</button>
       <table>
         <tbody>
-          <tr><td>Counter 2</td><td>{counter}</td></tr>
+          <tr><td>Counter</td><td>{counter}</td></tr>
           <tr><td>isFive</td><td>{JSON.stringify(isFive)}</td></tr>
           <tr><td>Doubled</td><td>{doubled}</td></tr>
         </tbody>

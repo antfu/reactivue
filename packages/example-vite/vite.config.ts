@@ -6,6 +6,8 @@ const config: UserConfig = {
   plugins: [reactPlugin],
   alias: {
     vue: 'reactivue',
+    'vue-demi': 'reactivue',
+    '@vue/runtime-dom': 'reactivue',
   },
 }
 
