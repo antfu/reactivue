@@ -106,7 +106,10 @@ function MyCounter(Props: Props) {
 
 To reuse the composition logics, `createSetup` is provided as a factory to create your own hooks.
 
-```tsx
+you can create useMySetup in a store file, and use in other components
+
+```ts
+// ./store/useMySetup.ts
 import React from 'react'
 import { createSetup, ref, computed, onUnmounted } from 'reactivue'
 
@@ -114,8 +117,8 @@ interface Props {
   value: number
 }
 
-// 'useSetup' can use any functional components and create multiple times
-const useSetup = createSetup(
+// 'useMySetup' can use any functional components and create multiple times
+export const useMySetup = createSetup(
   (props: Props) => {
     const counter = ref(props.value)
     const doubled = computed(() => counter.value * 2)
@@ -126,10 +129,15 @@ const useSetup = createSetup(
     return { counter, doubled, inc }
   },
 )
+```
+
+```tsx
+// ./component/MyCounter.tsx
+import { useMySetup } from '../store/useMySetup'
 
 export const MyCounter = (props: Props) => {
-  const { counter, doubled, inc } = useSetup(props)
-  const { counter: counter2, doubled: doubled2, inc: inc2 } = useSetup(props)
+  const { counter, doubled, inc } = useMySetup(props)
+  const { counter: counter2, doubled: doubled2, inc: inc2 } = useMySetup(props)
 
   return (
     <div>
