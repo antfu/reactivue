@@ -4,8 +4,8 @@
 <p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
 
 <p align="center">
-<a href="https://www.npmjs.com/package/reactivue"><img src="https://badgen.net/npm/v/reactivue?color=53c2df&label"/></a>
-<a href="https://bundlephobia.com/result?p=reactivue@latest"><img src="https://badgen.net/bundlephobia/minzip/reactivue?color=40b983&label"/></a>
+<a href="https://www.npmjs.com/package/reactivue"><img src="https://img.shields.io/npm/v/reactivue?color=53c2df&label"/></a>
+<a href="https://bundlephobia.com/result?p=reactivue@latest"><img src="https://img.shields.io/bundlephobia/minzip/reactivue?color=40b983&label"/></a>
 </p>
 
 
@@ -290,6 +290,8 @@ For most of the time, you can use them like you would in Vue.
 ### Example
 
 Check [example-vite](./packages/example-vite)
+
+![image](https://user-images.githubusercontent.com/11247099/88056258-dd7f6980-cb92-11ea-9e89-e090e73b7235.png)
 
 ### License
 
