@@ -1,7 +1,7 @@
 <p align="center">
 <img src="./screenshots/logo.svg" height="180"/></p>
 
-<p align="center"><b>{WIP}</b> Use Vue Composition API in React components</p>
+<p align="center">Use Vue Composition API in React components</p>
 
 <p align="center">
 <a href="https://www.npmjs.com/package/reactivue"><img src="https://img.shields.io/npm/v/reactivue?color=53c2df&label"/></a>
