@@ -289,6 +289,12 @@ For most of the time, you can use them like you would in Vue.
 
 ### Example
 
+#### Real-world Examples/Showcases
+
+- [Café CN](https://github.com/antfu/awesome-cn-cafe-web) - Web App for Awesome CN Café
+
+#### Demo
+
 Check [example-vite](./packages/example-vite)
 
 ![image](https://user-images.githubusercontent.com/11247099/88056258-dd7f6980-cb92-11ea-9e89-e090e73b7235.png)
