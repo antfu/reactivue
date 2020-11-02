@@ -1,50 +1,50 @@
 {
-	"name": "reactivue",
-	"description": "Using Vue Composition API in React components.",
-	"author": "Anthony Fu<https://github.com/antfu>",
-	"license": "MIT",
-	"version": "0.2.1",
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"browser": "dist/index.esm.js",
-	"typing": "dist/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"sideEffects": false,
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/antfu/reactivue.git"
-	},
-	"keywords": [
-		"vue",
-		"react",
-		"vue-composition-api",
-		"vue-in-react",
-		"reactivity"
-	],
-	"bugs": {
-		"url": "https://github.com/antfu/reactivue/issues"
-	},
-	"homepage": "https://github.com/antfu/reactivue#readme",
-	"scripts": {
-		"dev": "rollup -c -w",
-		"build": "rollup -c"
-	},
-	"devDependencies": {
-		"@rollup/plugin-node-resolve": "^8.4.0",
-		"cac": "^6.6.1",
-		"react": "^16.13.1",
-		"rollup": "^2.22.1",
-		"rollup-plugin-dts": "^1.4.8",
-		"rollup-plugin-typescript2": "^0.27.1",
-		"tslib": "^2.0.0",
-		"typescript": "^3.9.7"
-	},
-	"peerDependencies": {
-		"react": ">=16"
-	},
-	"dependencies": {
-		"@vue/reactivity": "^3.0.0-rc.1"
-	}
+  "name": "reactivue",
+  "description": "Using Vue Composition API in React components.",
+  "author": "Anthony Fu<https://github.com/antfu>",
+  "license": "MIT",
+  "version": "0.2.1",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.esm.js",
+  "typing": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/reactivue.git"
+  },
+  "keywords": [
+    "vue",
+    "react",
+    "vue-composition-api",
+    "vue-in-react",
+    "reactivity"
+  ],
+  "bugs": {
+    "url": "https://github.com/antfu/reactivue/issues"
+  },
+  "homepage": "https://github.com/antfu/reactivue#readme",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "cac": "^6.6.1",
+    "react": "^17.0.1",
+    "rollup": "^2.33.0",
+    "rollup-plugin-dts": "^1.4.13",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "dependencies": {
+    "@vue/reactivity": "^3.0.2"
+  }
 }

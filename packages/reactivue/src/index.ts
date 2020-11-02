@@ -4,6 +4,8 @@ export { watch, watchEffect } from './watch'
 export { computed } from './computed'
 export { createSetup } from './createSetup'
 export { getCurrentInstance } from './component'
+export { nextTick } from './nextTick'
+export * from './mock'
 export {
   onMounted,
   onBeforeMount,

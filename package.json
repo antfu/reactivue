@@ -5,19 +5,18 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/*"
   ],
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -C ./packages/reactivue run dev",
     "dev:vite": "pnpm -C ./packages/example-vite run dev",
     "build": "pnpm -C ./packages/reactivue run build && cp README.md ./packages/reactivue",
     "release": "cd ./packages/reactivue && pnpm run build && pnpx bumpp --commit --tag --push && pnpm publish"
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.2.14",
-    "eslint": "^7.5.0",
-    "eslint-plugin-react": "^7.20.3"
+    "@antfu/eslint-config-ts": "^0.4.3",
+    "eslint": "^7.12.1",
+    "eslint-plugin-react": "^7.21.5"
   },
   "eslintConfig": {
     "extends": [

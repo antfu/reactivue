@@ -7,6 +7,7 @@ const config: UserConfig = {
   alias: {
     vue: 'reactivue',
     'vue-demi': 'reactivue',
+    '@vue/composition-api': 'reactivue',
     '@vue/runtime-dom': 'reactivue',
   },
 }
