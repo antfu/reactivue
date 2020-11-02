@@ -22,8 +22,6 @@ npm i <b>reactivue</b>
 
 ## Usage
 
-> It's currently expiremental and might have some breaking changes in the future. No production yet but feel free to try it out.
-
 ### Component Factory
 
 ```tsx
