@@ -8,10 +8,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "pnpm -C ./packages/reactivue run dev",
-    "dev:vite": "pnpm -C ./packages/example-vite run dev",
-    "build": "pnpm -C ./packages/reactivue run build && cp README.md ./packages/reactivue",
-    "release": "cd ./packages/reactivue && pnpm run build && pnpx bumpp --commit --tag --push && pnpm publish"
+    "dev": "npm -C ./packages/reactivue run dev",
+    "dev:vite": "npm -C ./packages/example-vite run dev",
+    "build": "npm -C ./packages/reactivue run build && cp README.md ./packages/reactivue",
+    "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && npm publish"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.4.3",
