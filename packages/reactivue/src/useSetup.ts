@@ -7,14 +7,14 @@ import { LifecycleHooks } from './types'
 
 export function useSetup<State, Props = {}>(
   setupFunction: (props: Props) => State,
-  Props: Props,
+  ReactProps?: Props,
 ): UnwrapRef<State> {
   const [id] = useState(getNewInstanceId)
   const setTick = useState(0)[1]
 
   // run setup function
   const [state] = useState(() => {
-    const props = reactive({ ...(Props || {}) }) as any
+    const props = reactive({ ...(ReactProps || {}) }) as any
     const instance = createNewInstanceWithId(id, props)
 
     useInstanceScope(id, () => {
@@ -30,16 +30,16 @@ export function useSetup<State, Props = {}>(
 
   // sync props changes
   useEffect(() => {
-    if (!Props) return
+    if (!ReactProps) return
 
     useInstanceScope(id, (instance) => {
       if (!instance)
         return
       const { props } = instance
-      for (const key of Object.keys(Props))
-        props[key] = (Props as any)[key]
+      for (const key of Object.keys(ReactProps))
+        props[key] = (ReactProps as any)[key]
     })
-  }, [Props])
+  }, [ReactProps])
 
   // trigger React re-render on data changes
   useEffect(() => {
