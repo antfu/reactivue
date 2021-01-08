@@ -148,6 +148,16 @@ export const Counter = (props: Props) => {
 }
 ```
 
+## Usage with Preact
+
+To use reactivue in Preact apps, just replace `reactivue` import with `reactivue/preact`
+
+```diff
+import { h } from 'preact'
+-import { defineComponent, ref, computed, onUnmounted } from 'reactivue'
++import { defineComponent, ref, computed, onUnmounted } from 'reactivue/preact'
+```
+
 ## Using Vue's Libraries
 
 *Yes, you can!* Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
@@ -165,6 +175,18 @@ Add following code to `vite.config.js`
   alias: {
     'vue': 'reactivue',
     '@vue/runtime-dom': 'reactivue',
+  }
+}
+```
+
+If you are using it with Preact you have to add following code to `vite.config.js`
+
+```ts
+{
+  /* ... */
+  optimizeDeps: {
+    include: ['reactivue/preact'],
+    exclude: ['@vue/reactivity']
   }
 }
 ```
