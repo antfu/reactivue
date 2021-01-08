@@ -4,3 +4,4 @@ dist
 .cache
 packages/reactivue/README.md
 .idea/
+preact
