@@ -15,7 +15,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "preact"
   ],
   "sideEffects": false,
   "repository": {
