@@ -3,13 +3,15 @@
     "module": "esnext",
     "target": "es2017",
     "lib": ["ESNext"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "jsx": "react"
   },
   "exclude": ["node_modules", "dist"]
 }

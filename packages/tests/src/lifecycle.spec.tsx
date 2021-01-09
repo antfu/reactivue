@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
@@ -10,7 +11,7 @@ import {
   onUpdated,
   onBeforeUnmount,
   onUnmounted,
-} from '../src'
+} from 'reactivue'
 
 const onMountedJestFn = jest.fn()
 const onBeforeMountJestFn = jest.fn()
@@ -45,7 +46,7 @@ const LifecycleTest = () => {
       num: val,
       addOne: addToVal,
     }
-  })
+  }, {})
 
   return <div>
     <p>{num}</p>
