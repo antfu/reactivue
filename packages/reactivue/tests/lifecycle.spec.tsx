@@ -12,8 +12,6 @@ import {
   onUnmounted,
 } from '../src'
 
-const watchJestFn = jest.fn()
-const watchEffectJestFn = jest.fn()
 const onMountedJestFn = jest.fn()
 const onBeforeMountJestFn = jest.fn()
 const onUnmountedJestFn = jest.fn()
@@ -22,8 +20,6 @@ const onBeforeUnmountJestFn = jest.fn()
 const onBeforeUpdateJestFn = jest.fn()
 
 beforeEach(() => {
-  watchJestFn.mockClear()
-  watchEffectJestFn.mockClear()
   onMountedJestFn.mockClear()
   onBeforeMountJestFn.mockClear()
   onUnmountedJestFn.mockClear()
