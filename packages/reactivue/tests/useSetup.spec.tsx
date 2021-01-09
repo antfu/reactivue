@@ -15,7 +15,7 @@ const SetupTest = () => {
   return <p>{msg}</p>
 }
 
-it('should render absolute basic setup function return', async() => {
+it('should render basic useSetup function return', async() => {
   render(<SetupTest/>)
 
   await waitFor(() => {

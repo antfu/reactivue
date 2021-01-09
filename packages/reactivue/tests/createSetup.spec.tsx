@@ -1,20 +1,23 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { defineComponent, ref } from '../src'
+import { createSetup, ref } from '../src'
 
-const DefineTest = defineComponent(() => {
+const useMsg = createSetup(() => {
   const msg = ref('Hello, world!')
 
   return {
     msg,
   }
-}, ({ msg }) => {
-  return <p>{msg}</p>
 })
 
-it('should render basic defineComponent component', async() => {
-  render(<DefineTest/>)
+const CreateSetupTest = () => {
+  const { msg } = useMsg()
+  return <p>{msg}</p>
+}
+
+it('should render basic createSetup return', async() => {
+  render(<CreateSetupTest/>)
 
   await waitFor(() => {
     const el = screen.getByText('Hello, world!')
