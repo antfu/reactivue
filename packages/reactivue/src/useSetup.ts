@@ -12,8 +12,7 @@ export function useSetup<State, Props = {}>(
   const [id] = useState(getNewInstanceId)
   const setTick = useState(0)[1]
 
-  // run setup function
-  const [state] = useState(() => {
+  const createState = () => {
     const props = reactive({ ...(ReactProps || {}) }) as any
     const instance = createNewInstanceWithId(id, props)
 
@@ -26,7 +25,10 @@ export function useSetup<State, Props = {}>(
     })
 
     return instance.data.value
-  })
+  }
+
+  // run setup function
+  const [state, setState] = useState(createState)
 
   // sync props changes
   useEffect(() => {
@@ -43,6 +45,8 @@ export function useSetup<State, Props = {}>(
 
   // trigger React re-render on data changes
   useEffect(() => {
+    setState(createState())
+
     useInstanceScope(id, (instance) => {
       if (!instance)
         return
