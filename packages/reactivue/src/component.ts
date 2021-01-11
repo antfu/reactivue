@@ -9,6 +9,7 @@ const _vueState: Record<number, InternalInstanceState> = {}
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
+export const isInstanceExist = (id: number) => !!_vueState[id]
 export const getNewInstanceId = () => _id++
 export const getCurrentInstance = () => currentInstance
 export const setCurrentInstance = (
