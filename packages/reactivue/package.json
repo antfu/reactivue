@@ -9,6 +9,11 @@
   "browser": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
+    ".": {
+      "import": "./dist/index.esm.mjs",
+      "require": "./dist/index.js",
+    },
+    "./": "./",
     "./preact": {
       "import": "./preact/index.esm.js",
       "require": "./preact/index.js"
