@@ -16,6 +16,8 @@ export interface InternalInstanceState {
   props: any
   data: Ref<any>
   isUnmounted: boolean
+  willUnmount: boolean
   effects?: ReactiveEffect[]
   hooks: Record<string, Function[]>
+  initialState: Record<any, any>
 }
