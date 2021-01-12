@@ -98,7 +98,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
            * Prevent triggering rerender when component
            * is about to unmount or really unmounted
            */
-          if (instance.isUnmounting)
+          if (!instance || instance.isUnmounting)
             return
 
           useInstanceScope(id, () => {
