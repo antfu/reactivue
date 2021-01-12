@@ -47,10 +47,10 @@ export const unmountInstance = (id: number) => {
   _vueState[id].isUnmounting = true
 
   const unmount = async() => {
-    if (!_vueState[id].isUnmounting)
-      return
-
     if (_vueState[id]) {
+      if (!_vueState[id].isUnmounting)
+        return
+
       invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
       // unregister all the computed/watch effects
       for (const effect of _vueState[id].effects || [])
