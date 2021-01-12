@@ -10,7 +10,7 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.esm.mjs",
+      "import": "./dist/index.esm.js",
       "require": "./dist/index.js",
     },
     "./": "./",
