@@ -25,8 +25,10 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
 
       instance.data = data
 
-      for (const key of Object.keys(setupState))
-        instance.initialState[key] = unref(setupState[key])
+      if (isDev) {
+        for (const key of Object.keys(setupState))
+          instance.initialState[key] = unref(setupState[key])
+      }
     })
 
     return instance.data.value
