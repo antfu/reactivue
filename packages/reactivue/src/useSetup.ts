@@ -4,6 +4,7 @@ import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountIns
 import { watch } from './watch'
 import { invokeLifeCycle } from './lifecycle'
 import { LifecycleHooks } from './types'
+import { isDev } from './env'
 
 export function useSetup<State extends Record<any, any>, Props = {}>(
   setupFunction: (props: Props) => State,
@@ -52,32 +53,32 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     /**
      * Invalidate setup after hmr updates
      */
-    if (process.env.NODE_ENV === 'development') {
-      let willCreateNewState = false
+    if (isDev) {
+      let isChanged = false
 
       useInstanceScope(id, (instance) => {
         if (!instance)
           return
 
-        if (instance.willUnmount) {
+        if (instance.isUnmounting) {
           const props = Object.assign({}, (ReactProps || {})) as any
           const setup = setupFunction(readonly(props))
 
           for (const key of Object.keys(setup)) {
-            if (willCreateNewState)
+            if (isChanged)
               break
 
             if (typeof instance.initialState[key] === 'function')
-              willCreateNewState = instance.initialState[key].toString() !== setup[key].toString()
+              isChanged = instance.initialState[key].toString() !== setup[key].toString()
             else
-              willCreateNewState = instance.initialState[key] !== unref(setup[key])
+              isChanged = instance.initialState[key] !== unref(setup[key])
           }
 
-          instance.willUnmount = false
+          instance.isUnmounting = false
         }
       })
 
-      if (willCreateNewState)
+      if (isChanged)
         setState(createState())
     }
 
@@ -95,14 +96,15 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
            * Prevent triggering rerender when component
            * is about to unmount or really unmounted
            */
-          if (!instance.willUnmount) {
-            useInstanceScope(id, () => {
-              invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE)
-              // trigger React update
-              setTick(+new Date())
-              invokeLifeCycle(LifecycleHooks.UPDATED)
-            })
-          }
+          if (instance.isUnmounting)
+            return
+
+          useInstanceScope(id, () => {
+            invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE)
+            // trigger React update
+            setTick(+new Date())
+            invokeLifeCycle(LifecycleHooks.UPDATED)
+          })
         },
         { deep: true, flush: 'post' },
       )

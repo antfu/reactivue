@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
+import { isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
@@ -27,7 +28,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     props,
     data,
     isUnmounted: false,
-    willUnmount: false,
+    isUnmounting: false,
     hooks: {},
     initialState: {},
   }
@@ -43,10 +44,10 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
 }
 
 export const unmountInstance = (id: number) => {
-  _vueState[id].willUnmount = true
+  _vueState[id].isUnmounting = true
 
   const unmount = async() => {
-    if (!_vueState[id].willUnmount)
+    if (!_vueState[id].isUnmounting)
       return
 
     if (_vueState[id]) {
@@ -68,7 +69,7 @@ export const unmountInstance = (id: number) => {
    * for really unmounting components. Because they are increasing
    * instance id unlike the hmr updated components.
    */
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     setTimeout(unmount, 1000)
     return
   }
