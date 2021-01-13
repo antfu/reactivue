@@ -39,9 +39,7 @@ it('should handle watch ref', async() => {
   })
 })
 
-// TODO: This test does not pass due to a bug in the library
-// @see https://github.com/antfu/reactivue/issues/10
-it.skip('should handle watchEffect ref', async() => {
+it('should handle watchEffect ref', async() => {
   const comp = render(<WatchTest hello={'Hello, world'}/>)
 
   comp.rerender(<WatchTest hello={'Adios, world'}/>)
