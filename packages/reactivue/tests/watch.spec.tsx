@@ -31,9 +31,9 @@ const WatchTest = (Props: { hello: string }) => {
 }
 
 it('should handle watch ref', async() => {
-  const comp = render(<WatchTest hello={'Hello, world'}/>)
+  const { rerender } = render(<WatchTest hello={'Hello, world'}/>)
 
-  comp.rerender(<WatchTest hello={'Adios, world'}/>)
+  rerender(<WatchTest hello={'Adios, world'}/>)
 
   await waitFor(() => {
     expect(watchJestFn).toBeCalled()

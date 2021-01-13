@@ -7,4 +7,9 @@ export default {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   setupFilesAfterEnv: ['./setupTests.ts'],
+  globals: {
+    'ts-jest': {
+      tsconfig: 'tsconfig.spec.json',
+    },
+  },
 }
