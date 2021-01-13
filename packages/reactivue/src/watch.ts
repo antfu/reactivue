@@ -199,7 +199,7 @@ function doWatch(
     scheduler = job
   }
   else if (flush === 'post') {
-    scheduler = job => job()
+    scheduler = () => job()
     // TODO: scheduler = () => queuePostRenderEffect(job, instance && instance.suspense)
   }
   else {
