@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
+import { isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
@@ -27,7 +28,9 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     props,
     data,
     isUnmounted: false,
+    isUnmounting: false,
     hooks: {},
+    initialState: {},
   }
   _vueState[id] = instance
   return instance
@@ -41,17 +44,36 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
 }
 
 export const unmountInstance = (id: number) => {
-  if (_vueState[id]) {
-    invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
-    // unregister all the computed/watch effects
-    for (const effect of _vueState[id].effects || [])
-      stop(effect)
-    invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
-    _vueState[id].isUnmounted = true
+  _vueState[id].isUnmounting = true
+
+  const unmount = async() => {
+    if (_vueState[id]) {
+      if (!_vueState[id].isUnmounting)
+        return
+
+      invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
+      // unregister all the computed/watch effects
+      for (const effect of _vueState[id].effects || [])
+        stop(effect)
+      invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
+      _vueState[id].isUnmounted = true
+    }
+
+    // release the ref
+    delete _vueState[id]
   }
 
-  // release the ref
-  delete _vueState[id]
+  /**
+   * Postpone unmounting on dev. So we can check setup values
+   * in useSetup.ts after hmr updates. That will not be an issue
+   * for really unmounting components. Because they are increasing
+   * instance id unlike the hmr updated components.
+   */
+  if (isDev) {
+    setTimeout(unmount, 1000)
+    return
+  }
+  unmount()
 }
 
 // record effects created during a component's setup() so that they can be
