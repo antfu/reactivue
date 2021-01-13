@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { useSetup, toRef, computed } from 'reactivue'
+import { useSetup, toRef, computed } from '../src'
 
 const ComputedTest = (Props: { hello: string }) => {
   const { comp } = useSetup((props) => {

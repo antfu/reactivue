@@ -2,8 +2,10 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2017",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "strict": true,
+    "jsx": "react",
+    "rootDir": ".",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,

@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { createSetup, ref } from 'reactivue'
+import { createSetup, ref } from '../src'
 
 const useMsg = createSetup(() => {
   const msg = ref('Hello, world!')

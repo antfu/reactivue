@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { defineComponent, ref } from 'reactivue'
+import { defineComponent, ref } from '../src'
 
 const DefineTest = defineComponent(() => {
   const msg = ref('Hello, world!')

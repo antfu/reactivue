@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
@@ -11,7 +10,7 @@ import {
   onUpdated,
   onBeforeUnmount,
   onUnmounted,
-} from 'reactivue'
+} from '../src'
 
 const onMountedJestFn = jest.fn()
 const onBeforeMountJestFn = jest.fn()

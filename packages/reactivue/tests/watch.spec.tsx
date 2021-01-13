@@ -1,8 +1,7 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { render } from '@testing-library/react'
 import { waitFor } from '@testing-library/dom'
-import { useSetup, toRef, watch, watchEffect } from 'reactivue'
+import { useSetup, toRef, watch, watchEffect } from '../src'
 
 const watchJestFn = jest.fn()
 const watchEffectJestFn = jest.fn()
