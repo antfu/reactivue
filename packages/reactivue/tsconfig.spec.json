@@ -2,14 +2,21 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2017",
-    "lib": ["ESNext"],
+    "lib": ["dom", "ESNext"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "reactivue": ["./src"]
+    }
   },
+  "include": ["src", "tests"],
   "exclude": ["node_modules", "dist"]
 }

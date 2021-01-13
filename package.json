@@ -11,7 +11,8 @@
     "dev": "npm -C ./packages/reactivue run dev",
     "dev:vite": "npm -C ./packages/example-vite run dev",
     "build": "npm -C ./packages/reactivue run build && cp README.md ./packages/reactivue",
-    "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && npm publish"
+    "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && npm publish",
+    "test": "npm -C ./packages/reactivue run test"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.4.3",
