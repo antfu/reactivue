@@ -98,14 +98,14 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
            * Prevent triggering rerender when component
            * is about to unmount or really unmounted
            */
-          if (!instance || instance.isUnmounting)
+          if (instance.isUnmounting)
             return
 
           useInstanceScope(id, () => {
-            invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE)
+            invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE, instance)
             // trigger React update
             setTick(+new Date())
-            invokeLifeCycle(LifecycleHooks.UPDATED)
+            invokeLifeCycle(LifecycleHooks.UPDATED, instance)
           })
         },
         { deep: true, flush: 'post' },
