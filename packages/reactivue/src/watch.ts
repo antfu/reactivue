@@ -34,7 +34,6 @@ type MapOldSources<T, Immediate> = {
 }
 
 type InvalidateCbRegistrator = (cb: () => void) => void
-const invoke = (fn: Function) => fn()
 const INITIAL_WATCHER_VALUE = {}
 
 export interface WatchOptionsBase {
@@ -103,7 +102,14 @@ function doWatch(
   const instance = currentInstance
 
   let getter: () => any
-  if (isArray(source)) {
+  if (isRef(source)) {
+    getter = () => (source as Ref).value
+  }
+  else if (isReactive(source)) {
+    getter = () => source
+    deep = true
+  }
+  else if (isArray(source)) {
     getter = () =>
       source.map((s) => {
         if (isRef(s))
@@ -116,13 +122,6 @@ function doWatch(
           __DEV__ && warn('invalid source')
       })
   }
-  else if (isRef(source)) {
-    getter = () => source.value
-  }
-  else if (isReactive(source)) {
-    getter = () => source
-    deep = true
-  }
   else if (isFunction(source)) {
     if (cb) {
       // getter with cb
@@ -132,7 +131,7 @@ function doWatch(
     else {
       // no cb -> simple effect
       getter = () => {
-        if (instance)
+        if (instance && instance.isUnmounted)
           return
 
         if (cleanup)
@@ -164,11 +163,12 @@ function doWatch(
   }
 
   let oldValue = isArray(source) ? [] : INITIAL_WATCHER_VALUE
-  const applyCb = cb
-    ? () => {
-      if (instance && instance.isUnmounted)
-        return
+  const job = () => {
+    if (!runner.active)
+      return
 
+    if (cb) {
+      // watch(source, cb)
       const newValue = runner()
       if (deep || hasChanged(newValue, oldValue)) {
         // cleanup before running cb again
@@ -184,16 +184,29 @@ function doWatch(
         oldValue = newValue
       }
     }
-    : undefined
-
-  let scheduler: (job: () => any) => void
-  if (flush === 'sync') {
-    scheduler = invoke
+    else {
+      // watchEffect
+      runner()
+    }
   }
-  else if (flush === 'pre') {
-    scheduler = (job) => {
+
+  // important: mark the job as a watcher callback so that scheduler knows
+  // it is allowed to self-trigger (#1727)
+  job.allowRecurse = !!cb
+
+  let scheduler: ReactiveEffectOptions['scheduler']
+  if (flush === 'sync') {
+    scheduler = job
+  }
+  else if (flush === 'post') {
+    scheduler = job => job()
+    // TODO: scheduler = () => queuePostRenderEffect(job, instance && instance.suspense)
+  }
+  else {
+    // default: 'pre'
+    scheduler = () => {
       if (!instance) {
-        // TODO: queueJob(job)
+        // TODO: queuePreFlushCb(job)
         job()
       }
       else {
@@ -203,25 +216,20 @@ function doWatch(
       }
     }
   }
-  else {
-    scheduler = job => job()
-    // TODO: scheduler = job => queuePostRenderEffect(job, instance)
-  }
 
   const runner = effect(getter, {
     lazy: true,
     onTrack,
     onTrigger,
-    scheduler: applyCb ? () => scheduler(applyCb) : scheduler,
+    scheduler,
   })
 
   recordInstanceBoundEffect(runner)
 
   // initial run
-  if (applyCb) {
+  if (cb) {
     if (immediate)
-      applyCb()
-
+      job()
     else
       oldValue = runner()
   }
