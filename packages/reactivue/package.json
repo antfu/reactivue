@@ -3,7 +3,7 @@
   "description": "Using Vue Composition API in React components.",
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "browser": "dist/index.esm.js",
