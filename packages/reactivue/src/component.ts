@@ -27,7 +27,10 @@ export const getNewInstanceId = () => {
   // When React is in Strict mode, it runs state functions twice
   // Remove unmounted instances before creating new one
   if (isDev)
-    Object.keys(_vueState).forEach(id => !_vueState[+id].isActive && unmount(+id))
+    Object.keys(_vueState).forEach(id => {
+      if (!_vueState[id].isActive)
+        unmount(id)
+    })
 
   return Object.keys(_vueState).length
 }
