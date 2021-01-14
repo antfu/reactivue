@@ -4,7 +4,11 @@ import { isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
-const _vueState: Record<number, InternalInstanceState> = {}
+declare global {
+  interface Window { _reactivueState: Record<number, InternalInstanceState> }
+}
+
+const _vueState: Record<number, InternalInstanceState> = window._reactivueState || {}
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
@@ -41,6 +45,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     initialState: {},
   }
   _vueState[id] = instance
+  window._reactivueState = _vueState
 
   return instance
 }
@@ -65,6 +70,7 @@ const unmount = (id: number) => {
 
   // release the ref
   delete _vueState[id]
+  window._reactivueState = _vueState
 }
 
 export const unmountInstance = (id: number) => {
