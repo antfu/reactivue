@@ -71,6 +71,9 @@ const unmount = (id: number, active = true) => {
 }
 
 export const unmountInstance = (id: number) => {
+  if (!_vueState[id])
+    return
+
   _vueState[id].isUnmounting = true
 
   /**
