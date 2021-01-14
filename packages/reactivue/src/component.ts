@@ -4,13 +4,20 @@ import { isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
-let _id = 0
 const _vueState: Record<number, InternalInstanceState> = {}
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
-export const getNewInstanceId = () => _id++
+export const getNewInstanceId = () => {
+  // When React is in Strict mode, it runs state functions twice
+  // Remove unmounted instances before creating new one
+  if (isDev)
+    Object.keys(_vueState).forEach(id => !_vueState[+id].isActive && unmount(+id, false))
+
+  return Object.keys(_vueState).length
+}
+
 export const getCurrentInstance = () => currentInstance
 export const setCurrentInstance = (
   instance: InternalInstanceState | null,
@@ -27,12 +34,14 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     _id: id,
     props,
     data,
+    isActive: false,
     isUnmounted: false,
     isUnmounting: false,
     hooks: {},
     initialState: {},
   }
   _vueState[id] = instance
+
   return instance
 }
 
@@ -43,25 +52,26 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
   setCurrentInstanceId(prev)
 }
 
+const unmount = (id: number, active = true) => {
+  if (!_vueState[id]?.isUnmounting && active)
+    return
+
+  invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
+
+  // unregister all the computed/watch effects
+  for (const effect of _vueState[id].effects || [])
+    stop(effect)
+
+  invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
+
+  _vueState[id].isUnmounted = true
+
+  // release the ref
+  delete _vueState[id]
+}
+
 export const unmountInstance = (id: number) => {
   _vueState[id].isUnmounting = true
-
-  const unmount = async() => {
-    if (_vueState[id]) {
-      if (!_vueState[id].isUnmounting)
-        return
-
-      invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
-      // unregister all the computed/watch effects
-      for (const effect of _vueState[id].effects || [])
-        stop(effect)
-      invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
-      _vueState[id].isUnmounted = true
-    }
-
-    // release the ref
-    delete _vueState[id]
-  }
 
   /**
    * Postpone unmounting on dev. So we can check setup values
@@ -70,10 +80,10 @@ export const unmountInstance = (id: number) => {
    * instance id unlike the hmr updated components.
    */
   if (isDev) {
-    setTimeout(unmount, 1000)
+    setTimeout(async() => unmount(id))
     return
   }
-  unmount()
+  unmount(id)
 }
 
 // record effects created during a component's setup() so that they can be

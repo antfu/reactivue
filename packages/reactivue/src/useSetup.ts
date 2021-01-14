@@ -10,7 +10,8 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
   setupFunction: (props: Props) => State,
   ReactProps?: Props,
 ): UnwrapRef<State> {
-  const [id] = useState(getNewInstanceId)
+  const id = useState(getNewInstanceId)[0]
+
   const setTick = useState(0)[1]
 
   const createState = () => {
@@ -59,25 +60,25 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
       let isChanged = false
 
       useInstanceScope(id, (instance) => {
-        if (!instance)
+        if (!instance || !instance.isUnmounting)
           return
 
-        if (instance.isUnmounting) {
-          const props = Object.assign({}, (ReactProps || {})) as any
-          const setup = setupFunction(readonly(props))
+        instance.isActive = true
 
-          for (const key of Object.keys(setup)) {
-            if (isChanged)
-              break
+        const props = Object.assign({}, (ReactProps || {})) as any
+        const setup = setupFunction(readonly(props))
 
-            if (typeof instance.initialState[key] === 'function')
-              isChanged = instance.initialState[key].toString() !== setup[key].toString()
-            else
-              isChanged = instance.initialState[key] !== unref(setup[key])
-          }
+        for (const key of Object.keys(setup)) {
+          if (isChanged)
+            break
 
-          instance.isUnmounting = false
+          if (typeof instance.initialState[key] === 'function')
+            isChanged = instance.initialState[key].toString() !== setup[key].toString()
+          else
+            isChanged = instance.initialState[key] !== unref(setup[key])
         }
+
+        instance.isUnmounting = false
       })
 
       if (isChanged)
