@@ -4,11 +4,13 @@ import { isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InternalInstanceState, LifecycleHooks } from './types'
 
+type ReactiveEffects = Record<number, InternalInstanceState>
+
 declare global {
-  interface Window { _reactivueState: Record<number, InternalInstanceState> }
+  interface Window { _reactivueState: ReactiveEffects }
 }
 
-const _vueState: Record<number, InternalInstanceState> = window._reactivueState || {}
+const _vueState: ReactiveEffects = window._reactivueState || {}
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
