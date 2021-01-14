@@ -10,7 +10,7 @@ declare global {
   interface Window { _reactivueState: ReactiveEffects }
 }
 
-const _vueState: ReactiveEffects = window?._reactivueState || {}
+const _vueState: ReactiveEffects = window && isDev ? window._reactivueState : {}
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
@@ -48,7 +48,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
   }
   _vueState[id] = instance
 
-  if (window)
+  if (window && isDev)
     window._reactivueState = _vueState
 
   return instance
@@ -74,7 +74,7 @@ const unmount = (id: number) => {
 
   // release the ref
   delete _vueState[id]
-  if (window)
+  if (window && isDev)
     window._reactivueState = _vueState
 }
 
