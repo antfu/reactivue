@@ -13,7 +13,7 @@ export const getNewInstanceId = () => {
   // When React is in Strict mode, it runs state functions twice
   // Remove unmounted instances before creating new one
   if (isDev)
-    Object.keys(_vueState).forEach(id => !_vueState[+id].isActive && unmount(+id, false))
+    Object.keys(_vueState).forEach(id => !_vueState[+id].isActive && unmount(+id))
 
   return Object.keys(_vueState).length
 }
@@ -52,10 +52,7 @@ export const useInstanceScope = (id: number, cb: (instance: InternalInstanceStat
   setCurrentInstanceId(prev)
 }
 
-const unmount = (id: number, active = true) => {
-  if (!_vueState[id]?.isUnmounting && active)
-    return
-
+const unmount = (id: number) => {
   invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
 
   // unregister all the computed/watch effects
@@ -83,7 +80,7 @@ export const unmountInstance = (id: number) => {
    * instance id unlike the hmr updated components.
    */
   if (isDev) {
-    setTimeout(async() => unmount(id))
+    setTimeout(async() => _vueState[id]?.isUnmounting && unmount(id), 1)
     return
   }
   unmount(id)
