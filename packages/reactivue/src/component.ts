@@ -80,7 +80,7 @@ export const unmountInstance = (id: number) => {
    * instance id unlike the hmr updated components.
    */
   if (isDev) {
-    setTimeout(async() => _vueState[id]?.isUnmounting && unmount(id), 1)
+    setTimeout(async() => _vueState[id]?.isUnmounting && unmount(id))
     return
   }
   unmount(id)
