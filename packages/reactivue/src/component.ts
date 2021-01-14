@@ -1,36 +1,35 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
-import { isDev } from './env'
+import { isClient, isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
-import { InternalInstanceState, LifecycleHooks } from './types'
-
-const isClient = typeof window !== 'undefined'
-
-type ReactiveEffects = Record<number, InternalInstanceState>
+import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types'
 
 /**
- * When `reactivue` dependency gets updated during developmment
+ * When `reactivue` dependency gets updated during development
  * your build tool re-executes it and `_vueState` becomes its
- * initial state. Storing our reactive efects in `window.__reactivue_state`
+ * initial state. Storing our reactive effects in `window.__reactivue_state`
  * and filling our `_vueState` with it.
  */
 declare global {
-  interface Window { __reactivue_state: ReactiveEffects }
+  interface Window { __reactivue_state: InstanceStateMap }
 }
 
-const _vueState: ReactiveEffects = (isDev && isClient && window.__reactivue_state) || {}
+const _vueState: InstanceStateMap = (isDev && isClient && window.__reactivue_state) || {}
+if (isDev && isClient)
+  window.__reactivue_state = _vueState
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
 export const getNewInstanceId = () => {
-  // When React is in Strict mode, it runs state functions twice
-  // Remove unmounted instances before creating new one
-  if (isDev)
-    Object.keys(_vueState).forEach(id => {
-      if (!_vueState[id].isActive)
-        unmount(id)
+  if (isDev) {
+    // When React is in Strict mode, it runs state functions twice
+    // Remove unmounted instances before creating new one
+    Object.keys(_vueState).forEach((id) => {
+      if (!_vueState[+id].isActive)
+        unmount(+id)
     })
+  }
 
   return Object.keys(_vueState).length
 }
@@ -41,11 +40,13 @@ export const setCurrentInstance = (
 ) => {
   currentInstance = instance
 }
+
 export const setCurrentInstanceId = (id: number | null) => {
   currentInstanceId = id
   currentInstance = id != null ? (_vueState[id] || null) : null
   return currentInstance
 }
+
 export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> = ref(null)) => {
   const instance: InternalInstanceState = {
     _id: id,
@@ -58,9 +59,6 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     initialState: {},
   }
   _vueState[id] = instance
-
-  if (isDev && isClient)
-    window.__reactivue_state = _vueState
 
   return instance
 }
@@ -85,8 +83,6 @@ const unmount = (id: number) => {
 
   // release the ref
   delete _vueState[id]
-  if (isDev && isClient)
-    window.__reactivue_state = _vueState
 }
 
 export const unmountInstance = (id: number) => {
@@ -110,6 +106,9 @@ export const unmountInstance = (id: number) => {
 // record effects created during a component's setup() so that they can be
 // stopped when the component unmounts
 export function recordInstanceBoundEffect(effect: ReactiveEffect) {
-  if (currentInstance)
-    (currentInstance.effects || (currentInstance.effects = [])).push(effect)
+  if (currentInstance) {
+    if (!currentInstance.effects)
+      currentInstance.effects = []
+    currentInstance.effects.push(effect)
+  }
 }

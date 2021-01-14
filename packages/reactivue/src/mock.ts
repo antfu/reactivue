@@ -1,3 +1,3 @@
-export function createApp() { 
+export function createApp() {
   // do nothing
 }

@@ -22,3 +22,5 @@ export interface InternalInstanceState {
   hooks: Record<string, Function[]>
   initialState: Record<any, any>
 }
+
+export type InstanceStateMap = Record<number, InternalInstanceState>
