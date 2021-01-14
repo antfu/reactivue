@@ -10,7 +10,7 @@ declare global {
   interface Window { _reactivueState: ReactiveEffects }
 }
 
-const _vueState: ReactiveEffects = window && isDev ? window._reactivueState : {}
+const _vueState: ReactiveEffects = (isDev && window && window._reactivueState) || {}
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
