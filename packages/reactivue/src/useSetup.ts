@@ -60,10 +60,13 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
       let isChanged = false
 
       useInstanceScope(id, (instance) => {
-        if (!instance || !instance.isUnmounting)
+        if (!instance)
           return
 
         instance.isActive = true
+
+        if (!instance.isUnmounting)
+          return
 
         const props = Object.assign({}, (ReactProps || {})) as any
         const setup = setupFunction(readonly(props))
