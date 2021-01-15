@@ -1,11 +1,12 @@
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import ReactRefresh from '@vitejs/plugin-react-refresh'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [reactRefresh()],
+  plugins: [
+    ReactRefresh(),
+  ],
   alias: {
     vue: 'reactivue',
-    'vue-demi': 'reactivue',
     '@vue/composition-api': 'reactivue',
     '@vue/runtime-dom': 'reactivue',
   },
