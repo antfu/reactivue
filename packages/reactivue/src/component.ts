@@ -11,10 +11,13 @@ import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types
  * and filling our `_vueState` with it.
  */
 declare global {
-  interface Window { __reactivue_state: InstanceStateMap }
+  interface Window {
+    __reactivue_state: InstanceStateMap
+    __reactivue_id: number
+  }
 }
 
-let _id = 0
+let _id = (isDev && isClient && window.__reactivue_id) || 0
 const _vueState: InstanceStateMap = (isDev && isClient && window.__reactivue_state) || {}
 if (isDev && isClient)
   window.__reactivue_state = _vueState
@@ -34,7 +37,12 @@ export const getNewInstanceId = () => {
     })
   }
 
-  return _id++
+  _id++
+
+  if (isDev && isClient)
+    window.__reactivue_id = _id
+
+  return _id
 }
 
 export const getCurrentInstance = () => currentInstance
