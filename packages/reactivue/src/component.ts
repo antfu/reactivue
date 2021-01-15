@@ -14,6 +14,7 @@ declare global {
   interface Window { __reactivue_state: InstanceStateMap }
 }
 
+let _id = 0
 const _vueState: InstanceStateMap = (isDev && isClient && window.__reactivue_state) || {}
 if (isDev && isClient)
   window.__reactivue_state = _vueState
@@ -33,7 +34,7 @@ export const getNewInstanceId = () => {
     })
   }
 
-  return Object.keys(_vueState).length
+  return _id++
 }
 
 export const getCurrentInstance = () => currentInstance
