@@ -1,15 +1,12 @@
-import * as reactPlugin from 'vite-plugin-react'
-import type { UserConfig } from 'vite'
+import reactRefresh from '@vitejs/plugin-react-refresh'
+import { defineConfig } from 'vite'
 
-const config: UserConfig = {
-  jsx: 'react',
-  plugins: [reactPlugin],
+export default defineConfig({
+  plugins: [reactRefresh()],
   alias: {
     vue: 'reactivue',
     'vue-demi': 'reactivue',
     '@vue/composition-api': 'reactivue',
     '@vue/runtime-dom': 'reactivue',
   },
-}
-
-export default config
+})
