@@ -6,18 +6,19 @@
     "dev": "vite"
   },
   "dependencies": {
-    "@pika/react": "^16.13.1",
-    "@pika/react-dom": "^16.13.1",
-    "@vueuse/core": "^4.0.0-beta.30",
+    "@vueuse/core": "^4.0.6",
     "pinia": "0.1.0-alpha.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "reactivue": "workspace:*",
     "tailwindcss": "^1.9.6"
   },
   "devDependencies": {
-    "@types/react": "^16.9.55",
-    "@types/react-dom": "^16.9.9",
-    "typescript": "^4.0.5",
-    "vite": "^1.0.0-rc.8",
-    "vite-plugin-react": "^3.0.2"
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "^16.0.0",
+    "@vitejs/plugin-react-refresh": "1.1.1",
+    "@vue/composition-api": "^1.0.0-beta.26",
+    "typescript": "^4.1.3",
+    "vite": "2.0.0-beta.23"
   }
 }

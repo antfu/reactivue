@@ -4,9 +4,10 @@
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": ["**/react", "**/react/**"]
+  },
   "scripts": {
     "dev": "npm -C ./packages/reactivue run dev",
     "dev:vite": "npm -C ./packages/example-vite run dev",
@@ -16,7 +17,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.4.3",
-    "eslint": "^7.12.1",
+    "eslint": "^7.17.0",
     "eslint-plugin-react": "^7.21.5"
   },
   "eslintConfig": {
