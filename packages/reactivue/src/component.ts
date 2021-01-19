@@ -1,6 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
-import { isClient, isDev } from './env'
 import { invokeLifeCycle } from './lifecycle'
 import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types'
 
@@ -17,16 +16,16 @@ declare global {
   }
 }
 
-let _id = (isDev && isClient && window.__reactivue_id) || 0
-const _vueState: InstanceStateMap = (isDev && isClient && window.__reactivue_state) || {}
-if (isDev && isClient)
+let _id = (__DEV__ && __BROWSER__ && window.__reactivue_id) || 0
+const _vueState: InstanceStateMap = (__DEV__ && __BROWSER__ && window.__reactivue_state) || {}
+if (__DEV__ && __BROWSER__)
   window.__reactivue_state = _vueState
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
 export const getNewInstanceId = () => {
-  if (isDev) {
+  if (__DEV__) {
     // When React is in Strict mode, it runs state functions twice
     // Remove unmounted instances before creating new one
     Object.keys(_vueState).forEach((id) => {
@@ -39,7 +38,7 @@ export const getNewInstanceId = () => {
 
   _id++
 
-  if (isDev && isClient)
+  if (__DEV__ && __BROWSER__)
     window.__reactivue_id = _id
 
   return _id
@@ -108,7 +107,7 @@ export const unmountInstance = (id: number) => {
    * for really unmounting components. Because they are increasing
    * instance id unlike the hmr updated components.
    */
-  if (isDev)
+  if (__DEV__)
     setTimeout(() => _vueState[id]?.isUnmounting && unmount(id), 0)
   else
     unmount(id)

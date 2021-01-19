@@ -4,6 +4,10 @@ import resolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 
 const external = ['@vue/reactivity', 'react', 'preact/hooks']
+const replacements = {
+  __DEV__: '(typeof process !== \'undefined\' && process.env.NODE_ENV === \'development\')',
+  __BROWSER__: '(typeof window !== \'undefined\')',
+}
 
 export default [
   {
@@ -18,7 +22,7 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [resolve(), typescript()],
+    plugins: [replace({ ...replacements }), resolve(), typescript()],
     external,
     onwarn(msg, warn) {
       if (!/Circular/.test(msg))
@@ -37,7 +41,7 @@ export default [
         format: 'es',
       },
     ],
-    plugins: [replace({ react: 'preact/hooks' }), resolve(), typescript()],
+    plugins: [replace({ react: 'preact/hooks', ...replacements }), resolve(), typescript()],
     external,
     onwarn(msg, warn) {
       if (!/Circular/.test(msg))

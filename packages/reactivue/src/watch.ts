@@ -5,7 +5,6 @@ import { effect, Ref, ComputedRef, ReactiveEffectOptions, isRef, isReactive, sto
 import { isFunction, isArray, NOOP, isObject, remove, hasChanged } from '@vue/shared'
 import { currentInstance, recordInstanceBoundEffect } from './component'
 import { warn, callWithErrorHandling, callWithAsyncErrorHandling } from './errorHandling'
-import { __DEV__ } from './env'
 
 export type WatchEffect = (onInvalidate: InvalidateCbRegistrator) => void
 

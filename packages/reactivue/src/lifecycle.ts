@@ -1,7 +1,6 @@
 // ported from https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiLifecycle.ts
 
 import { pauseTracking, resetTracking } from '@vue/reactivity'
-import { __DEV__ } from './env'
 import { currentInstance, setCurrentInstance, useInstanceScope } from './component'
 import { warn, callWithAsyncErrorHandling } from './errorHandling'
 import { LifecycleHooks, InternalInstanceState } from './types'

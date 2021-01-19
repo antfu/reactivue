@@ -4,7 +4,6 @@ import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountIns
 import { watch } from './watch'
 import { invokeLifeCycle } from './lifecycle'
 import { LifecycleHooks } from './types'
-import { isDev } from './env'
 
 export function useSetup<State extends Record<any, any>, Props = {}>(
   setupFunction: (props: Props) => State,
@@ -26,7 +25,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
 
       instance.data = data
 
-      if (isDev) {
+      if (__DEV__) {
         for (const key of Object.keys(setupState))
           instance.initialState[key] = unref(setupState[key])
       }
@@ -56,7 +55,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     /**
      * Invalidate setup after hmr updates
      */
-    if (isDev) {
+    if (__DEV__) {
       let isChanged = false
 
       useInstanceScope(id, (instance) => {
