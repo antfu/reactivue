@@ -10,5 +10,7 @@ export default {
     'ts-jest': {
       tsconfig: 'tsconfig.json',
     },
+    __DEV__: true,
+    __BROWSER__: true,
   },
 }
