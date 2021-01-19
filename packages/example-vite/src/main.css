@@ -40,5 +40,5 @@ h2 {
 }
 
 input {
-  @apply mt-1 bg-white bg-opacity-10 border px-3 py-2 w-64 border-black border-opacity-25 block shadow-sm rounded
+  @apply px-3 py-2 w-64 bg-white bg-opacity-10 border border-black border-opacity-25 rounded
 }

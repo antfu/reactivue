@@ -18,7 +18,7 @@ import { Head } from './vueuse-head/head'
 const app = createApp()
 
 app.use(createClient({
-  url: 'https://api.spacex.land/graphql/', // your endpoint.
+  url: 'https://api.spacex.land/graphql/',
 }))
 
 app.use(createPinia())
