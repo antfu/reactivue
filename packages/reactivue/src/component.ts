@@ -66,7 +66,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     isUnmounting: false,
     hooks: {},
     initialState: {},
-    provides: __BROWSER__ ? { ...window.__reactivue_context.provides } : {},
+    provides: __BROWSER__ ? { ...window.__reactivue_context?.provides } : {},
   }
   _vueState[id] = instance
 
