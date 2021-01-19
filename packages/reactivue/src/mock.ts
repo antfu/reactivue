@@ -71,7 +71,6 @@ export function createApp() {
             + 'function.',
         )
       }
-      console.log(app)
 
       return app
     },
@@ -118,7 +117,6 @@ export function inject(
   treatDefaultAsFactory = false,
 ) {
   const instance = getCurrentInstance()
-  console.log(instance)
 
   if (instance) {
     if (instance.provides && (key as string | symbol) in instance.provides) {
