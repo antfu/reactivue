@@ -56,7 +56,6 @@ export const setCurrentInstanceId = (id: number | null) => {
   currentInstance = id != null ? (_vueState[id] || null) : null
   return currentInstance
 }
-
 export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> = ref(null)) => {
   const instance: InternalInstanceState = {
     _id: id,
@@ -67,6 +66,7 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     isUnmounting: false,
     hooks: {},
     initialState: {},
+    provides: __BROWSER__ ? { ...window.__reactivue_context.provides } : {},
   }
   _vueState[id] = instance
 

@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import './main.css'
 import { render } from 'react-dom'
+import { createApp } from 'reactivue'
+import { createClient } from 'villus'
+import { createPinia } from 'pinia'
+import { createHead } from '@vueuse/head'
 import { Counter as Counter1 } from './basic/defineComponent'
 import { Counter as Counter2 } from './basic/useSetup'
 import { Counter as Counter3 } from './basic/createSetup'
@@ -8,6 +12,17 @@ import { Pinia as Pinia1 } from './pinia/PiniaA'
 import { Pinia as Pinia2 } from './pinia/PiniaB'
 import { Mouse } from './vueuse/useMouse'
 import { Battery } from './vueuse/useBattery'
+import { Query } from './villus/useQuery'
+import { Head } from './vueuse-head/head'
+
+const app = createApp()
+
+app.use(createClient({
+  url: 'https://api.spacex.land/graphql/', // your endpoint.
+}))
+
+app.use(createPinia())
+app.use(createHead())
 
 function App(Props: { name: string }) {
   const [c, s] = useState(0)
@@ -37,6 +52,16 @@ function App(Props: { name: string }) {
       <div className="flex">
         <Mouse/>
         <Battery/>
+      </div>
+
+      <h2>@vueuse/head <a href="https://github.com/vueuse/head/" rel="noreferrer" target="_blank">📎</a></h2>
+      <div className="flex">
+        <Head/>
+      </div>
+
+      <h2>Villus <a href="https://github.com/logaretm/villus" rel="noreferrer" target="_blank">📎</a></h2>
+      <div className="flex">
+        <Query/>
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ export { computed } from './computed'
 export { createSetup } from './createSetup'
 export { getCurrentInstance } from './component'
 export { nextTick } from './nextTick'
+export { warn } from './errorHandling'
 export * from './mock'
 export {
   onMounted,

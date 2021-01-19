@@ -21,6 +21,7 @@ export interface InternalInstanceState {
   effects?: ReactiveEffect[]
   hooks: Record<string, Function[]>
   initialState: Record<any, any>
+  provides: Record<string, unknown>
 }
 
 export type InstanceStateMap = Record<number, InternalInstanceState>
