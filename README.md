@@ -160,7 +160,7 @@ import { h } from 'preact'
 
 ## Using Vue's Libraries
 
-*Yes, you can!* Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue`.
+*Yes, you can!* Before you start, you need set alias in your build tool in order to redirect some apis from `vue` to `reactivue` or `reactivue/preact` if you are using it with Preact.
 
 #### Aliasing
 
@@ -267,12 +267,28 @@ Jest allows the rewriting of module paths similar to bundlers. These rewrites ar
 
 </details>
 
+#### Installing Vue Plugins
+
+Installing Vue plugins are almost identical to Vue. Just simply create your root instance with `createApp` function and register your plugins as you do in Vue apps. **You don't need to call `app.mount`**. Your Vue plugins will be available in all your setup functions.
+
+```ts
+import { createApp } from 'reactivue'
+import { createPinia } from 'pinia'
+
+const app = createApp()
+
+app.use(createPinia())
+```
+
+> Note: If you are trying to use a library that calls app.component, app.directive or app.mixin in its install function, reactivue will skip these calls without any action and warn you about it.
+
 #### Compatible Libraries
 
 > A list of libaries that have been tested to work with `reactivue`. Feel free to make PRs adding more.
 
 - [pinia](https://github.com/posva/pinia) - 🍍 Automatically Typed, Modular and lightweight Store for Vue
-- [VueUse](https://github.com/antfu/vueuse) - 🧰 Collection of Composition API utils for Vue 2 and 3
+- [VueUse](https://github.com/vueuse/vueuse) - 🧰 Collection of Composition API utils for Vue 2 and 3
+- [Villus](https://github.com/logaretm/villus) - 🏎 A tiny and fast GraphQL client for Vue.js
 
 ## APIs
 
@@ -315,7 +331,9 @@ For most of the time, you can use them like you would in Vue.
 
 #### Demo
 
-Check [example-vite](./packages/example-vite)
+- [Preact Browser Example](./packages/example-preact-htm)
+
+- [React Vite Example](./packages/example-vite)
 
 ![image](https://user-images.githubusercontent.com/11247099/88056258-dd7f6980-cb92-11ea-9e89-e090e73b7235.png)
 
