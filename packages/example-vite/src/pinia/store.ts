@@ -1,6 +1,6 @@
-import { createStore } from 'pinia'
+import { defineStore } from 'pinia'
 
-export const useMainStore = createStore({
+export const useMainStore = defineStore({
   // name of the store
   // it is used in devtools and allows restoring state
   id: 'main',
@@ -11,15 +11,19 @@ export const useMainStore = createStore({
   }),
   // optional getters
   getters: {
-    doubleCount: (state, getters) => state.counter * 2,
+    doubleCount() {
+      return this.counter * 2
+    },
     // use getters in other getters
-    doubleCountPlusOne: (state, { doubleCount }) => doubleCount.value * 2,
+    doubleCountPlusOne() {
+      return this.doubleCount * 2
+    },
   },
   // optional actions
   actions: {
     reset() {
       // `this` is the store instance
-      this.state.counter = 0
+      this.counter = 0
     },
   },
 })
