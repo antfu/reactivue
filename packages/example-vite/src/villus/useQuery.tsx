@@ -18,17 +18,17 @@ export const Query = defineComponent(
     // })
 
     // without variables
-    const { data, isFetching } = useQuery({
+    const { data } = useQuery({
       query: Posts,
     })
 
-    return { data, isFetching }
+    return { data }
   },
-  ({ data, isFetching }) => {
+  ({ data }) => {
     return (
       <div className="card">
         <p>useQuery</p>
-        <pre className="p-1">{ isFetching ? 'Loading' : JSON.stringify(data, null, 2) }</pre>
+        <pre className="p-1">{ !data ? 'Loading' : JSON.stringify(data, null, 2) }</pre>
       </div>
     )
   },
