@@ -23,6 +23,11 @@ interface AppContext {
     globalProperties: Record<string, any>
   }
   provides: Record<string | symbol, any>
+
+  // not supported
+  mixins: any
+  components: any
+  directives: any
 }
 
 function createAppContext(): AppContext {
@@ -32,6 +37,11 @@ function createAppContext(): AppContext {
       globalProperties: {},
     },
     provides: {},
+
+    // not supported
+    mixins: [],
+    components: {},
+    directives: {},
   }
 }
 
@@ -49,8 +59,16 @@ export function createApp() {
   const app = (context.app = {
     version: '3.0.0',
 
-    config: {
-      globalProperties: {},
+    get config() {
+      return context.config
+    },
+
+    set config(_v) {
+      if (__DEV__) {
+        warn(
+          'app.config cannot be replaced. Modify individual options instead.',
+        )
+      }
     },
 
     use(plugin: Plugin, ...options: any[]) {
@@ -85,6 +103,21 @@ export function createApp() {
       // TypeScript doesn't allow symbols as index type
       // https://github.com/Microsoft/TypeScript/issues/24587
       context.provides[key as string] = value
+    },
+
+    mixin() {
+      if (__DEV__)
+        warn('`app.mixin` method is not supported in reactivue.')
+    },
+
+    component() {
+      if (__DEV__)
+        warn('`app.component` method is not supported in reactivue.')
+    },
+
+    directive() {
+      if (__DEV__)
+        warn('`app.directive` method is not supported in reactivue.')
     },
   })
 
