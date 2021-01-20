@@ -4,6 +4,8 @@
 
 .card {
   @apply bg-white p-3 m-1 rounded bg-opacity-10;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
 }
 
 .card p {
