@@ -10,4 +10,7 @@ export default defineConfig({
     '@vue/composition-api': 'reactivue',
     '@vue/runtime-dom': 'reactivue',
   },
+  optimizeDeps: {
+    include: ['reactivue'],
+  },
 })

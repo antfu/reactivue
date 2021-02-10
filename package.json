@@ -4,27 +4,24 @@
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/react",
-      "**/react/**"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
     "dev": "npm -C ./packages/reactivue run dev",
-    "dev:vite": "npm -C ./packages/example-vite run dev",
+    "dev:vite": "npm -C ./examples/example-vite run dev",
     "build": "npm -C ./packages/reactivue run build && cpy README.md ./packages/reactivue",
     "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && yarn publish --non-interactive",
+    "postinstall": "yarn-deduplicate || exit 0",
     "test": "npm -C ./packages/reactivue run test"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.4.3",
     "cpy-cli": "^3.1.1",
     "eslint": "^7.17.0",
-    "eslint-plugin-react": "^7.21.5"
+    "eslint-plugin-react": "^7.21.5",
+    "yarn-deduplicate": "^3.1.0"
   },
   "eslintConfig": {
     "extends": [
