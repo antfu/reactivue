@@ -10,7 +10,9 @@
   ],
   "scripts": {
     "dev": "npm -C ./packages/reactivue run dev",
-    "dev:vite": "npm -C ./examples/example-vite run dev",
+    "dev:vite": "npm -C ./examples/react-ts-vite run dev",
+    "build:vite": "npm -C ./examples/react-ts-vite run build",
+    "serve:vite": "npm -C ./examples/react-ts-vite run serve",
     "build": "npm -C ./packages/reactivue run build && cpy README.md ./packages/reactivue",
     "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && yarn publish --non-interactive",
     "postinstall": "yarn-deduplicate || exit 0",
