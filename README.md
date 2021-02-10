@@ -323,17 +323,15 @@ For most of the time, you can use them like you would in Vue.
 - `emit()` is not available
 
 
-### Example
+### Examples
 
 #### Real-world Examples/Showcases
 
 - [Café CN](https://github.com/antfu/awesome-cn-cafe-web) - Web App for Awesome CN Café
 
-#### Demo
+- [Preact Browser Example](./examples/preact-htm-browser)
 
-- [Preact Browser Example](./examples/example-preact-htm)
-
-- [React Vite Example](./examples/example-vite)
+- [React Vite 2.0 Demo](./examples/react-ts-vite)
 
 ![image](https://user-images.githubusercontent.com/11247099/88056258-dd7f6980-cb92-11ea-9e89-e090e73b7235.png)
 
