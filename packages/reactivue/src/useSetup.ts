@@ -18,7 +18,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     const instance = createNewInstanceWithId(id, props)
 
     useInstanceScope(id, () => {
-      const setupState = setupFunction(readonly(props))
+      const setupState = setupFunction(readonly(props)) ?? {}
       const data = ref(setupState)
 
       invokeLifeCycle(LifecycleHooks.BEFORE_MOUNT)
