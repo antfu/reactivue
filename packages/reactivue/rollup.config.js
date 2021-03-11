@@ -5,7 +5,7 @@ import replace from '@rollup/plugin-replace'
 
 const external = ['@vue/reactivity', 'react', 'preact/hooks']
 const replacements = {
-  __DEV__: '(typeof process !== \'undefined\' && process.env.NODE_ENV === \'development\')',
+  __DEV__: '(process.env.NODE_ENV === \'development\')',
   __BROWSER__: '(typeof window !== \'undefined\')',
 }
 
