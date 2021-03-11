@@ -29,7 +29,7 @@ export const Counter = defineComponent(
   ({ counter, inc, doubled, dec, isFive }) => {
     return (
       <div className="card">
-        <p>createComponent()</p>
+        <p>defineComponent()</p>
         <button onClick={dec}>dec -</button>
         <button onClick={inc}>inc +</button>
         <table>
