@@ -5,10 +5,12 @@ export default defineConfig({
   plugins: [
     ReactRefresh(),
   ],
-  alias: {
-    vue: 'reactivue',
-    '@vue/composition-api': 'reactivue',
-    '@vue/runtime-dom': 'reactivue',
+  resolve: {
+    alias: {
+      vue: 'reactivue',
+      '@vue/composition-api': 'reactivue',
+      '@vue/runtime-dom': 'reactivue',
+    },
   },
   optimizeDeps: {
     include: ['reactivue'],

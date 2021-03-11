@@ -21,7 +21,7 @@
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.4.3",
     "cpy-cli": "^3.1.1",
-    "eslint": "^7.17.0",
+    "eslint": "^7.21.0",
     "eslint-plugin-react": "^7.21.5",
     "yarn-deduplicate": "^3.1.0"
   },
