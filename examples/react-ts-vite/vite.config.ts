@@ -12,6 +12,11 @@ export default defineConfig({
       '@vue/runtime-dom': 'reactivue',
     },
   },
+  /**
+   * Actually listing `reactivue` here is not required.
+   * It's only required for our yarn workspaces setup.
+   * For some reason Vite don't optimizes locally linked deps.
+   */
   optimizeDeps: {
     include: ['reactivue'],
   },
