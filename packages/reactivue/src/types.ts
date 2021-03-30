@@ -25,17 +25,3 @@ export interface InternalInstanceState {
 }
 
 export type InstanceStateMap = Record<number, InternalInstanceState>
-
-declare global {
-  interface ImportMeta {
-    readonly env: ImportMetaEnv
-  }
-}
-
-interface ImportMetaEnv {
-  [key: string]: string | boolean | undefined
-  BASE_URL: string
-  MODE: string
-  DEV: boolean
-  PROD: boolean
-}

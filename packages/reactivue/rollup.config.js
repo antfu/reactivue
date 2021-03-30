@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser'
 
 const external = ['@vue/reactivity', '@vue/shared', 'react', 'preact/hooks']
 
-const __DEV__ = '(typeof process !== \'undefined\' && process.env.NODE_ENV === \'development\')'
+const __DEV__ = '(process.env.NODE_ENV === \'development\')'
 const __BROWSER__ = '(typeof window !== \'undefined\')'
 
 const onwarn = (msg, warn) => !/Circular|preventAssignment/.test(msg) && warn(msg)
@@ -44,7 +44,7 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [replace({ __DEV__: '(import.meta.env.MODE === \'development\')', __BROWSER__ }), resolve(), typescript()],
+    plugins: [replace({ __DEV__, __BROWSER__ }), resolve(), typescript()],
     external,
     onwarn,
   },
@@ -56,7 +56,7 @@ export default [
         format: 'es',
       },
     ],
-    plugins: [replace({ react: 'preact/hooks', __DEV__: '(import.meta.env.MODE === \'development\')', __BROWSER__ }), resolve(), typescript()],
+    plugins: [replace({ react: 'preact/hooks', __DEV__, __BROWSER__ }), resolve(), typescript()],
     external,
     onwarn,
   },
