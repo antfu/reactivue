@@ -76,6 +76,7 @@
   },
   "dependencies": {
     "@vue/reactivity": "^3.0.9",
-    "@vue/runtime-core": "^3.0.9"
+    "@vue/runtime-core": "^3.0.9",
+    "@vue/shared": "^3.0.9"
   }
 }
