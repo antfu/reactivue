@@ -13,5 +13,5 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "exclude": ["node_modules", "dist", "preact"]
+  "exclude": ["**/node_modules", "**/dist", "**/preact"]
 }
