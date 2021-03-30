@@ -16,7 +16,7 @@
     "postcss": "^8.2.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "reactivue": "^0.3.0",
+    "reactivue": "^0",
     "tailwindcss": "^2.0.4",
     "villus": "^1.0.0-rc.15"
   },
