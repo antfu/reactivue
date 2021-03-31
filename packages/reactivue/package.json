@@ -4,21 +4,21 @@
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
   "version": "0.4.1",
+  "browser": "dist/index.module.js",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
-  "browser": "dist/index.module.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "browser": "./dist/index.module.js",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "browser": "./dist/index.module.js"
+      "require": "./dist/index.js"
     },
     "./": "./",
     "./preact": {
+      "browser": "./preact/index.module.js",
       "import": "./preact/index.mjs",
-      "require": "./preact/index.js",
-      "browser": "./preact/index.module.js"
+      "require": "./preact/index.js"
     }
   },
   "files": [
