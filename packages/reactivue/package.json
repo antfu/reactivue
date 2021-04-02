@@ -10,13 +10,19 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./dist/index.module.js",
+      "browser": {
+        "production": "./dist/index.module.js",
+        "development": "./dist/index.module.dev.js"
+      },
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./": "./",
     "./preact": {
-      "browser": "./preact/index.module.js",
+      "browser": {
+        "production": "./preact/index.module.js",
+        "development": "./preact/index.module.dev.js"
+      },
       "import": "./preact/index.mjs",
       "require": "./preact/index.js"
     }

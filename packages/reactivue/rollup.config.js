@@ -88,6 +88,30 @@ export default [
     input: 'src/index.ts',
     output: [
       {
+        file: 'dist/index.module.dev.js',
+        format: 'es',
+      },
+    ],
+    plugins: [replace({ __DEV__, __BROWSER__ }), resolve(), typescript(), terser()],
+    external,
+    onwarn,
+  },
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'preact/index.module.dev.js',
+        format: 'es',
+      },
+    ],
+    plugins: [replace({ react: 'preact/hooks', __DEV__, __BROWSER__ }), resolve(), typescript(), terser()],
+    external,
+    onwarn,
+  },
+  {
+    input: 'src/index.ts',
+    output: [
+      {
         file: 'dist/index.d.ts',
         format: 'es',
       },
