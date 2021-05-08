@@ -182,7 +182,8 @@ function doWatch(
           ? (newValue as any[]).some((v, i) =>
             hasChanged(v, (oldValue as any[])[i]),
           )
-          : hasChanged(newValue, oldValue))) {
+          : hasChanged(newValue, oldValue))
+      ) {
         // cleanup before running cb again
         if (cleanup)
           cleanup()
