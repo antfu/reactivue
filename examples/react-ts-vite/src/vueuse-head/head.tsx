@@ -8,9 +8,7 @@ export const Head = defineComponent(
     const title = ref(document.title)
     const setTitle = (val: string) => title.value = val
 
-    useHead(() => ({
-      title: title.value,
-    }))
+    useHead({ title })
 
     return { title, setTitle }
   },
