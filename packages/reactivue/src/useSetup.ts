@@ -30,7 +30,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
 
       if (__DEV__) {
         for (const key of Object.keys(setupState))
-          (instance as any).initialState[key] = unref(setupState[key])
+          instance.initialState[key] = unref(setupState[key])
       }
     })
 
@@ -77,10 +77,10 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
           if (isChanged)
             break
 
-          if (typeof (instance as any).initialState[key] === 'function')
-            isChanged = (instance as any).initialState[key].toString() !== setup[key].toString()
+          if (typeof instance.initialState[key] === 'function')
+            isChanged = instance.initialState[key].toString() !== setup[key].toString()
           else
-            isChanged = (instance as any).initialState[key] !== unref(setup[key])
+            isChanged = instance.initialState[key] !== unref(setup[key])
         }
 
         instance.isUnmounting = false

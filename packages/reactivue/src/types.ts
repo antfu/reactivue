@@ -32,6 +32,7 @@ export interface ComponentInternalInstance extends _ComponentInternalInstance {
   isActive: boolean
   effects: Function[]
   isUnmounting: boolean
+  initialState: any
   /**
    * Object containing values this component provides for its descendents
    * @internal

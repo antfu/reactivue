@@ -1,6 +1,6 @@
-import { InjectionKey, warn } from '@vue/runtime-core'
+import { getCurrentInstance, InjectionKey, warn } from '@vue/runtime-core'
 import { isFunction } from '@vue/shared'
-import { getCurrentInstance } from './component'
+import { CompInstance } from './lifecycle'
 
 type PluginInstallFunction = (app: AppContext['app'], ...options: any[]) => any
 
@@ -126,10 +126,10 @@ export function h() {
 }
 
 export function provide<T>(key: InjectionKey<T> | string | number, value: T) {
-  const instance = getCurrentInstance()
+  const instance = getCurrentInstance() as CompInstance
 
   if (instance)
-    (instance as any).provides[key as string] = value
+    instance.provides[key as string] = value
 }
 
 export function inject<T>(key: InjectionKey<T> | string): T | undefined
@@ -148,12 +148,12 @@ export function inject(
   defaultValue?: unknown,
   treatDefaultAsFactory = false,
 ) {
-  const instance = getCurrentInstance()
+  const instance = getCurrentInstance() as CompInstance
 
   if (instance) {
-    if ((instance as any).provides && (key as string | symbol) in (instance as any).provides) {
+    if (instance.provides && (key as string | symbol) in instance.provides) {
       // TS doesn't allow symbol as index type
-      return (instance as any).provides[key as string]
+      return instance.provides[key as string]
     }
     else if (arguments.length > 1) {
       return treatDefaultAsFactory && isFunction(defaultValue)
