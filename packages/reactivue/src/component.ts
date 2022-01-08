@@ -1,4 +1,3 @@
-/* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop, EffectScope } from '@vue/reactivity'
 import { getCurrentInstance, setCurrentInstance } from '@vue/runtime-core'
 import { CompInstance, invokeLifeCycle } from './lifecycle'
@@ -59,20 +58,6 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     hooks: {},
     initialState: {},
     provides: __BROWSER__ ? { ...window.__reactivue_context?.provides } : {},
-    bc: null,
-    c: null,
-    bm: null,
-    m: null,
-    bu: null,
-    u: null,
-    um: null,
-    bum: null,
-    da: null,
-    a: null,
-    rtg: null,
-    rtc: null,
-    ec: null,
-    sp: null,
   } as Partial<ComponentInternalInstance> as never as ComponentInternalInstance
 
   _vueState[id] = final
