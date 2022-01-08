@@ -1,7 +1,6 @@
 export { useSetup } from './useSetup'
 export { defineComponent } from './defineComponent'
 export { createSetup } from './createSetup'
-export { getCurrentInstance } from './component'
 export { nextTick } from './nextTick'
 export * from './mock'
 export {
@@ -17,6 +16,7 @@ export {
   watchEffect,
   watch,
   computed,
+  getCurrentInstance,
 } from '@vue/runtime-core'
 
 // redirect all APIs from @vue/reactivity

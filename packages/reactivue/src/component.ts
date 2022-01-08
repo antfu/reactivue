@@ -2,7 +2,6 @@ import { Ref, ref, stop, EffectScope } from '@vue/reactivity'
 import { getCurrentInstance, setCurrentInstance } from '@vue/runtime-core'
 import { CompInstance, invokeLifeCycle } from './lifecycle'
 import { InstanceStateMap, LifecycleHooks, ComponentInternalInstance } from './types'
-export { getCurrentInstance } from '@vue/runtime-core'
 
 /**
  * When `reactivue` dependency gets updated during development
@@ -49,8 +48,6 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     props,
     data: data as any,
     isActive: false,
-    // lifecycle hooks
-    // not using enums here because it results in computed properties
     isMounted: false,
     isUnmounted: false,
     isDeactivated: false,
@@ -72,7 +69,7 @@ export const useInstanceScope = (
   const prev = getCurrentInstance()
   setCurrentInstance(instance)
   cb(instance)
-  setCurrentInstance(prev)
+  prev && setCurrentInstance(prev)
 }
 
 const unmount = (id: number) => {
