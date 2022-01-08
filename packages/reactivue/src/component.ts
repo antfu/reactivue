@@ -1,7 +1,9 @@
 /* eslint-disable import/no-mutable-exports */
-import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
-import { invokeLifeCycle } from './lifecycle'
-import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types'
+import { Ref, ReactiveEffect, ref, stop, EffectScope } from '@vue/reactivity'
+import { getCurrentInstance, setCurrentInstance } from '@vue/runtime-core'
+import { CompInstance, invokeLifeCycle } from './lifecycle'
+import { InstanceStateMap, LifecycleHooks, ComponentInternalInstance } from './types'
+export { getCurrentInstance } from '@vue/runtime-core'
 
 /**
  * When `reactivue` dependency gets updated during development
@@ -20,9 +22,6 @@ let _id = (__DEV__ && __BROWSER__ && window.__reactivue_id) || 0
 const _vueState: InstanceStateMap = (__DEV__ && __BROWSER__ && window.__reactivue_state) || {}
 if (__DEV__ && __BROWSER__)
   window.__reactivue_state = _vueState
-
-export let currentInstance: InternalInstanceState | null = null
-export let currentInstanceId: number | null = null
 
 export const getNewInstanceId = () => {
   if (__DEV__) {
@@ -44,40 +43,51 @@ export const getNewInstanceId = () => {
   return _id
 }
 
-export const getCurrentInstance = () => currentInstance
-export const setCurrentInstance = (
-  instance: InternalInstanceState | null,
-) => {
-  currentInstance = instance
-}
-
-export const setCurrentInstanceId = (id: number | null) => {
-  currentInstanceId = id
-  currentInstance = id != null ? (_vueState[id] || null) : null
-  return currentInstance
-}
-export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> = ref(null)) => {
-  const instance: InternalInstanceState = {
-    _id: id,
+export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> = ref(null)): ComponentInternalInstance => {
+  const final = {
+    uid: id,
+    scope: new EffectScope(true /* detached */),
     props,
-    data,
+    data: data as any,
     isActive: false,
+    // lifecycle hooks
+    // not using enums here because it results in computed properties
+    isMounted: false,
     isUnmounted: false,
+    isDeactivated: false,
     isUnmounting: false,
     hooks: {},
     initialState: {},
     provides: __BROWSER__ ? { ...window.__reactivue_context?.provides } : {},
-  }
-  _vueState[id] = instance
+    bc: null,
+    c: null,
+    bm: null,
+    m: null,
+    bu: null,
+    u: null,
+    um: null,
+    bum: null,
+    da: null,
+    a: null,
+    rtg: null,
+    rtc: null,
+    ec: null,
+    sp: null,
+  } as Partial<ComponentInternalInstance> as never as ComponentInternalInstance
 
-  return instance
+  _vueState[id] = final
+
+  return final
 }
 
-export const useInstanceScope = (id: number, cb: (instance: InternalInstanceState | null) => void) => {
-  const prev = currentInstanceId
-  const instance = setCurrentInstanceId(id)
+export const useInstanceScope = (
+  instance: CompInstance,
+  cb: (instance: CompInstance) => void,
+) => {
+  const prev = getCurrentInstance()
+  setCurrentInstance(instance)
   cb(instance)
-  setCurrentInstanceId(prev)
+  setCurrentInstance(prev)
 }
 
 const unmount = (id: number) => {
@@ -85,7 +95,7 @@ const unmount = (id: number) => {
 
   // unregister all the computed/watch effects
   for (const effect of _vueState[id].effects || [])
-    stop(effect)
+    stop(effect as never)
 
   invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
 
@@ -116,9 +126,10 @@ export const unmountInstance = (id: number) => {
 // record effects created during a component's setup() so that they can be
 // stopped when the component unmounts
 export function recordInstanceBoundEffect(effect: ReactiveEffect) {
+  const currentInstance = getCurrentInstance() as CompInstance
   if (currentInstance) {
-    if (!currentInstance.effects)
+    if (!currentInstance.effect)
       currentInstance.effects = []
-    currentInstance.effects.push(effect)
+    currentInstance.effects.push(effect as never)
   }
 }

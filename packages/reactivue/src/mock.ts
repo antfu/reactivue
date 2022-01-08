@@ -1,7 +1,6 @@
-import { InjectionKey } from '@vue/runtime-core'
+import { InjectionKey, warn } from '@vue/runtime-core'
 import { isFunction } from '@vue/shared'
 import { getCurrentInstance } from './component'
-import { warn } from './errorHandling'
 
 type PluginInstallFunction = (app: AppContext['app'], ...options: any[]) => any
 
@@ -130,7 +129,7 @@ export function provide<T>(key: InjectionKey<T> | string | number, value: T) {
   const instance = getCurrentInstance()
 
   if (instance)
-    instance.provides[key as string] = value
+    (instance as any).provides[key as string] = value
 }
 
 export function inject<T>(key: InjectionKey<T> | string): T | undefined
@@ -152,9 +151,9 @@ export function inject(
   const instance = getCurrentInstance()
 
   if (instance) {
-    if (instance.provides && (key as string | symbol) in instance.provides) {
+    if ((instance as any).provides && (key as string | symbol) in (instance as any).provides) {
       // TS doesn't allow symbol as index type
-      return instance.provides[key as string]
+      return (instance as any).provides[key as string]
     }
     else if (arguments.length > 1) {
       return treatDefaultAsFactory && isFunction(defaultValue)

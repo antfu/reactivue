@@ -1,8 +1,31 @@
 diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js b/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
-index 126b2f4..2530160 100644
+index 126b2f4..5838d2e 100644
 --- a/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
 +++ b/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
-@@ -7680,6 +7680,7 @@ exports.defineEmits = defineEmits;
+@@ -6203,14 +6203,18 @@ function createComponentInstance(vnode, parent, suspense) {
+ }
+ let currentInstance = null;
+ const getCurrentInstance = () => currentInstance || currentRenderingInstance;
+-const setCurrentInstance = (instance) => {
+-    currentInstance = instance;
+-    instance.scope.on();
+-};
+ const unsetCurrentInstance = () => {
+     currentInstance && currentInstance.scope.off();
+     currentInstance = null;
+ };
++const setCurrentInstance = (instance) => {
++    if (!instance) {
++        unsetCurrentInstance()
++        return;
++    }
++    currentInstance = instance;
++    instance.scope.on();
++};
+ const isBuiltInTag = /*#__PURE__*/ shared.makeMap('slot,component');
+ function validateComponentName(name, config) {
+     const appIsNativeTag = config.isNativeTag || shared.NO;
+@@ -7680,6 +7684,7 @@ exports.defineEmits = defineEmits;
  exports.defineExpose = defineExpose;
  exports.defineProps = defineProps;
  exports.getCurrentInstance = getCurrentInstance;
@@ -23,10 +46,33 @@ index 558dc7d..189963b 100644
  export { getCurrentScope }
  
 diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js b/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
-index 2b1ba9a..04259e0 100644
+index 2b1ba9a..fc16891 100644
 --- a/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
 +++ b/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
-@@ -7714,4 +7714,4 @@ const resolveFilter = null;
+@@ -6273,14 +6273,18 @@ function createComponentInstance(vnode, parent, suspense) {
+ }
+ let currentInstance = null;
+ const getCurrentInstance = () => currentInstance || currentRenderingInstance;
+-const setCurrentInstance = (instance) => {
+-    currentInstance = instance;
+-    instance.scope.on();
+-};
+ const unsetCurrentInstance = () => {
+     currentInstance && currentInstance.scope.off();
+     currentInstance = null;
+ };
++const setCurrentInstance = (instance) => {
++    if (!instance) {
++        unsetCurrentInstance()
++        return;
++    }
++    currentInstance = instance;
++    instance.scope.on();
++};
+ const isBuiltInTag = /*#__PURE__*/ makeMap('slot,component');
+ function validateComponentName(name, config) {
+     const appIsNativeTag = config.isNativeTag || NO;
+@@ -7714,4 +7718,4 @@ const resolveFilter = null;
   */
  const compatUtils = (null);
  

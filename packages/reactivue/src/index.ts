@@ -1,11 +1,8 @@
 export { useSetup } from './useSetup'
 export { defineComponent } from './defineComponent'
-export { watch, watchEffect } from './watch'
-export { computed } from './computed'
 export { createSetup } from './createSetup'
 export { getCurrentInstance } from './component'
 export { nextTick } from './nextTick'
-export { warn } from './errorHandling'
 export * from './mock'
 export {
   onMounted,
@@ -15,6 +12,12 @@ export {
   onBeforeUnmount,
   onBeforeUpdate,
 } from './lifecycle'
+
+export {
+  watchEffect,
+  watch,
+  computed,
+} from '@vue/runtime-core'
 
 // redirect all APIs from @vue/reactivity
 export {
