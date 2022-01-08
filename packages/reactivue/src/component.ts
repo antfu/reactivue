@@ -1,4 +1,4 @@
-import { Ref, ReactiveEffect, ref, stop, EffectScope } from '@vue/reactivity'
+import { Ref, ref, stop, EffectScope } from '@vue/reactivity'
 import { getCurrentInstance, setCurrentInstance } from '@vue/runtime-core'
 import { CompInstance, invokeLifeCycle } from './lifecycle'
 import { InstanceStateMap, LifecycleHooks, ComponentInternalInstance } from './types'
@@ -106,15 +106,4 @@ export const unmountInstance = (id: number) => {
     setTimeout(() => _vueState[id]?.isUnmounting && unmount(id), 0)
   else
     unmount(id)
-}
-
-// record effects created during a component's setup() so that they can be
-// stopped when the component unmounts
-export function recordInstanceBoundEffect(effect: ReactiveEffect) {
-  const currentInstance = getCurrentInstance() as CompInstance
-  if (currentInstance) {
-    if (!currentInstance.effect)
-      currentInstance.effects = []
-    currentInstance.effects.push(effect as never)
-  }
 }
