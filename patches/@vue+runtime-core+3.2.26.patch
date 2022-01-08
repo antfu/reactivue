@@ -1,0 +1,34 @@
+diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js b/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
+index 126b2f4..2530160 100644
+--- a/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
++++ b/node_modules/@vue/runtime-core/dist/runtime-core.cjs.js
+@@ -7680,6 +7680,7 @@ exports.defineEmits = defineEmits;
+ exports.defineExpose = defineExpose;
+ exports.defineProps = defineProps;
+ exports.getCurrentInstance = getCurrentInstance;
++exports.setCurrentInstance = setCurrentInstance;
+ exports.getTransitionRawChildren = getTransitionRawChildren;
+ exports.guardReactiveProps = guardReactiveProps;
+ exports.h = h;
+diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.d.ts b/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
+index 558dc7d..189963b 100644
+--- a/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
++++ b/node_modules/@vue/runtime-core/dist/runtime-core.d.ts
+@@ -902,6 +902,7 @@ export declare interface FunctionalComponent<P = {}, E extends EmitsOptions = {}
+ export declare type FunctionDirective<T = any, V = any> = DirectiveHook<T, any, V>;
+ 
+ export declare const getCurrentInstance: () => ComponentInternalInstance | null;
++export declare const setCurrentInstance: (instance: ComponentInternalInstance | null) => void;
+ 
+ export { getCurrentScope }
+ 
+diff --git a/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js b/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
+index 2b1ba9a..04259e0 100644
+--- a/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
++++ b/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js
+@@ -7714,4 +7714,4 @@ const resolveFilter = null;
+  */
+ const compatUtils = (null);
+ 
+-export { BaseTransition, Comment, Fragment, KeepAlive, Static, Suspense, Teleport, Text, callWithAsyncErrorHandling, callWithErrorHandling, cloneVNode, compatUtils, createBlock, createCommentVNode, createElementBlock, createBaseVNode as createElementVNode, createHydrationRenderer, createPropsRestProxy, createRenderer, createSlots, createStaticVNode, createTextVNode, createVNode, defineAsyncComponent, defineComponent, defineEmits, defineExpose, defineProps, devtools, getCurrentInstance, getTransitionRawChildren, guardReactiveProps, h, handleError, initCustomFormatter, inject, isMemoSame, isRuntimeOnly, isVNode, mergeDefaults, mergeProps, nextTick, onActivated, onBeforeMount, onBeforeUnmount, onBeforeUpdate, onDeactivated, onErrorCaptured, onMounted, onRenderTracked, onRenderTriggered, onServerPrefetch, onUnmounted, onUpdated, openBlock, popScopeId, provide, pushScopeId, queuePostFlushCb, registerRuntimeCompiler, renderList, renderSlot, resolveComponent, resolveDirective, resolveDynamicComponent, resolveFilter, resolveTransitionHooks, setBlockTracking, setDevtoolsHook, setTransitionHooks, ssrContextKey, ssrUtils, toHandlers, transformVNodeArgs, useAttrs, useSSRContext, useSlots, useTransitionState, version, warn, watch, watchEffect, watchPostEffect, watchSyncEffect, withAsyncContext, withCtx, withDefaults, withDirectives, withMemo, withScopeId };
++export { BaseTransition, Comment, Fragment, KeepAlive, Static, Suspense, Teleport, Text, callWithAsyncErrorHandling, callWithErrorHandling, cloneVNode, compatUtils, createBlock, createCommentVNode, createElementBlock, createBaseVNode as createElementVNode, createHydrationRenderer, createPropsRestProxy, createRenderer, createSlots, createStaticVNode, createTextVNode, createVNode, defineAsyncComponent, defineComponent, defineEmits, defineExpose, defineProps, devtools, getCurrentInstance, setCurrentInstance, getTransitionRawChildren, guardReactiveProps, h, handleError, initCustomFormatter, inject, isMemoSame, isRuntimeOnly, isVNode, mergeDefaults, mergeProps, nextTick, onActivated, onBeforeMount, onBeforeUnmount, onBeforeUpdate, onDeactivated, onErrorCaptured, onMounted, onRenderTracked, onRenderTriggered, onServerPrefetch, onUnmounted, onUpdated, openBlock, popScopeId, provide, pushScopeId, queuePostFlushCb, registerRuntimeCompiler, renderList, renderSlot, resolveComponent, resolveDirective, resolveDynamicComponent, resolveFilter, resolveTransitionHooks, setBlockTracking, setDevtoolsHook, setTransitionHooks, ssrContextKey, ssrUtils, toHandlers, transformVNodeArgs, useAttrs, useSSRContext, useSlots, useTransitionState, version, warn, watch, watchEffect, watchPostEffect, watchSyncEffect, withAsyncContext, withCtx, withDefaults, withDirectives, withMemo, withScopeId };
