@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "module": "esnext",
     "target": "es2017",
-    "lib": ["ESNext", "DOM"],
-    "strict": true,
-    "jsx": "react",
-    "rootDir": ".",
-    "esModuleInterop": true,
+    "module": "esnext",
+    "lib": ["DOM", "esnext"],
     "moduleResolution": "node",
-    "skipLibCheck": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true, 
+    "types": ["vitest/global"],
+    "jsx": "react-jsx",
+    "removeComments": false
   },
-  "exclude": ["**/node_modules", "**/dist", "**/preact"]
+  "include": ["src", "test"],
+  "exclude": ["**/node_modules/*", "dist"]
 }

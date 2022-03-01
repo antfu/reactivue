@@ -1,0 +1,46 @@
+html {
+  @apply bg-dark-900 text-gray-100
+  font-weight: 300;
+  line-height: 1.5em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#root {
+  @apply sm:container w-900px max-w-full mx-auto
+}
+b {
+  font-weight: 500;
+}
+td {
+  padding-right: 1em;
+}
+
+.card {
+  @apply bg-white/5 p-6 m-1 rounded-xl flex-1;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+.card p {
+  @apply text-gray-100 font-mono leading-none pb-4 mx-1 pt-1 opacity-80 text-sm;
+}
+
+button {
+  @apply bg-white bg-opacity-10 px-4 py-1 rounded m-1 opacity-50 hover:opacity-75 active:opacity-100 focus:outline-none;
+}
+
+table {
+  @apply m-1 leading-7 w-full;
+}
+
+td:first-child {
+  @apply text-right opacity-50 text-sm w-2.5/5;
+}
+
+h2 {
+  @apply mt-3 ml-1 text-lg;
+}
+
+input {
+  @apply px-3 py-2 w-64 bg-white bg-opacity-10 border border-black border-opacity-25 rounded
+}
