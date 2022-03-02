@@ -1,14 +1,17 @@
-import type { EffectScope, Ref, UnwrapNestedRefs, UnwrapRef } from '@vue/runtime-core'
+import type { EffectScope, UnwrapNestedRefs } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
-import { effectScope, isProxy, isRef, provide, setCurrentInstance, unref, watch } from '@vue/runtime-core'
+import { effectScope, isProxy, isRef, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
 import type { ReactNode } from 'react'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 
 import type { ReactivueInternalInstance } from './shared'
-import { LifecycleHooks, getCurrentInstance, getEffects, rawValues } from './shared'
+import { LifecycleHooks, getCurrentInstance, getEffects } from './shared'
 
-type ReturnedSetup<T> = T extends Ref<unknown> ? UnwrapRef<T> : UnwrapNestedRefs<T>
-export function useSetup<State = {}, Props = {}>(
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+export const getState = <T extends any>(setup: T): UnwrapNestedRefs<T> => isRef(setup) || isProxy(setup) || Array.isArray(setup) ? unref(setup) : typeof setup === 'object' ? readonly(reactive(setup as Object)) : setup as any
+
+type ReturnedSetup<T> = UnwrapNestedRefs<T>
+export function useSetup<State, Props = {}>(
   fn: (props: Props) => State,
   ReactProps: Props = {} as any,
 ): ReturnedSetup<State> {
@@ -57,18 +60,19 @@ export function useSetup<State = {}, Props = {}>(
   setCurrentInstance(instance.current)
   context.current.setup = context.current.setup ?? scope.current.run(() => {
     instance.current!.active = true
-    const setup = fn(ReactProps) ?? {}
-    const getState = () => isRef(setup) || isProxy(setup) || Array.isArray(setup) ? unref(setup) : typeof setup === 'object' ? Object.assign(rawValues(setup), { setup }) : setup as any
+    const setup = fn(ReactProps)
+    if (setup === null)
+      return null
     const effects = getEffects(setup)
     if (effects?.length) {
       watch(effects, () => {
-        context.current!.setup = getState()
+        context.current!.setup = getState(setup)
         invokeLifecycle(LifecycleHooks.BEFORE_UPDATE)
         setTick(tick => tick + 1)
         invokeLifecycle(LifecycleHooks.UPDATED)
       }, { deep: true })
     }
-    return getState()
+    return getState(setup)
   }) as ReturnedSetup<State>
 
   invokeLifecycle(LifecycleHooks.BEFORE_CREATE)

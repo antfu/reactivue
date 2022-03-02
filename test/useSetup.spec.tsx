@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
-import { ref, toRef } from '@vue/runtime-core'
-import { useSetup } from '../'
+import { isRef, ref, toRef } from '@vue/runtime-core'
+import { getState, useSetup } from '../'
 
 const SetupTest = (Props: { hello?: string }) => {
   const { msg, other } = useSetup((props) => {
@@ -38,4 +38,31 @@ it('should render basic useSetup function return', async() => {
     const el = screen.getByText('Hello, Universe!')
     expect(el).toBeInTheDocument()
   })
+})
+
+it('should return unwrapped values (object)', async() => {
+  const msgRef = ref('Hello, world!')
+  const { msg, deep } = getState({
+    msg: msgRef,
+    deep: {
+      msg: msgRef,
+    },
+  })
+
+  expect(isRef(msg)).toBe(false)
+  expect(isRef(deep.msg)).toBe(false)
+})
+
+it('should return wrapped values (array)', async() => {
+  const msgRef = ref('Hello, world!')
+  const [msg, deep] = getState([msgRef, { msg: msgRef }] as const)
+
+  expect(isRef(msg)).toBe(true)
+  expect(isRef(deep.msg)).toBe(true)
+})
+
+it('should return unwrapped values (ref)', async() => {
+  const msg = getState(ref('Hello, world!'))
+
+  expect(isRef(msg)).toBe(false)
 })

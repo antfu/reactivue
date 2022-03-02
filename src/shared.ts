@@ -1,5 +1,5 @@
-import type { EffectScope, Ref } from '@vue/runtime-core'
-import { getCurrentInstance as _getCurrentInstance, isProxy, isReactive, isRef, unref } from '@vue/runtime-core'
+import type { EffectScope } from '@vue/runtime-core'
+import { getCurrentInstance as _getCurrentInstance, isProxy, isReactive, isRef } from '@vue/runtime-core'
 
 export const enum LifecycleHooks {
   BEFORE_CREATE = 'bc',
@@ -32,15 +32,12 @@ export function getCurrentInstance() {
   return _getCurrentInstance() as unknown as ReactivueInternalInstance
 }
 
-export function getEffects(setup: Record<any, Ref<unknown> | {}> | Record<any, Ref<unknown> | {}>[]) {
+export function getEffects(setup: any) {
   if (isRef(setup) || isProxy(setup))
     return [setup]
   if (Array.isArray(setup))
     return setup.filter(e => isRef(e) || isReactive(e))
   if (typeof setup === 'object')
     return Object.values(setup).filter(val => isRef(val) || isReactive(val))
-}
-
-export function rawValues(setup: Record<any, any>) {
-  return Object.fromEntries(Object.entries(setup).map(([key, value]) => [key, unref(value)]))
+  return []
 }
