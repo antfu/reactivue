@@ -1,7 +1,6 @@
 import type { EffectScope, UnwrapNestedRefs } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
 import { effectScope, isProxy, isRef, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
-import type { ReactNode } from 'react'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 
 import type { ReactivueInternalInstance } from './shared'
@@ -110,7 +109,7 @@ export function createSetup<PropsType, State>(
   }
 }
 
-export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: ReactNode | ReactNode[] }) {
+export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: JSX.Element | JSX.Element[] }) {
   const scope = useRef<EffectScope | null>(null)
   if (scope.current === null)
     scope.current = effectScope()
@@ -146,6 +145,5 @@ export function ReactivueProvider({ plugins, children }: { plugins?: any[]; chil
     provides: instance.current!.provides,
   }
 
-  if (children)
-    return createElement(Fragment, null, children)
+  return createElement(Fragment, null, children)
 }
