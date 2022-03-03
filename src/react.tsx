@@ -1,6 +1,6 @@
 import type { EffectScope, UnwrapNestedRefs } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
-import { effectScope, isProxy, isRef, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
+import { effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 
 import type { ReactivueInternalInstance } from './shared'
@@ -54,7 +54,14 @@ export function useSetup<State, Props = {}>(
     instance.current?.[hook]?.forEach(fn => fn())
   }
 
-  const setTick = useState(0)[1]
+  const [tick, setTick] = useState(0)
+
+  useEffect(() => {
+    invokeLifecycle(LifecycleHooks.BEFORE_UPDATE)
+    nextTick(() => {
+      invokeLifecycle(LifecycleHooks.UPDATED)
+    })
+  }, [tick])
 
   setCurrentInstance(instance.current)
   context.current.setup = context.current.setup ?? scope.current.run(() => {
@@ -65,10 +72,7 @@ export function useSetup<State, Props = {}>(
     const effects = getEffects(setup)
     if (effects?.length) {
       watch(effects, () => {
-        context.current!.setup = getState(setup)
-        invokeLifecycle(LifecycleHooks.BEFORE_UPDATE)
         setTick(tick => tick + 1)
-        invokeLifecycle(LifecycleHooks.UPDATED)
       }, { deep: true })
     }
     return getState(setup)

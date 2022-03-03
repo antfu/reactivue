@@ -1,5 +1,5 @@
 import { defineComponent } from 'reactivue'
-import { computed, onBeforeUpdate, onUnmounted, onUpdated, ref, watch } from '@vue/runtime-core'
+import { computed, onUnmounted, onUpdated, ref, watch } from '@vue/runtime-core'
 
 export const Counter = defineComponent(
   (props: { value: number }) => {
@@ -11,13 +11,8 @@ export const Counter = defineComponent(
     const isFive = ref(false)
 
     watch(counter, v => (isFive.value = v === 5), { immediate: true })
-
-    onBeforeUpdate(() => {
-      console.log('Counter 45.')
-    })
-
     onUpdated(() => {
-      console.log('Counter updated 2.')
+      console.log('Counter updated.')
     })
 
     onUnmounted(() => {
