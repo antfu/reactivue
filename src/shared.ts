@@ -10,6 +10,7 @@ export const enum LifecycleHooks {
   UPDATED = 'u',
   BEFORE_UNMOUNT = 'bum',
   UNMOUNTED = 'um',
+  PROPS_UPDATED = 'pu',
 }
 
 export interface ReactivueInternalInstance {
@@ -27,6 +28,7 @@ export interface ReactivueInternalInstance {
   [LifecycleHooks.UPDATED]?: (() => void)[]
   [LifecycleHooks.BEFORE_UNMOUNT]?: (() => void)[]
   [LifecycleHooks.UNMOUNTED]?: (() => void)[]
+  [LifecycleHooks.PROPS_UPDATED]?: ((props: any) => void)[]
 }
 export function getCurrentInstance() {
   return _getCurrentInstance() as unknown as ReactivueInternalInstance

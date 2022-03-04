@@ -1,6 +1,6 @@
 import type { EffectScope, UnwrapNestedRefs } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
-import { effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
+import { createHook, effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 
 import type { ReactivueInternalInstance } from './shared'
@@ -17,7 +17,7 @@ export function useSetup<State, Props = {}>(
   ReactProps: Props = {} as any,
 ): ReturnedSetup<State> {
   const scope = useRef<EffectScope | null>(null)
-  const context = useRef<{ fn: string; setup: ReturnedSetup<State> | null } | null>(null)
+  const context = useRef<{ fn: string; setup: ReturnedSetup<State> | null; ReactProps: Props } | null>(null)
   const instance = useRef<ReactivueInternalInstance | null>(null)
   const isInputsChanged = context.current?.fn !== fn.toString()
 
@@ -25,6 +25,7 @@ export function useSetup<State, Props = {}>(
     context.current = {
       fn: fn.toString(),
       setup: null,
+      ReactProps,
     }
     if (isInputsChanged) {
       scope.current?.stop()
@@ -52,7 +53,7 @@ export function useSetup<State, Props = {}>(
     instance.current!.isUnmounted = !state
   }
 
-  const invokeLifecycle = (hook: LifecycleHooks) => {
+  const invokeLifecycle = (hook: Exclude<LifecycleHooks, LifecycleHooks.PROPS_UPDATED>) => {
     instance.current?.[hook]?.forEach(fn => fn())
   }
 
@@ -64,6 +65,10 @@ export function useSetup<State, Props = {}>(
       invokeLifecycle(LifecycleHooks.UPDATED)
     })
   }, [tick])
+
+  useEffect(() => {
+    instance.current?.[LifecycleHooks.PROPS_UPDATED]?.forEach(fn => fn(ReactProps))
+  }, [ReactProps])
 
   setCurrentInstance(instance.current)
   context.current.setup = context.current.setup ?? scope.current.run(() => {
@@ -114,6 +119,10 @@ export function createSetup<PropsType, State>(
   return (props: PropsType) => {
     return useSetup(setupFunction, props)
   }
+}
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+export const onPropsUpdated = <Props extends any>(fn: (newProps: Props) => void) => {
+  createHook(LifecycleHooks.PROPS_UPDATED)(fn)
 }
 
 export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: JSX.Element | JSX.Element[] }) {

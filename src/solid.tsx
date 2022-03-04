@@ -40,7 +40,7 @@ export function useSetup<State, Props = {}>(
     instance.isUnmounted = !state
   }
 
-  const invokeLifecycle = (hook: LifecycleHooks) => {
+  const invokeLifecycle = (hook: Exclude<LifecycleHooks, LifecycleHooks.PROPS_UPDATED>) => {
     instance?.[hook]?.forEach(fn => fn())
   }
 
