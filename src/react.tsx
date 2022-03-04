@@ -74,6 +74,7 @@ export function useSetup<State, Props = {}>(
     const effects = getEffects(setup)
     if (effects?.length) {
       watch(effects, () => {
+        context.current!.setup = getState(setup)
         setTick(tick => tick + 1)
       }, { deep: true })
     }
