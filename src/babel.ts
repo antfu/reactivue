@@ -55,3 +55,52 @@ export default ({
       },
     }
   }
+
+export const reactivueImports = [
+  {
+    reactivue: ['defineComponent', 'onPropsUpdated'],
+  },
+  {
+    '@vue/runtime-core': [
+      // lifecycle
+      'onBeforeMount',
+      'onBeforeUnmount',
+      'onBeforeUpdate',
+      'onMounted',
+      'onUnmounted',
+      'onUpdated',
+
+      // reactivity,
+      'computed',
+      'customRef',
+      'isReadonly',
+      'isRef',
+      'markRaw',
+      'reactive',
+      'readonly',
+      'ref',
+      'shallowReactive',
+      'shallowReadonly',
+      'shallowRef',
+      'triggerRef',
+      'toRaw',
+      'toRef',
+      'toRefs',
+      'unref',
+      'watch',
+      'watchEffect',
+
+      // component
+      'getCurrentInstance',
+      'inject',
+      'nextTick',
+      'provide',
+
+      // effect scope
+      'effectScope',
+      'EffectScope',
+      'getCurrentScope',
+      'onScopeDispose',
+    ],
+  },
+]
