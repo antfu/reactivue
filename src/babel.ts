@@ -56,51 +56,50 @@ export default ({
     }
   }
 
-export const reactivueImports = [
-  {
-    reactivue: ['defineComponent', 'onPropsUpdated'],
-  },
-  {
-    '@vue/runtime-core': [
-      // lifecycle
-      'onBeforeMount',
-      'onBeforeUnmount',
-      'onBeforeUpdate',
-      'onMounted',
-      'onUnmounted',
-      'onUpdated',
+const reactivue = {
+  reactivue: ['defineComponent', 'onPropsUpdated'],
+}
+const runtime = {
+  '@vue/runtime-core': [
+    // lifecycle
+    'onBeforeMount',
+    'onBeforeUnmount',
+    'onBeforeUpdate',
+    'onMounted',
+    'onUnmounted',
+    'onUpdated',
 
-      // reactivity,
-      'computed',
-      'customRef',
-      'isReadonly',
-      'isRef',
-      'markRaw',
-      'reactive',
-      'readonly',
-      'ref',
-      'shallowReactive',
-      'shallowReadonly',
-      'shallowRef',
-      'triggerRef',
-      'toRaw',
-      'toRef',
-      'toRefs',
-      'unref',
-      'watch',
-      'watchEffect',
+    // reactivity,
+    'computed',
+    'customRef',
+    'isReadonly',
+    'isRef',
+    'markRaw',
+    'reactive',
+    'readonly',
+    'ref',
+    'shallowReactive',
+    'shallowReadonly',
+    'shallowRef',
+    'triggerRef',
+    'toRaw',
+    'toRef',
+    'toRefs',
+    'unref',
+    'watch',
+    'watchEffect',
 
-      // component
-      'getCurrentInstance',
-      'inject',
-      'nextTick',
-      'provide',
+    // component
+    'getCurrentInstance',
+    'inject',
+    'nextTick',
+    'provide',
 
-      // effect scope
-      'effectScope',
-      'EffectScope',
-      'getCurrentScope',
-      'onScopeDispose',
-    ],
-  },
-] as const
+    // effect scope
+    'effectScope',
+    'EffectScope',
+    'getCurrentScope',
+    'onScopeDispose',
+  ],
+}
+export const reactivueImports: [typeof reactivue, typeof runtime] = [reactivue, runtime]
