@@ -1,6 +1,6 @@
 {
   "name": "reactivue",
-  "version": "0.4.4",
+  "version": "1.0.0-beta.1",
   "description": "Use Vue 3 Composition API in React and Solid components",
   "type": "module",
   "license": "MIT",
