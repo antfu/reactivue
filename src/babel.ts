@@ -103,4 +103,4 @@ export const reactivueImports = [
       'onScopeDispose',
     ],
   },
-]
+] as const
