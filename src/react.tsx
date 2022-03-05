@@ -121,7 +121,7 @@ export const onPropsUpdated = <Props extends any>(fn: (newProps: Props) => void)
   createHook(LifecycleHooks.PROPS_UPDATED)(fn)
 }
 
-export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: JSX.Element | JSX.Element[] }) {
+export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: JSX.Element | JSX.Element[] }): JSX.Element {
   const scope = useRef<EffectScope | null>(null)
   if (scope.current === null)
     scope.current = effectScope()
