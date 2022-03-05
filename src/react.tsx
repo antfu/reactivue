@@ -6,8 +6,6 @@ import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 import type { ReactivueInternalInstance } from './shared'
 import { LifecycleHooks, getCurrentInstance, getEffects } from './shared'
 
-export { default as babelReactivue } from './babel'
-
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 export const getState = <T extends any>(setup: T): T extends Readonly<Array<any>> ? T : UnwrapNestedRefs<T> => isRef(setup) || isProxy(setup) || Array.isArray(setup) ? unref(setup) : typeof setup === 'object' ? readonly(reactive(setup as Object)) : setup as any
 

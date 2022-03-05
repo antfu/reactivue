@@ -1,21 +1,57 @@
 import type * as types from '@babel/types'
 
-export default ({ types: t }: { types: typeof types }) => {
-  return {
-    visitor: {
-      Identifier(path: any) {
-        if (path.node.name === 'defineComponent' && path.parent.arguments?.length === 1) {
-          const parentArgument = path.parent.arguments[0]
-          const fnBody = parentArgument.type === 'ArrowFunctionExpression' ? parentArgument.body.body : parentArgument.right.body.body
-          if (fnBody && fnBody[fnBody.length - 1].argument.callee.name !== 'computed') {
-            fnBody[fnBody.length - 1] = t.returnStatement(
-              t.callExpression(t.identifier('computed'), [
-                t.arrowFunctionExpression([], fnBody[fnBody.length - 1].argument),
-              ]),
-            )
-          }
-        }
-      },
-    },
-  }
+function isComponentishName(name: string) {
+  return typeof name === 'string' && name[0] >= 'A' && name[0] <= 'Z'
 }
+
+type ReactivueBabelOptions = {
+  /**
+   * @default false
+   */
+  arrowFunctionAsComponent?: boolean
+
+  /**
+   * @default true
+   */
+  autoWrapComputed?: boolean
+}
+
+export default ({
+  arrowFunctionAsComponent = false,
+  autoWrapComputed = true,
+}: ReactivueBabelOptions = {}) =>
+  ({ types: t }: { types: typeof types }) => {
+    return {
+      visitor: {
+        Expression(path: any) {
+          if (arrowFunctionAsComponent && t.isArrowFunctionExpression(path.node)) {
+            if (t.isVariableDeclarator(path.parent)) {
+              if (isComponentishName(path.parent.id.name))
+                path.replaceWith(t.callExpression(t.identifier('defineComponent'), [path.node]))
+            }
+          }
+
+          if (
+            autoWrapComputed
+            && path.node.name === 'defineComponent'
+            && path.parent.arguments?.length === 1
+          ) {
+            const parentArgument = path.parent.arguments[0]
+            const fnBody = parentArgument.type.endsWith('FunctionExpression')
+              ? parentArgument.body.body // preact
+              : parentArgument.right.body.body // react
+            if (
+              t.isReturnStatement(fnBody?.[fnBody.length - 1])
+              && fnBody[fnBody.length - 1].argument.callee.name !== 'computed'
+            ) {
+              fnBody[fnBody.length - 1] = t.returnStatement(
+                t.callExpression(t.identifier('computed'), [
+                  t.arrowFunctionExpression([], fnBody[fnBody.length - 1].argument),
+                ]),
+              )
+            }
+          }
+        },
+      },
+    }
+  }

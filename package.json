@@ -18,12 +18,20 @@
       "require": "./dist/solid.cjs",
       "import": "./dist/solid.js",
       "types": "./dist/solid.d.ts"
+    },
+    "./babel": {
+      "require": "./dist/babel.cjs",
+      "import": "./dist/babel.js",
+      "types": "./dist/babel.d.ts"
     }
   },
   "typesVersions": {
     "*": {
       "solid": [
         "dist/solid.d.ts"
+      ],
+      "babel": [
+        "dist/babel.d.ts"
       ]
     }
   },
@@ -39,6 +47,7 @@
   "tsup": {
     "entry": [
       "src/react.tsx",
+      "src/babel.ts",
       "src/solid.tsx"
     ],
     "format": [
