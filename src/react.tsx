@@ -84,10 +84,8 @@ export function useSetup<State, Props = {}>(
     return getState(setup)
   }) as ReturnedSetup<State>
 
-  invokeLifecycle(LifecycleHooks.BEFORE_CREATE)
-  invokeLifecycle(LifecycleHooks.CREATED)
+  invokeLifecycle(LifecycleHooks.BEFORE_MOUNT)
   useEffect(() => {
-    invokeLifecycle(LifecycleHooks.BEFORE_MOUNT)
     setMountState(true)
     invokeLifecycle(LifecycleHooks.MOUNTED)
     return () => {
