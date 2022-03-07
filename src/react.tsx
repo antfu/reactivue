@@ -90,6 +90,7 @@ export function useSetup<State, Props = {}>(
     invokeLifecycle(LifecycleHooks.MOUNTED)
     return () => {
       invokeLifecycle(LifecycleHooks.BEFORE_UNMOUNT)
+      scope.current?.cleanups.forEach(fn => fn())
       invokeLifecycle(LifecycleHooks.UNMOUNTED)
       setMountState(false)
       process.env.NODE_ENV !== 'development' && scope.current?.stop()
