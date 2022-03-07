@@ -126,9 +126,9 @@ export function useSetup<State, Props = {}>(
 
   onCleanup(() => {
     invokeLifecycle(LifecycleHooks.BEFORE_UNMOUNT)
+    scope.stop()
     invokeLifecycle(LifecycleHooks.UNMOUNTED)
     setMountState(false)
-    scope.stop()
   })
 
   return state as ReturnedSetup<State>
