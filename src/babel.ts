@@ -42,7 +42,7 @@ export default ({
               : parentArgument.right.body.body // react
             if (
               t.isReturnStatement(fnBody?.[fnBody.length - 1])
-              && fnBody[fnBody.length - 1].argument.callee.name !== 'computed'
+              && fnBody[fnBody.length - 1].argument?.callee.name !== 'computed'
             ) {
               fnBody[fnBody.length - 1] = t.returnStatement(
                 t.callExpression(t.identifier('computed'), [
