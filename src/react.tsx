@@ -103,11 +103,11 @@ export function useSetup<State, Props = {}>(
 
 export function defineComponent<PropsType = {}, State = {}>(
   setupFunction: (props: PropsType) => State,
-  renderFunction?: (state: ReturnedSetup<State>) => JSX.Element,
+  renderFunction?: (state: ReturnedSetup<State>, props: PropsType) => JSX.Element,
 ): (props: PropsType) => JSX.Element {
   return (props: PropsType) => {
     const state = useSetup(setupFunction, props)
-    return renderFunction?.(state) ?? state as JSX.Element
+    return renderFunction?.(state, props) ?? state as JSX.Element
   }
 }
 
