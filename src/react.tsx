@@ -1,4 +1,4 @@
-import type { EffectScope, UnwrapNestedRefs } from '@vue/runtime-core'
+import type { EffectScope, Ref, UnwrapNestedRefs, UnwrapRef } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
 import { createHook, effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
@@ -6,10 +6,11 @@ import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 import type { ReactivueInternalInstance } from './shared'
 import { LifecycleHooks, getCurrentInstance, getEffects } from './shared'
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-export const getState = <T extends any>(setup: T): T extends Readonly<Array<any>> ? T : UnwrapNestedRefs<T> => isRef(setup) || isProxy(setup) || Array.isArray(setup) ? unref(setup) : typeof setup === 'object' ? readonly(reactive(setup as Object)) : setup as any
+type ReturnedSetup<T> = T extends Readonly<Array<any>> ? T : T extends Ref ? UnwrapRef<T> : UnwrapNestedRefs<T>
 
-type ReturnedSetup<T> = T extends Readonly<Array<any>> ? T : UnwrapNestedRefs<T>
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+export const getState = <T extends any>(setup: T): ReturnedSetup<T> => isRef(setup) || isProxy(setup) || Array.isArray(setup) ? unref(setup) : typeof setup === 'object' ? readonly(reactive(setup as Object)) : setup as any
+
 export function useSetup<State, Props = {}>(
   fn: (props: Props) => State,
   ReactProps: Props = {} as any,
