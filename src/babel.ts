@@ -57,7 +57,7 @@ export default ({
   }
 
 const reactivue = {
-  reactivue: ['defineComponent', 'onPropsUpdated'],
+  reactivue: ['defineComponent', 'onPropsUpdated', 'useProps'],
 }
 const runtime = {
   '@vue/runtime-core': [

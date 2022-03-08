@@ -1,6 +1,6 @@
 import type { EffectScope, Ref, UnwrapNestedRefs, UnwrapRef } from '@vue/runtime-core'
 // @ts-expect-error setCurrentInstance not exposed
-import { createHook, effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, setCurrentInstance, unref, watch } from '@vue/runtime-core'
+import { createHook, effectScope, isProxy, isRef, nextTick, provide, reactive, readonly, ref, setCurrentInstance, unref, watch } from '@vue/runtime-core'
 import { Fragment, createElement, useEffect, useRef, useState } from 'react'
 
 import type { ReactivueInternalInstance } from './shared'
@@ -120,8 +120,15 @@ export function createSetup<PropsType, State>(
   }
 }
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-export const onPropsUpdated = <Props extends any>(fn: (newProps: Props) => void) => {
+export const onPropsUpdated = <Props extends Record<any, any>>(fn: (newProps: Props) => void) => {
   createHook(LifecycleHooks.PROPS_UPDATED)(fn)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
+export const useProps = <Props extends Record<any, any>>(props: Props) => {
+  const reactiveProps = ref(props)
+  onPropsUpdated<Props>(newProps => reactiveProps.value = newProps)
+  return reactiveProps
 }
 
 export function ReactivueProvider({ plugins, children }: { plugins?: any[]; children?: JSX.Element | JSX.Element[] }): JSX.Element {
