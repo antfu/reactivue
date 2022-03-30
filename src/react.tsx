@@ -71,7 +71,6 @@ export function useSetup<State, Props = {}>(
 
   setCurrentInstance(instance.current)
   context.current.setup = context.current.setup ?? scope.current.run(() => {
-    instance.current!.active = true
     const setup = fn(ReactProps)
     if (setup === null)
       return null
@@ -79,7 +78,7 @@ export function useSetup<State, Props = {}>(
     if (effects?.length) {
       watch(effects, () => {
         context.current!.setup = getState(setup)
-        setTick(tick => tick + 1)
+        instance.current!.active && setTick(tick => tick + 1)
       }, { deep: true })
     }
     return getState(setup)
@@ -87,6 +86,7 @@ export function useSetup<State, Props = {}>(
 
   invokeLifecycle(LifecycleHooks.BEFORE_MOUNT)
   useEffect(() => {
+    instance.current!.active = true
     setMountState(true)
     invokeLifecycle(LifecycleHooks.MOUNTED)
     return () => {
