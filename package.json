@@ -89,6 +89,19 @@
     "vue-in-react",
     "reactivity"
   ],
+  "peerDependencies": {
+    "@vue/runtime-core": "^3.2.31",
+    "react": "^17.0.2",
+    "solid-js": "^1.3.8"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.14.2",
     "@antfu/ni": "^0.12.0",
