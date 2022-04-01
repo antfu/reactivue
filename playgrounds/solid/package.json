@@ -1,0 +1,28 @@
+{
+  "name": "react",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vue/runtime-core": "^3.2.31",
+    "@vueuse/core": "^7.6.2",
+    "@vueuse/head": "^0.7.5",
+    "graphql": "^16.3.0",
+    "pinia": "^2.0.11",
+    "reactivue": "workspace:*",
+    "solid-js": "^1.3.8",
+    "villus": "^1.0.1",
+    "vue": "^3.2.31"
+  },
+  "devDependencies": {
+    "@unocss/preset-wind": "^0.26.2",
+    "@unocss/reset": "^0.26.2",
+    "unocss": "^0.26.2",
+    "vite": "^2.8.4",
+    "vite-plugin-solid": "^2.2.5"
+  }
+}

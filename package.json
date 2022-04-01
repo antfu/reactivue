@@ -1,38 +1,132 @@
 {
-  "name": "@reactivue/monorepo",
-  "description": "Using Vue Composition API in React components.",
-  "author": "Anthony Fu<https://github.com/antfu>",
+  "name": "reactivue",
+  "version": "1.0.0-beta.7",
+  "description": "Use Vue 3 Composition API in React and Solid components",
+  "type": "module",
   "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ],
+  "sideEffects": false,
+  "main": "./dist/react.cjs",
+  "module": "./dist/react.js",
+  "types": "./dist/react.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/react.cjs",
+      "import": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    },
+    "./solid": {
+      "require": "./dist/solid.cjs",
+      "import": "./dist/solid.js",
+      "types": "./dist/solid.d.ts"
+    },
+    "./babel": {
+      "require": "./dist/babel.cjs",
+      "import": "./dist/babel.js",
+      "types": "./dist/babel.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "solid": [
+        "dist/solid.d.ts"
+      ],
+      "babel": [
+        "dist/babel.d.ts"
+      ]
+    }
+  },
   "scripts": {
-    "dev": "npm -C ./packages/reactivue run dev",
-    "dev:vite": "npm -C ./examples/react-ts-vite run dev",
-    "build:vite": "npm -C ./examples/react-ts-vite run build",
-    "serve:vite": "npm -C ./examples/react-ts-vite run serve",
-    "build": "npm -C ./packages/reactivue run build && cpy README.md ./packages/reactivue",
-    "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && yarn publish --non-interactive",
-    "postinstall": "yarn-deduplicate || exit 0",
-    "test": "npm -C ./packages/reactivue run test"
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "lint": "eslint --ext .js,.ts,.tsx .",
+    "prepublishOnly": "nr build",
+    "release": "bumpp --commit --push --tag && pnpm publish --tag beta",
+    "test": "vitest",
+    "postinstall": "node ./scripts/postinstall.js"
+  },
+  "tsup": {
+    "entry": [
+      "src/react.tsx",
+      "src/babel.ts",
+      "src/solid.tsx"
+    ],
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "external": [
+      "react",
+      "react-dom",
+      "solid-js",
+      "@vue/runtime-core"
+    ],
+    "splitting": false,
+    "sourcemap": "inline",
+    "dts": true,
+    "clean": true
+  },
+  "files": [
+    "dist",
+    "bin",
+    "scripts"
+  ],
+  "bin": {
+    "reactivue-fix": "bin/reactivue-fix.js"
+  },
+  "homepage": "https://github.com/antfu/reactivue#readme",
+  "bugs": {
+    "url": "https://github.com/antfu/reactivue/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/reactivue.git"
+  },
+  "keywords": [
+    "vue",
+    "react",
+    "solid",
+    "vue-composition-api",
+    "vue-in-react",
+    "reactivity"
+  ],
+  "peerDependencies": {
+    "@vue/runtime-core": "^3.2.31",
+    "react": "^17.0.2||^18.0.0",
+    "solid-js": "^1.3.8"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.6.2",
-    "cpy-cli": "^3.1.1",
-    "eslint": "^7.23.0",
-    "eslint-plugin-react": "^7.23.1",
-    "yarn-deduplicate": "^3.1.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@antfu/eslint-config-ts",
-      "plugin:react/recommended"
-    ],
-    "rules": {
-      "react/prop-types": "off",
-      "no-use-before-define": "off"
-    }
+    "@antfu/eslint-config": "^0.14.2",
+    "@antfu/ni": "^0.12.0",
+    "@babel/types": "^7.17.0",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/node": "^17.0.21",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@unocss/transformer-directives": "^0.26.2",
+    "@vitejs/plugin-react": "^1.2.0",
+    "@vue/runtime-core": "^3.2.31",
+    "bumpp": "^7.1.1",
+    "eslint": "^8.9.0",
+    "esno": "^0.13.0",
+    "jsdom": "^19.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "solid-js": "^1.3.8",
+    "tsup": "^5.11.13",
+    "typescript": "^4.5.5",
+    "unocss": "^0.26.2",
+    "vite": "^2.8.4",
+    "vitest": "^0.0.129"
   }
 }
