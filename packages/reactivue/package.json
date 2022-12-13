@@ -10,6 +10,7 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "browser": {
         "production": "./dist/index.module.js",
         "development": "./dist/index.module.dev.js"
@@ -19,6 +20,7 @@
     },
     "./": "./",
     "./preact": {
+      "types": "./dist/index.d.ts",
       "browser": {
         "production": "./preact/index.module.js",
         "development": "./preact/index.module.dev.js"
