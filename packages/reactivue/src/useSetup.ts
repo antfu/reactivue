@@ -1,7 +1,7 @@
 import { UnwrapRef, reactive, ref, readonly, unref } from '@vue/reactivity'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { watch } from '@vue/runtime-core'
 import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountInstance } from './component'
-import { watch } from './watch'
 import { invokeLifeCycle } from './lifecycle'
 import { LifecycleHooks } from './types'
 
@@ -13,17 +13,20 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
 
   const setTick = useState(0)[1]
 
+  const instanceRef = useRef<any>()
   const createState = () => {
     const props = reactive({ ...(ReactProps || {}) }) as any
     const instance = createNewInstanceWithId(id, props)
 
-    useInstanceScope(id, () => {
+    instanceRef.current = instance
+
+    useInstanceScope(instance, () => {
       const setupState = setupFunction(readonly(props)) ?? {}
       const data = ref(setupState)
 
-      invokeLifeCycle(LifecycleHooks.BEFORE_MOUNT)
+      invokeLifeCycle(LifecycleHooks.BEFORE_MOUNT, instance)
 
-      instance.data = data
+      instance.data = data as never
 
       if (__DEV__) {
         for (const key of Object.keys(setupState))
@@ -41,7 +44,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
   useEffect(() => {
     if (!ReactProps) return
 
-    useInstanceScope(id, (instance) => {
+    useInstanceScope(instanceRef.current, (instance) => {
       if (!instance)
         return
       const { props } = instance
@@ -58,7 +61,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     if (__DEV__) {
       let isChanged = false
 
-      useInstanceScope(id, (instance) => {
+      useInstanceScope(instanceRef.current, (instance) => {
         if (!instance)
           return
 
@@ -87,11 +90,11 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
         setState(createState())
     }
 
-    useInstanceScope(id, (instance) => {
+    useInstanceScope(instanceRef.current, (instance) => {
       if (!instance)
         return
 
-      invokeLifeCycle(LifecycleHooks.MOUNTED)
+      invokeLifeCycle(LifecycleHooks.MOUNTED, instance)
 
       const { data } = instance
       watch(
@@ -104,7 +107,7 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
           if (instance.isUnmounting)
             return
 
-          useInstanceScope(id, () => {
+          useInstanceScope(instanceRef.current, () => {
             invokeLifeCycle(LifecycleHooks.BEFORE_UPDATE, instance)
             // trigger React update
             setTick(+new Date())
@@ -120,5 +123,5 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     }
   }, [])
 
-  return state
+  return state as never
 }

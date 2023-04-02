@@ -15,7 +15,7 @@
     "serve:vite": "npm -C ./examples/react-ts-vite run serve",
     "build": "npm -C ./packages/reactivue run build && cpy README.md ./packages/reactivue",
     "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && yarn publish --non-interactive",
-    "postinstall": "yarn-deduplicate || exit 0",
+    "postinstall": "yarn-deduplicate && patch-package",
     "test": "npm -C ./packages/reactivue run test"
   },
   "devDependencies": {
@@ -23,7 +23,8 @@
     "cpy-cli": "^3.1.1",
     "eslint": "^7.23.0",
     "eslint-plugin-react": "^7.23.1",
-    "yarn-deduplicate": "^3.1.0"
+    "yarn-deduplicate": "^3.1.0",
+    "patch-package": "^6.4.7"
   },
   "eslintConfig": {
     "extends": [

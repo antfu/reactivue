@@ -1,7 +1,6 @@
-import { InjectionKey } from '@vue/runtime-core'
+import { getCurrentInstance, InjectionKey, warn } from '@vue/runtime-core'
 import { isFunction } from '@vue/shared'
-import { getCurrentInstance } from './component'
-import { warn } from './errorHandling'
+import { CompInstance } from './lifecycle'
 
 type PluginInstallFunction = (app: AppContext['app'], ...options: any[]) => any
 
@@ -127,7 +126,7 @@ export function h() {
 }
 
 export function provide<T>(key: InjectionKey<T> | string | number, value: T) {
-  const instance = getCurrentInstance()
+  const instance = getCurrentInstance() as CompInstance
 
   if (instance)
     instance.provides[key as string] = value
@@ -149,7 +148,7 @@ export function inject(
   defaultValue?: unknown,
   treatDefaultAsFactory = false,
 ) {
-  const instance = getCurrentInstance()
+  const instance = getCurrentInstance() as CompInstance
 
   if (instance) {
     if (instance.provides && (key as string | symbol) in instance.provides) {

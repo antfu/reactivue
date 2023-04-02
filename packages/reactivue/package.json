@@ -83,8 +83,8 @@
     "react": ">=16"
   },
   "dependencies": {
-    "@vue/reactivity": "^3.0.9",
-    "@vue/runtime-core": "^3.0.9",
-    "@vue/shared": "^3.0.9"
+    "@vue/reactivity": "3.2.26",
+    "@vue/runtime-core": "3.2.26",
+    "@vue/shared": "3.2.26"
   }
 }
