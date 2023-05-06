@@ -25,17 +25,6 @@ export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
 export const getNewInstanceId = () => {
-  if (__DEV__) {
-    // When React is in Strict mode, it runs state functions twice
-    // Remove unmounted instances before creating new one
-    Object.keys(_vueState).forEach((id) => {
-      setTimeout(() => {
-        if (_vueState[+id]?.isActive === false)
-          unmount(+id)
-      }, 0)
-    })
-  }
-
   _id++
 
   if (__DEV__ && __BROWSER__)
