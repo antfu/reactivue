@@ -81,7 +81,10 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
 export const useInstanceScope = (id: number, cb: (instance: InternalInstanceState | null) => void) => {
   const prev = currentInstanceId
   const instance = setCurrentInstanceId(id)
-  cb(instance)
+  if (usingEffectScope) {
+    if (!instance?.isUnmounted) instance?.scope?.run(() => cb(instance))
+  }
+  else cb(instance)
   setCurrentInstanceId(prev)
 }
 
@@ -89,13 +92,11 @@ const unmount = (id: number) => {
   invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
 
   // unregister all the computed/watch effects
-  if (usingEffectScope) _vueState[id].scope!.stop()
-  else
-    for (const effect of _vueState[id].effects || [])
-      stop(effect)
+  for (const effect of _vueState[id].effects || [])
+    stop(effect)
 
   invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
-
+  if (usingEffectScope) _vueState[id].scope!.stop()
   _vueState[id].isUnmounted = true
 
   // release the ref
