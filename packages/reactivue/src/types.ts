@@ -1,4 +1,4 @@
-import { ReactiveEffect, Ref } from '@vue/reactivity'
+import { ReactiveEffect, Ref, EffectScope } from '@vue/reactivity'
 
 export const enum LifecycleHooks {
   BEFORE_CREATE = 'BeforeMount',
@@ -22,6 +22,7 @@ export interface InternalInstanceState {
   hooks: Record<string, Function[]>
   initialState: Record<any, any>
   provides: Record<string, unknown>
+  scope: EffectScope | null
 }
 
 export type InstanceStateMap = Record<number, InternalInstanceState>

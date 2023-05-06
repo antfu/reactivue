@@ -3,7 +3,8 @@
 /* eslint-disable array-callback-return */
 import { effect, Ref, ComputedRef, ReactiveEffectOptions, isRef, isReactive, stop } from '@vue/reactivity'
 import { isFunction, isArray, NOOP, isObject, remove, hasChanged } from '@vue/shared'
-import { currentInstance, recordInstanceBoundEffect } from './component'
+import { watch as _watch, watchEffect as _watchEffect } from '@vue/runtime-core'
+import { currentInstance, recordInstanceBoundEffect, usingEffectScope } from './component'
 import { warn, callWithErrorHandling, callWithAsyncErrorHandling } from './errorHandling'
 
 export type WatchEffect = (onInvalidate: InvalidateCbRegistrator) => void
@@ -51,6 +52,7 @@ export function watchEffect(
   effect: WatchEffect,
   options?: WatchOptionsBase,
 ): WatchStopHandle {
+  if (usingEffectScope) return _watchEffect(effect, options)
   return doWatch(effect, null, options)
 }
 
@@ -90,6 +92,7 @@ export function watch<T = any>(
   cb: WatchCallback<T>,
   options?: WatchOptions,
 ): WatchStopHandle {
+  if (usingEffectScope) return _watch(source, cb as any, options)
   return doWatch(source, cb, options)
 }
 
