@@ -50,7 +50,6 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     _id: id,
     props,
     data,
-    isActive: false,
     isUnmounted: false,
     isUnmounting: false,
     hooks: {},
