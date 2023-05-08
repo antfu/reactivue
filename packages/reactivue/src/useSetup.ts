@@ -90,6 +90,12 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
     useInstanceScope(id, (instance) => {
       if (!instance)
         return
+      
+      // Avoid repeated execution of onMounted and watch after hmr updates in development mode
+      if (instance.isMounted)
+        return
+
+      instance.isMounted = true
 
       invokeLifeCycle(LifecycleHooks.MOUNTED)
 
