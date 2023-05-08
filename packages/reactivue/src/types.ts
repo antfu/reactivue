@@ -15,7 +15,6 @@ export interface InternalInstanceState {
   _id: number
   props: any
   data: Ref<any>
-  isActive: boolean
   isUnmounted: boolean
   isUnmounting: boolean
   effects?: ReactiveEffect[]
