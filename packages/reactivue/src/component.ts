@@ -2,7 +2,7 @@
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
 import * as vueReactivity from '@vue/reactivity'
 import { invokeLifeCycle } from './lifecycle'
-import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types'
+import { InstanceStateMap, InternalInstanceState, LifecycleHooks, EffectScope } from './types'
 
 /**
  * When `reactivue` dependency gets updated during development
@@ -22,7 +22,7 @@ const _vueState: InstanceStateMap = (__DEV__ && __BROWSER__ && window.__reactivu
 if (__DEV__ && __BROWSER__)
   window.__reactivue_state = _vueState
 
-const effectScope = vueReactivity['effectScope']
+const effectScope: (detached?: boolean) => EffectScope = (vueReactivity as any)['effectScope']
 export const usingEffectScope = typeof effectScope === 'function'
 
 export let currentInstance: InternalInstanceState | null = null
