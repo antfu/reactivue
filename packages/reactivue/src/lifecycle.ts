@@ -37,7 +37,7 @@ export function injectHook(
     if (prepend)
       hooks.unshift(wrappedHook)
 
-    else
+    else if (!target.isMounted)
       hooks.push(wrappedHook)
   }
   else if (__DEV__) {
