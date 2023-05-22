@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { defineComponent, ref } from 'reactivue'
 import { useHead } from '@vueuse/head'

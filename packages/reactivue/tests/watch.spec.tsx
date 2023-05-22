@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { waitFor } from '@testing-library/dom'
-import { useSetup, toRef, watch, watchEffect } from '../src'
+import { toRef, useSetup, watch, watchEffect } from '../src'
 
 const watchJestFn = jest.fn()
 const watchEffectJestFn = jest.fn()
@@ -11,7 +11,7 @@ beforeEach(() => {
   watchEffectJestFn.mockClear()
 })
 
-const WatchTest = (Props: { hello: string }) => {
+function WatchTest(Props: { hello: string }) {
   const { other } = useSetup((props) => {
     const other = toRef(props, 'hello')
 
@@ -29,7 +29,7 @@ const WatchTest = (Props: { hello: string }) => {
   return <p>{other}</p>
 }
 
-it('should handle watch ref', async() => {
+it('should handle watch ref', async () => {
   const { rerender } = render(<WatchTest hello={'Hello, world'}/>)
 
   rerender(<WatchTest hello={'Adios, world'}/>)
@@ -39,7 +39,7 @@ it('should handle watch ref', async() => {
   })
 })
 
-it('should handle watchEffect ref', async() => {
+it('should handle watchEffect ref', async () => {
   const comp = render(<WatchTest hello={'Hello, world'}/>)
 
   comp.rerender(<WatchTest hello={'Adios, world'}/>)

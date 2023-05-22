@@ -26,7 +26,7 @@ npm i <b>reactivue</b>
 
 ```tsx
 import React from 'React'
-import { defineComponent, ref, computed, onUnmounted } from 'reactivue'
+import { computed, defineComponent, onUnmounted, ref } from 'reactivue'
 
 interface Props {
   value: number
@@ -56,7 +56,7 @@ const MyCounter = defineComponent(
 )
 
 // use it as you normally would
-render(<MyCounter value={10}>, el)
+render(<MyCounter value={10} />, el)
 ```
 
 ### Hooks
@@ -68,7 +68,7 @@ You can use it as a hook as well.
 
 ```tsx
 import React from 'React'
-import { useSetup, ref, computed, onUnmounted } from 'reactivue'
+import { computed, onUnmounted, ref, useSetup } from 'reactivue'
 
 interface Props {
   value: number
@@ -102,11 +102,11 @@ function MyCounter(Props: Props) {
 
 ### Hook Factory
 
-To reuse the composition logics, `createSetup` is provided as a factory to create your own hooks.
+To reuse the composition logic, `createSetup` is provided as a factory to create your own hooks.
 
 ```ts
 // mySetup.ts
-import { createSetup, ref, computed, onUnmounted } from 'reactivue'
+import { computed, createSetup, onUnmounted, ref } from 'reactivue'
 
 export interface Props {
   value: number
@@ -129,9 +129,9 @@ export const useMySetup = createSetup(
 ```tsx
 // Counter.tsx
 import React from 'react'
-import { useMySetup, Props } from './mySetup'
+import { Props, useMySetup } from './mySetup'
 
-export const Counter = (props: Props) => {
+export function Counter(props: Props) {
   const { counter, doubled, inc } = useMySetup(props)
   const { counter: counter2, doubled: doubled2, inc: inc2 } = useMySetup({ value: 10 })
 
@@ -169,6 +169,8 @@ import { h } from 'preact'
 
 Add following code to `vite.config.js` 
 
+<!--eslint-skip-->
+
 ```js
 {
   /* ... */
@@ -179,7 +181,9 @@ Add following code to `vite.config.js`
 }
 ```
 
-If you are using it with Preact you have to add following code to `vite.config.js`
+If you are using it with Preact you have to add the following code to `vite.config.js`
+
+<!--eslint-skip-->
 
 ```ts
 {
@@ -195,13 +199,13 @@ If you are using it with Preact you have to add following code to `vite.config.j
 <details>
 <summary>Webpack</summary><br>
 
-Add following code to your webpack config
+Add the following code to your webpack config
 
 ```js
-const config = { 
+const config = {
   /* ... */
-  resolve: { 
-    alias: { 
+  resolve: {
+    alias: {
       'vue': 'reactivue',
       '@vue/runtime-dom': 'reactivue',
     },
@@ -215,6 +219,8 @@ const config = {
 <summary>Parcel</summary><br>
 
 Parcel uses the standard `package.json` file to read configuration options under an `alias` key.
+
+<!--eslint-skip-->
 
 ```js
 {
@@ -234,7 +240,7 @@ Parcel uses the standard `package.json` file to read configuration options under
 To alias within Rollup, you'll need to install [@rollup/plugin-alias](https://github.com/rollup/plugins/tree/master/packages/alias). The plugin will need to be placed before your `@rollup/plugin-node-resolve`.
 
 ```js
-import alias from '@rollup/plugin-alias';
+import alias from '@rollup/plugin-alias'
 
 module.exports = {
   plugins: [
@@ -245,7 +251,7 @@ module.exports = {
       ]
     })
   ]
-};
+}
 ```
 
 </details>
@@ -255,6 +261,8 @@ module.exports = {
 <summary>Jest</summary><br>
 
 Jest allows the rewriting of module paths similar to bundlers. These rewrites are configured using regular expressions in your Jest configuration:
+
+<!--eslint-skip-->
 
 ```js
 {
@@ -300,15 +308,15 @@ The reactivity system APIs are direct re-exported from `@vue/reactivity`, they s
 
 ````ts
 // the following two line are equivalent.
-import { ref, reactive, computed } from 'reactivue'
-import { ref, reactive, computed } from '@vue/reactivity'
+import { computed, reactive, ref } from 'reactivue'
+import { computed, reactive, ref } from '@vue/reactivity'
 ````
 
 #### Lifecycles
 
-This library implemented the basic lifecycles to bound with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when they should be called (for example `onMounted` will be call right after `onCreated`).
+This library implemented the basic lifecycles to bind with React's lifecycles. For some lifecycles that don't have the React equivalent, they will be called somewhere near when they should be called (for example `onMounted` will be called right after `onCreated`).
 
-For most of the time, you can use them like you would in Vue.
+Most of the time, you can use them as you would in Vue.
 
 #### Extra APIs
 
@@ -319,7 +327,7 @@ For most of the time, you can use them like you would in Vue.
 
 #### Limitations
 
-- `getCurrentInstance()` - returns the meta info for the internal states, NOT a Vue instance. It's exposed to allow you check if it's inside a instance scope.
+- `getCurrentInstance()` - returns the meta info for the internal states, NOT a Vue instance. It's exposed to allow you to check if it's inside an instance scope.
 - `emit()` is not available
 
 

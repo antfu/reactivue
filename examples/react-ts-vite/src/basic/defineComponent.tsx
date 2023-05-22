@@ -1,5 +1,5 @@
 import React from 'react'
-import { defineComponent, ref, computed, watch, onUnmounted, onMounted } from 'reactivue'
+import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'reactivue'
 
 export const Counter = defineComponent(
   (props: { value: number }) => {

@@ -1,6 +1,7 @@
-import { UnwrapRef, reactive, ref, readonly, unref } from '@vue/reactivity'
-import { useState, useEffect } from 'react'
-import { getNewInstanceId, createNewInstanceWithId, useInstanceScope, unmountInstance } from './component'
+import type { UnwrapRef } from '@vue/reactivity'
+import { reactive, readonly, ref, unref } from '@vue/reactivity'
+import { useEffect, useState } from 'react'
+import { createNewInstanceWithId, getNewInstanceId, unmountInstance, useInstanceScope } from './component'
 import { watch } from './watch'
 import { invokeLifeCycle } from './lifecycle'
 import { LifecycleHooks } from './types'
@@ -39,7 +40,8 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
 
   // sync props changes
   useEffect(() => {
-    if (!ReactProps) return
+    if (!ReactProps)
+      return
 
     useInstanceScope(id, (instance) => {
       if (!instance)

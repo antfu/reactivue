@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { useSetup, ref, toRef } from '../src'
+import { ref, toRef, useSetup } from '../src'
 
-const SetupTest = (Props: { hello?: string }) => {
+function SetupTest(Props: { hello?: string }) {
   const { msg, other } = useSetup((props) => {
     const msg = ref('Hello, world!')
     const other = toRef(props, 'hello')
@@ -20,7 +20,7 @@ const SetupTest = (Props: { hello?: string }) => {
   </div>
 }
 
-it('should render basic useSetup function return', async() => {
+it('should render basic useSetup function return', async () => {
   render(<SetupTest/>)
 
   await waitFor(() => {
@@ -29,7 +29,7 @@ it('should render basic useSetup function return', async() => {
   })
 })
 
-it('should render basic useSetup function return', async() => {
+it('should render basic useSetup function return', async () => {
   render(<SetupTest hello={'Hello, Universe!'}/>)
 
   await waitFor(() => {

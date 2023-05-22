@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { defineComponent } from 'reactivue'
 import { useBattery } from '@vueuse/core'

@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
-import { useSetup, toRef, computed } from '../src'
+import { computed, toRef, useSetup } from '../src'
 
-const ComputedTest = (Props: { hello: string }) => {
+function ComputedTest(Props: { hello: string }) {
   const { comp } = useSetup((props) => {
     const other = toRef(props, 'hello')
 
@@ -17,7 +17,7 @@ const ComputedTest = (Props: { hello: string }) => {
   return <p>{comp}</p>
 }
 
-it('should handle computed properties', async() => {
+it('should handle computed properties', async () => {
   const comp = render(<ComputedTest hello={'Hello, world'}/>)
 
   await waitFor(() => {

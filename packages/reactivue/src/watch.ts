@@ -1,11 +1,12 @@
 // ported from https://github.com/vuejs/vue-next/blob/master/packages/runtime-core/src/apiWatch.ts
 
 /* eslint-disable array-callback-return */
-import { effect, Ref, ComputedRef, ReactiveEffectOptions, isRef, isReactive, stop } from '@vue/reactivity'
-import { isFunction, isArray, NOOP, isObject, remove, hasChanged } from '@vue/shared'
+import type { ComputedRef, ReactiveEffectOptions, Ref } from '@vue/reactivity'
+import { effect, isReactive, isRef, stop } from '@vue/reactivity'
+import { NOOP, hasChanged, isArray, isFunction, isObject, remove } from '@vue/shared'
 import { watch as _watch, watchEffect as _watchEffect } from '@vue/runtime-core'
 import { currentInstance, recordInstanceBoundEffect, usingEffectScope } from './component'
-import { warn, callWithErrorHandling, callWithAsyncErrorHandling } from './errorHandling'
+import { callWithAsyncErrorHandling, callWithErrorHandling, warn } from './errorHandling'
 
 export type WatchEffect = (onInvalidate: InvalidateCbRegistrator) => void
 
@@ -52,7 +53,8 @@ export function watchEffect(
   effect: WatchEffect,
   options?: WatchOptionsBase,
 ): WatchStopHandle {
-  if (usingEffectScope) return _watchEffect(effect, options)
+  if (usingEffectScope)
+    return _watchEffect(effect, options)
   return doWatch(effect, null, options)
 }
 
@@ -62,7 +64,7 @@ export function watchEffect(
 // of all possible value types.
 export function watch<
   T extends Readonly<Array<WatchSource<unknown> | object>>,
-  Immediate extends Readonly<boolean> = false
+  Immediate extends Readonly<boolean> = false,
 >(
   sources: T,
   cb: WatchCallback<MapSources<T>, MapOldSources<T, Immediate>>,
@@ -79,7 +81,7 @@ export function watch<T, Immediate extends Readonly<boolean> = false>(
 // overload #3: watching reactive object w/ cb
 export function watch<
   T extends object,
-  Immediate extends Readonly<boolean> = false
+  Immediate extends Readonly<boolean> = false,
 >(
   source: T,
   cb: WatchCallback<T, Immediate extends true ? (T | undefined) : T>,
@@ -92,7 +94,8 @@ export function watch<T = any>(
   cb: WatchCallback<T>,
   options?: WatchOptions,
 ): WatchStopHandle {
-  if (usingEffectScope) return _watch(source, cb as any, options)
+  if (usingEffectScope)
+    return _watch(source, cb as any, options)
   return doWatch(source, cb, options)
 }
 
@@ -104,11 +107,14 @@ function doWatch(
   const instance = currentInstance
 
   let getter: () => any
+  let cleanup: () => void
   let forceTrigger = false
   let isMultiSource = false
+  let runner: ReturnType<typeof effect>
+
   if (isRef(source)) {
     getter = () => (source as Ref).value
-    // @ts-expect-error
+    // @ts-expect-error force cast
     forceTrigger = !!(source as Ref)._shallow
   }
   else if (isReactive(source)) {
@@ -163,8 +169,7 @@ function doWatch(
     getter = () => traverse(baseGetter())
   }
 
-  let cleanup: () => void
-  const onInvalidate: InvalidateCbRegistrator = (fn: () => void) => {
+  function onInvalidate(fn: () => void) {
     cleanup = runner.options.onStop = () => {
       callWithErrorHandling(fn, instance, 'watch cleanup')
     }
@@ -183,8 +188,8 @@ function doWatch(
         || forceTrigger
         || (isMultiSource
           ? (newValue as any[]).some((v, i) =>
-            hasChanged(v, (oldValue as any[])[i]),
-          )
+              hasChanged(v, (oldValue as any[])[i]),
+            )
           : hasChanged(newValue, oldValue))
       ) {
         // cleanup before running cb again
@@ -233,7 +238,7 @@ function doWatch(
     }
   }
 
-  const runner = effect(getter, {
+  runner = effect(getter, {
     lazy: true,
     onTrack,
     onTrigger,

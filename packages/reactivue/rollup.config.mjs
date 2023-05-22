@@ -1,4 +1,4 @@
-import typescript from 'rollup-plugin-typescript2'
+import typescript from 'rollup-plugin-esbuild'
 import dts from 'rollup-plugin-dts'
 import resolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
@@ -38,7 +38,11 @@ export default [
         format: 'cjs',
       },
     ],
-    plugins: [replace({ react: 'preact/hooks', __DEV__, __BROWSER__ }), resolve(), typescript()],
+    plugins: [
+      replace({ react: 'preact/hooks', __DEV__, __BROWSER__ }),
+      resolve(),
+      typescript(),
+    ],
     external,
     onwarn,
   },
@@ -50,7 +54,11 @@ export default [
         format: 'esm',
       },
     ],
-    plugins: [replace({ __DEV__, __BROWSER__ }), resolve(), typescript()],
+    plugins: [
+      replace({ __DEV__, __BROWSER__ }),
+      resolve(),
+      typescript(),
+    ],
     external,
     onwarn,
   },

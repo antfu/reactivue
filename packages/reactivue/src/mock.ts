@@ -1,4 +1,4 @@
-import { InjectionKey } from '@vue/runtime-core'
+import type { InjectionKey } from '@vue/runtime-core'
 import { isFunction } from '@vue/shared'
 import { getCurrentInstance } from './component'
 import { warn } from './errorHandling'
@@ -47,7 +47,7 @@ function createAppContext(): AppContext {
 
 export function createApp() {
   const context
-    = __BROWSER__ && window.__reactivue_context
+    = (__BROWSER__ && window.__reactivue_context)
       ? window.__reactivue_context
       : createAppContext()
 
@@ -157,7 +157,7 @@ export function inject(
       return instance.provides[key as string]
     }
     else if (arguments.length > 1) {
-      return treatDefaultAsFactory && isFunction(defaultValue)
+      return (treatDefaultAsFactory && isFunction(defaultValue))
         ? defaultValue()
         : defaultValue
     }

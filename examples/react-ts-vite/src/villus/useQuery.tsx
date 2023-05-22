@@ -1,7 +1,7 @@
-
 import React from 'react'
 import { defineComponent } from 'reactivue'
 import { useQuery } from 'villus'
+
 const Posts = `
 {
   company {

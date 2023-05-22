@@ -1,6 +1,5 @@
-
 import React from 'react'
-import { useSetup, ref, computed, watch } from 'reactivue'
+import { computed, ref, useSetup, watch } from 'reactivue'
 
 export function Counter(Props: { value: number }) {
   const state = useSetup(

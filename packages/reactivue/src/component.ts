@@ -1,8 +1,10 @@
 /* eslint-disable import/no-mutable-exports */
-import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
+import type { ReactiveEffect, Ref } from '@vue/reactivity'
+import { ref, stop } from '@vue/reactivity'
 import * as vueReactivity from '@vue/reactivity'
 import { invokeLifeCycle } from './lifecycle'
-import { InstanceStateMap, InternalInstanceState, LifecycleHooks, EffectScope } from './types'
+import type { EffectScope, InstanceStateMap, InternalInstanceState } from './types'
+import { LifecycleHooks } from './types'
 
 /**
  * When `reactivue` dependency gets updated during development
@@ -22,13 +24,13 @@ const _vueState: InstanceStateMap = (__DEV__ && __BROWSER__ && window.__reactivu
 if (__DEV__ && __BROWSER__)
   window.__reactivue_state = _vueState
 
-const effectScope: (detached?: boolean) => EffectScope = (vueReactivity as any)['effectScope']
+const effectScope: (detached?: boolean) => EffectScope = (vueReactivity as any).effectScope
 export const usingEffectScope = typeof effectScope === 'function'
 
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
-export const getNewInstanceId = () => {
+export function getNewInstanceId() {
   _id++
 
   if (__DEV__ && __BROWSER__)
@@ -38,18 +40,16 @@ export const getNewInstanceId = () => {
 }
 
 export const getCurrentInstance = () => currentInstance
-export const setCurrentInstance = (
-  instance: InternalInstanceState | null,
-) => {
+export function setCurrentInstance(instance: InternalInstanceState | null) {
   currentInstance = instance
 }
 
-export const setCurrentInstanceId = (id: number | null) => {
+export function setCurrentInstanceId(id: number | null) {
   currentInstanceId = id
   currentInstance = id != null ? (_vueState[id] || null) : null
   return currentInstance
 }
-export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> = ref(null)) => {
+export function createNewInstanceWithId(id: number, props: any, data: Ref<any> = ref(null)) {
   const instance: InternalInstanceState = {
     _id: id,
     props,
@@ -66,17 +66,18 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
   return instance
 }
 
-export const useInstanceScope = (id: number, cb: (instance: InternalInstanceState | null) => void) => {
+export function useInstanceScope(id: number, cb: (instance: InternalInstanceState | null) => void) {
   const prev = currentInstanceId
   const instance = setCurrentInstanceId(id)
   if (usingEffectScope) {
-    if (!instance?.isUnmounted) instance?.scope?.run(() => cb(instance))
+    if (!instance?.isUnmounted)
+      instance?.scope?.run(() => cb(instance))
   }
-  else cb(instance)
+  else { cb(instance) }
   setCurrentInstanceId(prev)
 }
 
-const unmount = (id: number) => {
+function unmount(id: number) {
   invokeLifeCycle(LifecycleHooks.BEFORE_UNMOUNT, _vueState[id])
 
   // unregister all the computed/watch effects
@@ -84,14 +85,15 @@ const unmount = (id: number) => {
     stop(effect)
 
   invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
-  if (usingEffectScope) _vueState[id].scope!.stop()
+  if (usingEffectScope)
+    _vueState[id].scope!.stop()
   _vueState[id].isUnmounted = true
 
   // release the ref
   delete _vueState[id]
 }
 
-export const unmountInstance = (id: number) => {
+export function unmountInstance(id: number) {
   if (!_vueState[id])
     return
 

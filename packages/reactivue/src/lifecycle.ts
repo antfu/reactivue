@@ -2,8 +2,9 @@
 
 import { pauseTracking, resetTracking } from '@vue/reactivity'
 import { currentInstance, setCurrentInstance, useInstanceScope } from './component'
-import { warn, callWithAsyncErrorHandling } from './errorHandling'
-import { LifecycleHooks, InternalInstanceState } from './types'
+import { callWithAsyncErrorHandling, warn } from './errorHandling'
+import type { InternalInstanceState } from './types'
+import { LifecycleHooks } from './types'
 
 export function injectHook(
   type: LifecycleHooks,
@@ -49,9 +50,9 @@ export function injectHook(
   }
 }
 
-export const createHook = <T extends Function = () => any>(
-  lifecycle: LifecycleHooks,
-) => (hook: T, target: InternalInstanceState | null = currentInstance) => injectHook(lifecycle, hook, target)
+export function createHook<T extends Function = () => any>(lifecycle: LifecycleHooks) {
+  return (hook: T, target: InternalInstanceState | null = currentInstance) => injectHook(lifecycle, hook, target)
+}
 
 export const onBeforeMount = createHook(LifecycleHooks.BEFORE_MOUNT)
 export const onMounted = createHook(LifecycleHooks.MOUNTED)
@@ -60,10 +61,8 @@ export const onUpdated = createHook(LifecycleHooks.UPDATED)
 export const onBeforeUnmount = createHook(LifecycleHooks.BEFORE_UNMOUNT)
 export const onUnmounted = createHook(LifecycleHooks.UNMOUNTED)
 
-export const invokeLifeCycle = (
-  type: LifecycleHooks,
-  target: InternalInstanceState | null = currentInstance,
-) => {
+export function invokeLifeCycle(type: LifecycleHooks,
+  target: InternalInstanceState | null = currentInstance) {
   if (target) {
     const hooks = target.hooks[type] || []
     useInstanceScope(target._id, () => {

@@ -1,9 +1,9 @@
 {
   "name": "@reactivue/monorepo",
+  "private": true,
   "description": "Using Vue Composition API in React components.",
   "author": "Anthony Fu<https://github.com/antfu>",
   "license": "MIT",
-  "private": true,
   "workspaces": [
     "packages/*",
     "examples/*"
@@ -13,17 +13,21 @@
     "dev:vite": "npm -C ./examples/react-ts-vite run dev",
     "build:vite": "npm -C ./examples/react-ts-vite run build",
     "serve:vite": "npm -C ./examples/react-ts-vite run serve",
+    "lint": "eslint .",
     "build": "npm -C ./packages/reactivue run build && cpy README.md ./packages/reactivue",
     "release": "cd ./packages/reactivue && npm run build && npx bumpp --commit --tag --push && yarn publish --non-interactive",
-    "postinstall": "yarn-deduplicate || exit 0",
     "test": "npm -C ./packages/reactivue run test"
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.6.2",
-    "cpy-cli": "^3.1.1",
-    "eslint": "^7.23.0",
-    "eslint-plugin-react": "^7.23.1",
-    "yarn-deduplicate": "^3.1.0"
+    "@antfu/eslint-config-ts": "^0.39.1",
+    "@vue/reactivity": "^3.3.4",
+    "@vue/runtime-core": "^3.3.4",
+    "@vue/shared": "^3.3.4",
+    "cpy-cli": "^4.2.0",
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2",
+    "reactivue": "workspace:*",
+    "rollup-plugin-esbuild": "^5.0.0"
   },
   "eslintConfig": {
     "extends": [
@@ -33,6 +37,16 @@
     "rules": {
       "react/prop-types": "off",
       "no-use-before-define": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "examples/**"
+        ],
+        "rules": {
+          "no-console": "off"
+        }
+      }
+    ]
   }
 }

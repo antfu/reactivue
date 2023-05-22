@@ -1,5 +1,5 @@
 import React from 'react'
-import { createSetup, ref, computed, onUnmounted } from 'reactivue'
+import { computed, createSetup, onUnmounted, ref } from 'reactivue'
 
 interface Props {
   value: number
@@ -17,7 +17,7 @@ const useMySetup = createSetup(
   },
 )
 
-export const Counter = (props: Props) => {
+export function Counter(props: Props) {
   const { counter, doubled, inc } = useMySetup(props)
   const { counter: counter2, doubled: doubled2, inc: inc2 } = useMySetup({ value: 10 })
 

@@ -2,14 +2,14 @@ import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 import { screen, waitFor } from '@testing-library/dom'
 import {
-  useSetup,
-  ref,
   onBeforeMount,
-  onMounted,
-  onBeforeUpdate,
-  onUpdated,
   onBeforeUnmount,
+  onBeforeUpdate,
+  onMounted,
   onUnmounted,
+  onUpdated,
+  ref,
+  useSetup,
 } from '../src'
 
 const onMountedJestFn = jest.fn()
@@ -28,7 +28,7 @@ beforeEach(() => {
   onBeforeUpdateJestFn.mockClear()
 })
 
-const LifecycleTest = () => {
+function LifecycleTest() {
   const { num, addOne } = useSetup(() => {
     const val = ref(0)
 
@@ -53,7 +53,7 @@ const LifecycleTest = () => {
   </div>
 }
 
-it('should handle mount lifecycles', async() => {
+it('should handle mount lifecycles', async () => {
   render(<LifecycleTest/>)
 
   await waitFor(() => {
@@ -62,7 +62,7 @@ it('should handle mount lifecycles', async() => {
   })
 })
 
-it('should handle update lifecycles', async() => {
+it('should handle update lifecycles', async () => {
   render(<LifecycleTest/>)
 
   fireEvent.click(screen.getByText('Add one'))
@@ -73,7 +73,7 @@ it('should handle update lifecycles', async() => {
   })
 })
 
-it('should handle unmount lifecycles', async() => {
+it('should handle unmount lifecycles', async () => {
   const comp = render(<LifecycleTest/>)
 
   comp.unmount()

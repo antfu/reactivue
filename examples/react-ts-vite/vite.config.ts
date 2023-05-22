@@ -7,7 +7,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      vue: 'reactivue',
+      'vue': 'reactivue',
       '@vue/composition-api': 'reactivue',
       '@vue/runtime-dom': 'reactivue',
     },

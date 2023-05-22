@@ -11,12 +11,12 @@ const useMsg = createSetup(() => {
   }
 })
 
-const CreateSetupTest = () => {
+function CreateSetupTest() {
   const { msg } = useMsg({})
   return <p>{msg}</p>
 }
 
-it('should render basic createSetup return', async() => {
+it('should render basic createSetup return', async () => {
   render(<CreateSetupTest/>)
 
   await waitFor(() => {

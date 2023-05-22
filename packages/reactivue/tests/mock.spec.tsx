@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import { screen } from '@testing-library/dom'
 import { inject, provide, useSetup } from '../src'
 
-const ChildComp = (Props: { }) => {
+function ChildComp(Props: { }) {
   const { message } = useSetup(() => {
     const message = inject('key', 'Hello, world')
 
@@ -15,7 +15,7 @@ const ChildComp = (Props: { }) => {
   return <p>{message}</p>
 }
 
-const ParentComp = (Props: { }) => {
+function ParentComp(Props: { }) {
   useSetup(() => {
     provide('key', 'Hello, world')
 
@@ -25,7 +25,7 @@ const ParentComp = (Props: { }) => {
   return <ChildComp/>
 }
 
-it('should handle computed properties', async() => {
+it('should handle computed properties', async () => {
   render(<ParentComp/>)
 
   const el = screen.getByText('Hello, world')

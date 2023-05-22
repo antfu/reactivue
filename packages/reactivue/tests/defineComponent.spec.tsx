@@ -13,7 +13,7 @@ const DefineTest = defineComponent(() => {
   return <p>{msg}</p>
 })
 
-it('should render basic defineComponent component', async() => {
+it('should render basic defineComponent component', async () => {
   render(<DefineTest/>)
 
   await waitFor(() => {
