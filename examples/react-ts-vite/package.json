@@ -13,7 +13,7 @@
     "autoprefixer": "^10.2.5",
     "graphql": "^15.4.0",
     "pinia": "^2.0.0-alpha.8",
-    "postcss": "^8.2.8",
+    "postcss": "^8.2.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "reactivue": "^0",
