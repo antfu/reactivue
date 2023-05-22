@@ -62,8 +62,6 @@ export function useSetup<State extends Record<any, any>, Props = {}>(
         if (!instance)
           return
 
-        instance.isActive = true
-
         if (!instance.isUnmounting)
           return
 

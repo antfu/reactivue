@@ -1,7 +1,8 @@
 /* eslint-disable import/no-mutable-exports */
 import { Ref, ReactiveEffect, ref, stop } from '@vue/reactivity'
+import * as vueReactivity from '@vue/reactivity'
 import { invokeLifeCycle } from './lifecycle'
-import { InstanceStateMap, InternalInstanceState, LifecycleHooks } from './types'
+import { InstanceStateMap, InternalInstanceState, LifecycleHooks, EffectScope } from './types'
 
 /**
  * When `reactivue` dependency gets updated during development
@@ -21,21 +22,13 @@ const _vueState: InstanceStateMap = (__DEV__ && __BROWSER__ && window.__reactivu
 if (__DEV__ && __BROWSER__)
   window.__reactivue_state = _vueState
 
+const effectScope: (detached?: boolean) => EffectScope = (vueReactivity as any)['effectScope']
+export const usingEffectScope = typeof effectScope === 'function'
+
 export let currentInstance: InternalInstanceState | null = null
 export let currentInstanceId: number | null = null
 
 export const getNewInstanceId = () => {
-  if (__DEV__) {
-    // When React is in Strict mode, it runs state functions twice
-    // Remove unmounted instances before creating new one
-    Object.keys(_vueState).forEach((id) => {
-      setTimeout(() => {
-        if (_vueState[+id]?.isActive === false)
-          unmount(+id)
-      }, 0)
-    })
-  }
-
   _id++
 
   if (__DEV__ && __BROWSER__)
@@ -61,13 +54,13 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
     _id: id,
     props,
     data,
-    isActive: false,
     isMounted: false,
     isUnmounted: false,
     isUnmounting: false,
     hooks: {},
     initialState: {},
     provides: __BROWSER__ ? { ...window.__reactivue_context?.provides } : {},
+    scope: usingEffectScope ? effectScope() : null,
   }
   _vueState[id] = instance
 
@@ -77,7 +70,10 @@ export const createNewInstanceWithId = (id: number, props: any, data: Ref<any> =
 export const useInstanceScope = (id: number, cb: (instance: InternalInstanceState | null) => void) => {
   const prev = currentInstanceId
   const instance = setCurrentInstanceId(id)
-  cb(instance)
+  if (usingEffectScope) {
+    if (!instance?.isUnmounted) instance?.scope?.run(() => cb(instance))
+  }
+  else cb(instance)
   setCurrentInstanceId(prev)
 }
 
@@ -89,7 +85,7 @@ const unmount = (id: number) => {
     stop(effect)
 
   invokeLifeCycle(LifecycleHooks.UNMOUNTED, _vueState[id])
-
+  if (usingEffectScope) _vueState[id].scope!.stop()
   _vueState[id].isUnmounted = true
 
   // release the ref

@@ -5,7 +5,7 @@ import {
   WritableComputedRef,
   ComputedGetter,
 } from '@vue/reactivity'
-import { recordInstanceBoundEffect } from './component'
+import { recordInstanceBoundEffect, usingEffectScope } from './component'
 
 export function computed<T>(getter: ComputedGetter<T>): ComputedRef<T>
 export function computed<T>(
@@ -15,6 +15,6 @@ export function computed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>,
 ) {
   const c = _computed(getterOrOptions as any)
-  recordInstanceBoundEffect(c.effect)
+  if (!usingEffectScope) recordInstanceBoundEffect(c.effect)
   return c
 }
